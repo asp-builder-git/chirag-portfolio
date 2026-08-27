@@ -1,29 +1,36 @@
-# SKILL.md — Personal Portfolio Site (M1: Skeleton)
+# SKILL.md — chirag-portfolio
 
-## Pipeline
+## ⚠️ Hard Rules (Chirag, 2026-08-27)
 
-1. **DESIGN**: Astro static site, GitHub Pages hosting, public repo from day one. Structure: Home/About, Projects index, Writing index. Positioning: "Product Manager & Builder". Markdown-first content (OpenClaw writes case studies into content collections).
-2. **PLAN**: scaffold Astro → strip to skeleton → About page with positioning → git init + public push → GitHub Pages workflow → verify URL loads.
-3. **IMPLEMENT**: standard Astro scaffold (verified approach, no ad-lib).
-4. **VERIFY**: `npm run build` passes; deployed URL returns 200; repo is public.
-5. **SHIP**: report URL + repo to Chirag. Guardrails: public repo or it doesn't count; MLP = one page that loads.
+1. **NO direct pushes to `main`. Ever.** All changes land via a branch + pull request.
+2. **Every change is pre-reviewed before merge.** The review gate is: build passes → review summary written for Chirag → Chirag approves (chat or GitHub) → merge → deploy.
+3. **No working behind the scenes.** Drafts, branches, and review summaries are visible; merges wait for the human.
+4. **The site is built by sub-agents following this SKILL.md + VOICE.md.** Read VOICE.md before writing any copy.
+
+## Pipeline (5 gates)
+
+1. **DESIGN** — what changes, why, which pages. For copy: draft in Chirag's voice (VOICE.md). Output: short design note in REVIEW.md.
+2. **PLAN** — files touched, spec sources (analyses/08, 09 etc.), verification steps.
+3. **IMPLEMENT** — on a branch (`chore/…`, `feat/…`, `fix/…`). `npm run build` must pass.
+4. **REVIEW (mandatory, never skipped)** — write a review summary for Chirag: what changed, how it looks, what he should decide. He approves → merge. He rejects → fix on the branch.
+5. **SHIP** — merge to main → GitHub Actions deploys → verify live URL HTTP 200.
 
 ## Gates
 
-- **Gate 1 (Design)**: Stack validated against Obsidian Publish (analysis 06) — Astro wins on demos + build-in-public evidence. ✅ auto-pass (decision made 2026-08-27).
-- **Gate 2 (Plan)**: Steps are ordered and complete (scaffold → skeleton → deploy → verify). External dep: GitHub Pages deploy — known workflow, auto-pass with verification.
-- **Gate 3 (Verify)**: `npm run build` exit 0 + live URL returns 200.
-- **Gate 4 (Ship)**: Chirag asked for the site (M1 from project plan). Repo public, no secrets, README present.
+- G1 Design: clear scope + voice-checked copy.
+- G2 Plan: files + spec identified.
+- G3 Build: `npm run build` exit 0.
+- G4 Review: **Chirag's explicit approval recorded in REVIEW.md** (chat OK). Without it: no merge, no push.
+- G5 Live: URL returns 200 post-deploy.
 
 ## Recovery
 
-- npm scaffold fails (network/registry) → retry with `--yes` flags; fall back to manual `package.json` + minimal Astro install.
-- GitHub Pages deploy fails → check workflow logs, verify `base` path config for project-site repos.
-- Node version too old → check `node -v`; use `npx astro@latest` which handles current versions.
+- Pushed to main by mistake → create branch from main, revert main via PR, log it in REVIEW.md.
+- Chirag rejects review → fix on branch, re-run G3 + G4.
+- Deploy fails → fix, re-verify, don't bypass.
 
 ## Exit Criteria
 
-- [x] Public GitHub repo exists (day one)
-- [x] Astro skeleton: About + Projects + Writing pages
-- [x] Deployed to GitHub Pages, URL returns HTTP 200
-- [x] README with positioning one-liner
+- Change is on `main` ONLY via merged PR.
+- REVIEW.md shows the approval.
+- Live URL verified.
