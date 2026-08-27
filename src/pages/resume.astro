@@ -1,0 +1,185 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Resume — Chirag R Gandhi" active="resume">
+  <style>
+    .head { margin-bottom: 2.5rem; }
+    .head h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.35rem; }
+    .head .role { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .contact { display: flex; flex-wrap: wrap; gap: 0.3rem 1.3rem; color: var(--muted); font-size: 0.92rem; }
+    .contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .contact a:hover { text-decoration: underline; }
+    .summary {
+      font-size: 1.02rem; color: #333; border-left: 3px solid var(--accent);
+      padding-left: 1.1rem; margin-bottom: 2.5rem;
+    }
+    .job { margin-bottom: 2.2rem; }
+    .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.2rem 1rem; margin-bottom: 0.45rem; }
+    .job-head h3 { font-size: 1.15rem; }
+    .job-head .dates { font-size: 0.85rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .job .company { font-weight: 600; color: var(--accent-dark); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
+    .job ul { margin: 0 0 0 1.15rem; }
+    .job li { margin-bottom: 0.45rem; color: #333; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .skills-col { border: 1px solid var(--border); border-radius: 12px; background: var(--card); padding: 1.2rem 1.3rem; }
+    .skills-col h3 { font-size: 1rem; margin-bottom: 0.6rem; }
+    .skills-col ul { list-style: none; }
+    .skills-col li { font-size: 0.9rem; color: var(--muted); padding: 0.18rem 0; border-bottom: 1px dashed var(--border); }
+    .skills-col li:last-child { border-bottom: none; }
+    .edu { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; }
+    .edu .d { font-size: 0.85rem; color: var(--muted); }
+    .sec { margin-bottom: 2.5rem; }
+    .sec-title { font-size: 1.35rem; margin-bottom: 1.1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    @media (max-width: 480px) {
+      .job-head .dates { white-space: normal; }
+    }
+  </style>
+
+  <section class="head">
+    <div class="eyebrow">Résumé</div>
+    <h1>Chirag R Gandhi</h1>
+    <div class="role">Senior Product Manager</div>
+    <div class="contact">
+      <span>Luxembourg</span>
+      <a href="mailto:chirag0912@gmail.com">chirag0912@gmail.com</a>
+      <a href="https://www.linkedin.com/in/chirag-gandhi" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/asp-builder-git" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <p class="summary">
+    Enterprise product leader with 11+ years of experience, currently at Amazon. Owns a negotiations
+    platform that enables €0.9Bn in business for 400+ users across 10 markets — driving adoption from
+    5% to 100% and 120%+ YoY throughput. Strategic AI/automation builder: 3 full-stack applications
+    and multiple assistants shipped to production.
+  </p>
+
+  <section class="sec">
+    <h2 class="sec-title">Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Senior Product Manager — Enterprise Negotiations Platform</h3>
+        <span class="dates">2023 – Present</span>
+      </div>
+      <div class="company">Amazon</div>
+      <ul>
+        <li>Identified a <strong>$200M+ think-big opportunity</strong> — now a VP-level priority for 2026.</li>
+        <li>Drove adoption from <strong>5% to 100%</strong> in 3 years; platform now handles <strong>3.6M actions/year</strong>.</li>
+        <li>Ran an AI innovation program: <strong>6 ideas, 4 shipped</strong>; cut negotiation prep time from <strong>8h → 1h</strong>.</li>
+        <li>Shipped <strong>2 full-stack apps</strong> (SQL → Lambda → S3 → React) to production.</li>
+        <li>Improved reliability <strong>+148bps</strong>; piloted ML-powered recommendations; delivered <strong>7 features in 18 months</strong>; secured <strong>9 HC</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Senior Product Manager — Cross-Border Commerce</h3>
+        <span class="dates">2021 – 2023</span>
+      </div>
+      <div class="company">Amazon</div>
+      <ul>
+        <li>Unblocked <strong>144K products</strong> across 7 projects.</li>
+        <li>Built an OCR label-language identification product → <strong>€300M+ incremental revenue</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Senior Program Manager — Ops &amp; Logistics</h3>
+        <span class="dates">2019 – 2021</span>
+      </div>
+      <div class="company">Amazon</div>
+      <ul>
+        <li>Stood up a warehouse <strong>from scratch in 2 months</strong> — 1M units/year capacity.</li>
+        <li>Cut <strong>$10M in defect costs</strong> by attacking 8 root causes.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Program Manager — Marketplace Programs</h3>
+        <span class="dates">2016 – 2019</span>
+      </div>
+      <div class="company">Amazon</div>
+      <ul>
+        <li>Launched 2 revenue programs (<strong>$3M+ / $15M+</strong>); expanded coverage from <strong>12 to 68 cities</strong>.</li>
+        <li>Grew data coverage from <strong>7.8% to 99%</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Business Development Manager — 3P Marketplace</h3>
+        <span class="dates">2014 – 2016</span>
+      </div>
+      <div class="company">Amazon</div>
+      <ul>
+        <li>Grew category share from <strong>6.5% to 25%</strong>; lifted sell-through <strong>+12.3pp</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Earlier</h3>
+        <span class="dates">2007 – 2014</span>
+      </div>
+      <div class="company">Godrej Security Solutions · Citicorp</div>
+      <ul>
+        <li><strong>Godrej Security Solutions</strong> (2012–2014): grew channel revenue <strong>+43%</strong>.</li>
+        <li><strong>Citicorp</strong> (2007–2009): research analyst.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title">Skills</h2>
+    <div class="skills-grid">
+      <div class="skills-col">
+        <h3>Product</h3>
+        <ul>
+          <li>Platform strategy</li>
+          <li>AI agent design</li>
+          <li>ML product management</li>
+          <li>0 → 1</li>
+          <li>RICE &amp; OKR</li>
+        </ul>
+      </div>
+      <div class="skills-col">
+        <h3>Technical</h3>
+        <ul>
+          <li>SQL</li>
+          <li>Python</li>
+          <li>GenAI tools</li>
+          <li>API design</li>
+          <li>Data pipelines</li>
+          <li>UX prototyping</li>
+          <li>A/B testing</li>
+        </ul>
+      </div>
+      <div class="skills-col">
+        <h3>Domain</h3>
+        <ul>
+          <li>Enterprise SaaS</li>
+          <li>Decision intelligence</li>
+          <li>Negotiation systems</li>
+          <li>Marketplace operations</li>
+          <li>Change management</li>
+          <li>Agile</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title">Education</h2>
+    <div class="edu">
+      <div><strong>MBA</strong> — Xavier Institute of Management (2012), exchange at Neoma Business School</div>
+      <div class="d">2012</div>
+    </div>
+    <div class="edu" style="margin-top: 0.4rem">
+      <div><strong>B.Com</strong> — Narsee Monjee College of Commerce &amp; Economics</div>
+      <div class="d">2007</div>
+    </div>
+  </section>
+</Layout>

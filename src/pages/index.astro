@@ -1,69 +1,103 @@
 ---
+import Layout from "../layouts/Layout.astro";
 ---
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Chirag Gandhi — Product Manager & Builder</title>
-		<meta name="description" content="Product Manager & Builder. I ship things in public — case studies, demos, and writing." />
-		<style>
-			:root { --ink: #1a1a1a; --muted: #666; --accent: #e8590c; --bg: #fffdf8; }
-			* { box-sizing: border-box; margin: 0; padding: 0; }
-			body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-			.container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-			nav { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid #eee; margin-bottom: 3rem; }
-			nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
-			nav a:hover { color: var(--accent); }
-			h1 { font-size: 2.5rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-			h2 { font-size: 1.3rem; margin: 2.5rem 0 0.75rem; }
-			.tagline { font-size: 1.2rem; color: var(--muted); margin-bottom: 1.5rem; }
-			p { margin-bottom: 1rem; }
-			.links { display: flex; gap: 1.25rem; margin-top: 1rem; }
-			.links a { color: var(--accent); font-weight: 600; text-decoration: none; }
-			.links a:hover { text-decoration: underline; }
-			.card { border: 1px solid #e5e5e5; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; background: #fff; }
-			.card h3 { margin-bottom: 0.25rem; }
-			.card .status { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-			.muted { color: var(--muted); }
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<nav>
-				<a href="/chirag-portfolio/">Home</a>
-				<a href="/chirag-portfolio/about">About</a>
-				<a href="/chirag-portfolio/projects">Projects</a>
-				<a href="/chirag-portfolio/writing">Writing</a>
-			</nav>
+<Layout title="Chirag Gandhi — Senior Product Manager & Builder" active="home">
+  <style>
+    .hero h1 { font-size: clamp(2.3rem, 6vw, 3.2rem); margin: 0.25rem 0 1rem; }
+    .lede { font-size: 1.1rem; color: var(--muted); margin-bottom: 1.75rem; max-width: 62ch; }
+    .lede strong { color: var(--ink); }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 3rem; }
+    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin-bottom: 3.5rem; }
+    .highlight {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .highlight:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26, 26, 26, 0.06); }
+    .highlight .num { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
+    .highlight .label { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.45; }
+    .section { margin-bottom: 3rem; }
+    .section h2 { font-size: 1.35rem; margin-bottom: 1.1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .chips { margin-top: 0.8rem; }
+    .build-line { font-size: 0.95rem; color: var(--muted); margin-top: 0.75rem; }
+    .cta-end {
+      background: var(--accent-soft); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem 1.6rem; display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 1rem;
+    }
+    .cta-end h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .cta-end p { color: var(--muted); font-size: 0.92rem; max-width: 42ch; }
+  </style>
 
-			<h1>Chirag Gandhi</h1>
-			<div class="tagline">Product Manager &amp; Builder</div>
-			<p>
-				I build software and ship it in public. Everything on this site is a real project —
-				each one published as it reaches a shareable state. No vaporware, no "coming soon".
-			</p>
-			<p class="muted">
-				This site is itself the first project: built incrementally, in public, one feature at a time.
-			</p>
-			<div class="links">
-				<a href="/chirag-portfolio/projects">Projects</a>
-				<a href="/chirag-portfolio/writing">Writing</a>
-				<a href="https://github.com/asp-builder-git">GitHub</a>
-			</div>
+  <section class="hero">
+    <div class="eyebrow">Senior Product Manager · Luxembourg · Amazon</div>
+    <h1>Enterprise products, shipped end to end.</h1>
+    <p class="lede">
+      I'm Chirag Gandhi — an enterprise product leader with 11+ years at Amazon. I own a
+      negotiations platform that moves <strong>€0.9Bn</strong> across 10 markets, drove adoption
+      from <strong>5% to 100%</strong>, and I build AI tools that make teams dramatically faster:
+      3 full-stack apps and multiple assistants in production.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/chirag-portfolio/resume">View full resume</a>
+      <a class="btn btn-ghost" href="/chirag-portfolio/projects">Explore projects</a>
+    </div>
+  </section>
 
-			<h2>Latest</h2>
-			<div class="card">
-				<div class="status">Project · in progress</div>
-				<h3>This site</h3>
-				<p>Personal portfolio, built with Astro, deployed to GitHub Pages. Public from day one.</p>
-			</div>
-			<div class="card">
-				<div class="status">Writing · planned</div>
-				<h3>First post coming soon</h3>
-				<p>The build-in-public story starts here.</p>
-			</div>
-		</div>
-	</body>
-</html>
+  <section class="highlights" aria-label="Career highlights">
+    <div class="highlight">
+      <div class="num">€0.9Bn</div>
+      <div class="label">Platform value under management — 400+ users, 10 markets</div>
+    </div>
+    <div class="highlight">
+      <div class="num">5% → 100%</div>
+      <div class="label">Adoption in 3 years · 3.6M actions/year</div>
+    </div>
+    <div class="highlight">
+      <div class="num">$200M+</div>
+      <div class="label">Think-big opportunity — VP-level priority for 2026</div>
+    </div>
+    <div class="highlight">
+      <div class="num">11+ yrs</div>
+      <div class="label">Enterprise product &amp; program leadership</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What I do</h2>
+    <div class="chips">
+      <span class="chip">Platform strategy</span><span class="chip">AI agent design</span>
+      <span class="chip">ML product management</span><span class="chip">0 → 1</span>
+      <span class="chip">RICE &amp; OKR</span><span class="chip">SQL &amp; Python</span>
+      <span class="chip">GenAI tools</span><span class="chip">API design</span>
+      <span class="chip">Data pipelines</span><span class="chip">A/B testing</span>
+      <span class="chip">Enterprise SaaS</span><span class="chip">Marketplace ops</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Latest</h2>
+    <div class="card">
+      <div class="status">Project · in progress</div>
+      <h3>This site</h3>
+      <p>Personal portfolio, built with Astro, deployed to GitHub Pages. Public from day one.</p>
+    </div>
+    <div class="card">
+      <div class="status">Writing · planned</div>
+      <h3>First post coming soon</h3>
+      <p>The build-in-public story starts here.</p>
+    </div>
+    <p class="build-line">
+      Everything on this site is real — each project published as it reaches a shareable state.
+      No vaporware, no "coming soon".
+    </p>
+  </section>
+
+  <section class="cta-end">
+    <div>
+      <h3>Want the full story?</h3>
+      <p>Every role, number, and skill. The 60-second version is above — the details are one click away.</p>
+    </div>
+    <a class="btn btn-primary" href="/chirag-portfolio/resume">Full resume →</a>
+  </section>
+</Layout>
