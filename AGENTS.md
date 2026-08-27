@@ -8,6 +8,10 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Voice
+
+**READ `VOICE.md` before writing any site copy.** It defines Chirag's voice — first person, no buzzwords, grounded in reality, numbers over adjectives. All generated text follows it. It's a living doc: Chirag's feedback gets folded in every session.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

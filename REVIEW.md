@@ -25,6 +25,24 @@
 - Resume page could gain a print stylesheet (`@media print`) later; not needed for M2.
 - README still describes M1 skeleton — worth updating next pass.
 
+## M3 — Homepage v3 + dark mode (2026-08-27)
+
+**Decision: follow Chirag's feedback exactly.** Home stops being a résumé hook and becomes two clearly separated halves: who he is professionally (hero + one paragraph + handoff) and what he builds himself (project cards). Amazon and the career numbers leave the home page entirely; the numbers move to the resume as a Highlights strip.
+
+**Voice reference:** this pass is the first execution of `VOICE.md` (v0.1, started same day from his feedback). All new copy follows it: first person, no buzzwords, grounded claims, numbers only where they belong (resume). The skills sentence is the chips replacement.
+
+**What changed (M3):**
+- `index.astro` rebuilt to Chirag's spec: eyebrow (no Amazon) → **H1 "Chirag R Gandhi"** (largest text) → headline "I enjoy solving real problems and adding value at scale." → one honest sentence ("Eleven-plus years owning enterprise products — and I still build the tools myself.") → **Professional section** (2-line plain summary ending with the one-sentence skills line + "Full résumé →" button) → **Projects section** (4 cards: this site, crawler, TrueReview, market-evaluation + build-in-public line + "All projects →"). Removed: skills chips grid, 4-number highlights strip, resume detail, all Amazon references, "Latest" section.
+- One-sentence skills line (chips replacement): **"I own enterprise products end to end — strategy, discovery, delivery — and I build the tools myself: SQL, Python, React."** Grounded in the resume (owns platform end to end; shipped full-stack apps SQL→Lambda→S3→React).
+- `resume.astro`: added **Highlights** section (€0.9Bn / 5%→100% / $200M+ / 11+ yrs) right after the summary; Amazon + full history untouched; hardcoded `#333` → `var(--body)` token.
+- `Layout.astro`: design tokens extended — new `--body` token; dark values for `--bg/--card/--ink/--body/--muted/--accent/--accent-dark/--accent-soft/--border` under `:root[data-theme="dark"]`; `color-scheme` set per theme; no-JS `@media (prefers-color-scheme: dark)` fallback; **theme toggle** (sun/moon SVG, keyboard-accessible button) in nav; inline head script sets `data-theme` before first paint from localStorage → OS preference; toggle persists choice. Shared meta description de-Amazoned.
+- `about.astro`: hardcoded `#333` → token. `projects.astro`/`writing.astro`: already token-clean.
+
+**Follow-ups / notes:**
+- Headline is a placeholder per Chirag (VOICE.md approves it as such).
+- Dark palette keeps the cream/warm brand (deep brown-black bg, warm off-white ink, brighter orange accent #ff8a3d for contrast).
+- Card hover shadow switched to neutral black-alpha so it works on dark cards.
+
 ## Known decisions
 
 - Repo name: `chirag-portfolio` (project site under GitHub Pages with `base` path) — final name TBD if custom domain added later.

@@ -11,7 +11,7 @@ const {
 } = Astro.props;
 
 const description =
-  "Chirag Gandhi — Senior Product Manager in Luxembourg. 11+ years at Amazon building platforms, negotiation systems, and AI tools. €0.9Bn under management, adoption 5% to 100%.";
+  "Chirag R Gandhi — Senior Product Manager in Luxembourg. 11+ years of enterprise product leadership, and a builder: SQL, Python, React. Résumé, projects, and writing.";
 
 const links = [
   { href: "/chirag-portfolio/", label: "Home", key: "home" },
@@ -38,11 +38,40 @@ const year = new Date().getFullYear();
         --bg: #fffdf8;
         --card: #ffffff;
         --ink: #1a1a1a;
+        --body: #333333;
         --muted: #6f675e;
         --accent: #e8590c;
         --accent-dark: #c94d08;
         --accent-soft: #fceee3;
         --border: #e9e2d6;
+        color-scheme: light;
+      }
+      :root[data-theme="dark"] {
+        --bg: #17130f;
+        --card: #201b16;
+        --ink: #f2ece2;
+        --body: #cfc6b8;
+        --muted: #a89e90;
+        --accent: #ff8a3d;
+        --accent-dark: #ffa25e;
+        --accent-soft: #332418;
+        --border: #3a332a;
+        color-scheme: dark;
+      }
+      /* No-JS fallback: follow the OS without a manual override */
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme]) {
+          --bg: #17130f;
+          --card: #201b16;
+          --ink: #f2ece2;
+          --body: #cfc6b8;
+          --muted: #a89e90;
+          --accent: #ff8a3d;
+          --accent-dark: #ffa25e;
+          --accent-soft: #332418;
+          --border: #3a332a;
+          color-scheme: dark;
+        }
       }
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
@@ -77,6 +106,18 @@ const year = new Date().getFullYear();
         border-radius: 999px; color: var(--accent); font-weight: 600;
       }
       nav a.cta:hover { background: var(--accent); color: #fff; }
+      .theme-toggle {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 2.1rem; height: 2.1rem; border-radius: 999px;
+        border: 1px solid var(--border); background: transparent; color: var(--ink);
+        cursor: pointer; margin-left: 0.15rem; padding: 0;
+        transition: color 0.15s ease, border-color 0.15s ease;
+      }
+      .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+      .theme-toggle svg { width: 15px; height: 15px; display: block; }
+      .theme-toggle .icon-sun { display: none; }
+      [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+      [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
       main { min-height: 50vh; }
       footer {
         margin-top: 4rem; padding-top: 1.75rem; border-top: 1px solid var(--border);
@@ -105,7 +146,7 @@ const year = new Date().getFullYear();
         margin-bottom: 1rem; background: var(--card);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
       }
-      .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26, 26, 26, 0.06); }
+      .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
       .card h3 { font-size: 1.15rem; margin-bottom: 0.35rem; }
       .card p { color: var(--muted); font-size: 0.95rem; }
       .status {
@@ -123,6 +164,17 @@ const year = new Date().getFullYear();
         nav a.cta { margin-left: 0; }
       }
     </style>
+    <script is:inline>
+      // Set theme before first paint: stored choice wins, else follow the OS.
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem("theme"); } catch (e) {}
+        var dark =
+          stored === "dark" ||
+          (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+      })();
+    </script>
   </head>
   <body>
     <div class="container">
@@ -134,6 +186,10 @@ const year = new Date().getFullYear();
             </a>
           ))
         }
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
       </nav>
       <main>
         <slot />
@@ -147,5 +203,17 @@ const year = new Date().getFullYear();
         </div>
       </footer>
     </div>
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+          var next = cur === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try { localStorage.setItem("theme", next); } catch (e) {}
+        });
+      })();
+    </script>
   </body>
 </html>

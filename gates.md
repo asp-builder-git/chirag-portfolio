@@ -26,3 +26,22 @@
 - [x] All original content preserved (About, Projects, Writing)
 - [x] Shared Layout = consistent typography/spacing/hover states; responsive
 - [x] Deployed; `/` and `/resume/` return HTTP 200
+
+## M3: Homepage v3 + dark mode
+
+| Gate | Criteria | Status |
+|------|----------|--------|
+| G9 Design | Name = H1, headline under it, one honest sentence; professional vs personal demarcation; skills → one sentence; numbers move to resume; zero Amazon on home | ✅ PASS 2026-08-27 (per Chirag feedback, recorded in VOICE.md) |
+| G10 Plan | Rewrite `index.astro`; extend Layout tokens with dark values + toggle + localStorage; add Highlights strip to `resume.astro`; sweep hardcoded colors on all pages | ✅ PASS 2026-08-27 |
+| G11 Verify | `npm run build` exit 0; home has H1 name + no Amazon + no chips/numbers; resume has Amazon + highlights; dark vars on all 5 pages (no hardcoded light colors left) | ✅ PASS 2026-08-27 |
+| G12 Ship | Commit + push to main, Actions deploy green, live `/` and `/resume/` return HTTP 200 | ✅ PASS 2026-08-27 |
+
+## Exit Criteria (M3)
+
+- [x] Home hero: "Chirag R Gandhi" as H1 (biggest text), headline beneath, one honest sentence
+- [x] Home: professional section (plain summary + skills sentence + "Full résumé →") clearly separated from projects section (cards: site, crawler, TrueReview, market-evaluation)
+- [x] Home: no skills chips, no career numbers, no resume detail, no Amazon
+- [x] Resume: keeps Amazon + full history + new Highlights strip (€0.9Bn / 5%→100% / $200M+ / 11+ yrs)
+- [x] Dark mode: `prefers-color-scheme` default + manual nav toggle (sun/moon), persisted via localStorage, all tokens have dark variants
+- [x] About/Projects/Writing content intact; all pages work in both modes
+- [x] Deployed; `/` and `/resume/` return HTTP 200
