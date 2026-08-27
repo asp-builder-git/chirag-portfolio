@@ -1,77 +1,122 @@
 ---
 import Layout from "../layouts/Layout.astro";
 ---
-<Layout title="Chirag R Gandhi — Product Manager & Builder" active="home">
+<Layout title="Chirag R Gandhi — Senior Technical Product Manager, Builder">
   <style>
-    .hero h1 { font-size: clamp(2.6rem, 7vw, 3.8rem); margin: 0.25rem 0 0.5rem; }
-    .hero .headline {
-      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
-      font-size: 1.35rem; font-weight: 600; color: var(--ink);
-      line-height: 1.35; margin-bottom: 0.9rem;
+    .intro h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.25rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin: 0;
     }
-    .hero .honest { font-size: 1.05rem; color: var(--muted); max-width: 60ch; margin-bottom: 1rem; }
-    .section { margin-bottom: 3rem; }
-    .section h2 {
-      font-size: 1.35rem; margin-bottom: 1.1rem; padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
+    .intro .tagline {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 0.5rem;
     }
-    .section .sub { color: var(--muted); font-size: 0.95rem; margin: -0.6rem 0 1.25rem; }
-    .pro-summary { font-size: 1.05rem; max-width: 62ch; margin-bottom: 1.4rem; }
-    .pro-summary p { margin-bottom: 0.6rem; }
-    .pro-summary .skills-line { color: var(--ink); font-weight: 500; }
-    .build-line { font-size: 0.95rem; color: var(--muted); margin-top: 0.9rem; }
-    .more-link { margin-top: 0.25rem; display: inline-block; }
+    .intro p.lead {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      max-width: 65ch;
+      margin-top: 1rem;
+      color: var(--ink);
+    }
+    .intro p.lead em {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ink);
+    }
+    .intro .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .intro { margin-bottom: 2.5rem; }
+    .section + .section { margin-top: 3.5rem; }
+    .section .label { display: block; margin-bottom: 1.25rem; }
+    .row {
+      border-top: 1px solid var(--hairline);
+      padding: 1.25rem 0;
+    }
+    .row .row-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.4;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.3rem 0.75rem;
+    }
+    .row p {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      max-width: 60ch;
+    }
+    .section .more { margin-top: 1.25rem; }
+    .build-line {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-top: 1.25rem;
+    }
   </style>
 
-  <section class="hero">
-    <div class="eyebrow">Senior Product Manager · Luxembourg</div>
+  <header class="intro">
     <h1>Chirag R Gandhi</h1>
-    <p class="headline">I enjoy solving real problems and adding value at scale.</p>
-    <p class="honest">
-      Eleven-plus years owning enterprise products — and I still build the tools myself.
+    <p class="tagline">Senior Technical Product Manager, Builder</p>
+    <p class="lead">
+      I build enterprise products used by hundreds of internal Amazon users that support actions driving billion $ impact with engineering teams. I <em>build</em> full-stack apps with Claude in VS Code at work and with Cursor &amp; Openclaw at home.
     </p>
-  </section>
-
-  <section class="section">
-    <h2>The professional side</h2>
-    <div class="pro-summary">
-      <p>
-        <span class="skills-line">I own enterprise products end to end — strategy, discovery, delivery — and I build the tools myself: SQL, Python, React.</span>
-      </p>
-      <p>
-        That's the 60-second proof. The full history — every role, number, and skill — is on the resume.
-      </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/chirag-portfolio/resume">Professional Experience / Career</a>
+      <a class="btn btn-secondary" href="/chirag-portfolio/projects">Projects →</a>
     </div>
-    <a class="btn btn-primary" href="/chirag-portfolio/resume">Full résumé →</a>
-  </section>
+  </header>
 
   <section class="section">
-    <h2>What I build myself</h2>
-    <p class="sub">Personal projects — each published when it reaches a shareable state. No vaporware, no "coming soon".</p>
-    <div class="card">
-      <div class="status">Live</div>
-      <h3>This portfolio site</h3>
+    <h2 class="label">Projects</h2>
+
+    <div class="row">
+      <div class="row-title">This portfolio site <span class="status">Live</span></div>
       <p>Astro + GitHub Pages, built in public. The meta-project: proof I can finish things.</p>
     </div>
-    <div class="card">
-      <div class="status">In progress</div>
-      <h3>Luxembourg Property Asymmetry Crawler</h3>
-      <p>Compares broker listings against the atHome aggregator inventory to find what's listed where, and what's missing. Full pipeline: crawl → snapshot → match → dashboard.</p>
+
+    <div class="row">
+      <div class="row-title">Luxembourg Property Asymmetry Crawler <span class="status">In progress</span></div>
+      <p>Compares broker listings against the atHome aggregator inventory to find what's listed where, and what's missing.</p>
     </div>
-    <div class="card">
-      <div class="status">In progress</div>
-      <h3>TrueReview</h3>
+
+    <div class="row">
+      <div class="row-title">TrueReview <span class="status">In progress</span></div>
       <p>Honest restaurant ratings: analyzes Google reviews for suspicious patterns and shows the adjusted "true" rating.</p>
     </div>
-    <div class="card">
-      <div class="status">In progress</div>
-      <h3>Market Evaluation — 4 Agents, 1 Day</h3>
+
+    <div class="row">
+      <div class="row-title">Market Evaluation — 4 Agents, 1 Day <span class="status">In progress</span></div>
       <p>A 4-week market study compressed into a single day using a 4-agent pipeline. Three ranked, ready-to-build business ideas.</p>
     </div>
-    <p class="build-line">
-      Everything on this site is real — each project published as it reaches a shareable state.
-      A project counts when a stranger can open it.
-    </p>
-    <a class="btn btn-ghost more-link" href="/chirag-portfolio/projects">All projects →</a>
+
+    <p class="build-line">A project counts when a stranger can open it.</p>
+    <a class="btn btn-secondary more" href="/chirag-portfolio/projects">All projects →</a>
+  </section>
+
+  <section class="section">
+    <h2 class="label">Writing</h2>
+
+    <div class="row">
+      <div class="row-title">Why I'm publishing my work in public <span class="status">Coming soon</span></div>
+      <p>The story behind this site, and the rule that runs it.</p>
+    </div>
+
+    <a class="btn btn-secondary more" href="/chirag-portfolio/writing">All writing →</a>
   </section>
 </Layout>

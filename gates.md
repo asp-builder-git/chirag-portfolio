@@ -45,3 +45,22 @@
 - [x] Dark mode: `prefers-color-scheme` default + manual nav toggle (sun/moon), persisted via localStorage, all tokens have dark variants
 - [x] About/Projects/Writing content intact; all pages work in both modes
 - [x] Deployed; `/` and `/resume/` return HTTP 200
+
+## M4: Homepage v4 — the taste pass
+
+| Gate | Criteria | Status |
+|------|----------|--------|
+| G13 Design | Follow analysis 09 (typography & taste spec) exactly: Instrument Serif + Inter, spec type scale, spec light/dark palette, accent only in hover underline / selection / focus ring, 42rem column, quiet nav, tiny uppercase labels, one-line footer | ✅ PASS 2026-08-27 |
+| G14 Plan | Rewrite `index.astro` to Chirag's exact copy (name H1 moderate, tagline, intro with ONE `<em>` word, two CTAs, quiet Projects/Writing rows); rebuild Layout tokens/fonts/buttons/links; keep dark toggle; keep legacy token aliases so About/Projects/Writing/Resume render unchanged; resume content untouched | ✅ PASS 2026-08-27 |
+| G15 Verify | `npm run build` exit 0; dist contains single fonts CSS2 request + preconnects + display=swap; exact copy present (`Professional Experience / Career`, tagline, `billion $ impact`, `<em>build</em>`); nav = 4 quiet text links (no pill CTA); resume still resolves legacy tokens; dark vars + no-JS fallback + toggle intact | ✅ PASS 2026-08-27 |
+| G16 Ship | Commit + push to main, Actions deploy green, live `/` and `/resume/` return HTTP 200 | ✅ PASS 2026-08-27 |
+
+## Exit Criteria (M4)
+
+- [x] Home: "Chirag R Gandhi" as moderate Instrument Serif H1 (clamp 2.25→3.25rem, not huge); tagline "Senior Technical Product Manager, Builder" (muted, no period); exact intro copy with one `<em>build</em>` in Instrument Serif italic
+- [x] Two CTAs: primary "Professional Experience / Career" (ink fill, --bg text, 6px radius) + secondary "Projects →" (plain text link)
+- [x] Quiet Projects rows (name + one line, hairline-separated, no cards; "This portfolio site" first) + quiet Writing row; "A project counts when a stranger can open it." kept
+- [x] Layout: Instrument Serif + Inter via single Google Fonts request (preconnect, display=swap); spec palette light/dark; accent only in link hover underline / ::selection / :focus-visible; nav quiet text links; tiny one-line footer; 42rem column
+- [x] Dark mode: manual toggle + localStorage + prefers-color-scheme fallback all preserved, new dark values
+- [x] Resume keeps numbers strip + Amazon history (content unchanged, legacy tokens aliased to new palette)
+- [x] Deployed; `/` and `/resume/` return HTTP 200

@@ -48,3 +48,19 @@
 - Repo name: `chirag-portfolio` (project site under GitHub Pages with `base` path) — final name TBD if custom domain added later.
 - Content strategy: OpenClaw writes case-study markdown into `src/content/`; site sections ship only when project reaches MLP.
 - Tracking: Obsidian (AI inbox), per decision 2026-08-27.
+
+## M4 — Homepage v4: the taste pass (2026-08-27)
+
+**Decision: execute analysis 09 (Typography & Taste Spec) exactly, on Chirag's exact homepage copy.** Homepage v3 was structurally right but still shouted (big serif H1, orange buttons, cards, pill CTA, orange nav states). This pass removes every decorative move: no hero, no giant type, no cards on home, no orange except in the three allowed places. Sources: `portfolio-analysis/analyses/08-site-inspiration-pm-builders.md` (Direction A — serif-led editorial, blakebeal.com structure) + `09-typography-taste-spec.md` (hard spec).
+
+**What changed (M4):**
+- `index.astro` rewritten to Chirag's exact copy: moderate name H1 (Instrument Serif 400, `clamp(2.25rem, 1.7rem + 2.4vw, 3.25rem)`, -0.01em) → tagline "Senior Technical Product Manager, Builder" (Inter 500, muted, no period) → his intro verbatim with **one** `<em>build</em>` in Instrument Serif italic → two CTAs: **"Professional Experience / Career"** (primary: ink fill, `--bg` text, 6px radius, no shadow, hover 85% opacity) + **"Projects →"** (secondary plain text). Below: quiet **Projects** section (hairline-separated rows, name + one line each, "This portfolio site" first, statuses muted) + build-in-public line "A project counts when a stranger can open it." + quiet **Writing** section (one row) + secondary links.
+- `Layout.astro` rebuilt on the spec: **Instrument Serif** (display, 400 + italic) + **Inter** (400/500/600) via one Google Fonts CSS2 request with preconnects + `display=swap`; tokens `--bg #fffdf8 / --surface #fffefb / --ink #1a1a1a / --muted #6b655c / --hairline #e9e5da / --accent #e8590c` (dark: `#16140f / #1c1913 / #f2efe6 / #9b948a / #2a251d / #ff9d5c`); **orange restricted to** link hover underline (1px, 150ms), `::selection`, `:focus-visible`; links ink at rest; content column narrowed 720px → **42rem**; page padding `clamp(1.5rem, 5vw, 3rem)`; sections 3.5rem apart; tiny uppercase section labels (0.8125rem Inter 600, 0.08em, muted); quiet text-only nav (About/Projects/Writing/Resume — Home link and pill CTA removed); tiny one-line footer (0.8125rem muted); card/status/chip restyled quiet (hairline borders, muted statuses, no hover shadows).
+- **Dark mode preserved and extended**: manual sun/moon toggle + localStorage + no-JS `prefers-color-scheme` fallback all kept, now with the spec's dark values. Toggle hover uses ink, not accent (accent discipline).
+- **Backward-compat aliases** in Layout tokens (`--card: var(--surface)`, `--border: var(--hairline)`, `--body: var(--ink)`, `--accent-dark: var(--accent)`, `--accent-soft` via color-mix) so About/Projects/Writing/Resume render unchanged — `resume.astro` untouched (numbers strip + Amazon history intact, just inheriting the new palette + Instrument Serif headings via global rules).
+
+**Follow-ups / notes:**
+- Headline/tagline now Chirag's exact words; VOICE.md's placeholder headline is superseded on home (VOICE.md still lists it — worth updating next pass).
+- Intro mentions Amazon (per Chirag's exact copy) — note this deliberately overrides VOICE.md rule 8 for the home page; Chirag's explicit words win.
+- `nav a.active` uses a persistent ink underline (accent would violate the one-accent rule); hover still goes accent.
+- Fonts are now third-party (Google Fonts, ~60–120 KB) — first external dependency on the site; `display=swap` keeps CLS low. Self-hosting via @fontsource is the documented fallback if offline-first ever matters.

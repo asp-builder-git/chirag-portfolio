@@ -6,15 +6,14 @@ interface Props {
 }
 
 const {
-  title = "Chirag Gandhi — Senior Product Manager & Builder",
+  title = "Chirag R Gandhi — Senior Technical Product Manager, Builder",
   active,
 } = Astro.props;
 
 const description =
-  "Chirag R Gandhi — Senior Product Manager in Luxembourg. 11+ years of enterprise product leadership, and a builder: SQL, Python, React. Résumé, projects, and writing.";
+  "Chirag R Gandhi — Senior Technical Product Manager and builder. Enterprise products used by hundreds of internal Amazon users, and full-stack apps built with Claude, Cursor & Openclaw. Résumé, projects, writing.";
 
 const links = [
-  { href: "/chirag-portfolio/", label: "Home", key: "home" },
   { href: "/chirag-portfolio/about", label: "About", key: "about" },
   { href: "/chirag-portfolio/projects", label: "Projects", key: "projects" },
   { href: "/chirag-portfolio/writing", label: "Writing", key: "writing" },
@@ -33,135 +32,166 @@ const year = new Date().getFullYear();
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style is:global>
       :root {
         --bg: #fffdf8;
-        --card: #ffffff;
+        --surface: #fffefb;
         --ink: #1a1a1a;
-        --body: #333333;
-        --muted: #6f675e;
+        --muted: #6b655c;
+        --hairline: #e9e5da;
         --accent: #e8590c;
-        --accent-dark: #c94d08;
-        --accent-soft: #fceee3;
-        --border: #e9e2d6;
+        /* legacy aliases so inner pages keep working */
+        --card: var(--surface);
+        --border: var(--hairline);
+        --body: var(--ink);
+        --accent-dark: var(--accent);
+        --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+        --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+        --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
         color-scheme: light;
       }
       :root[data-theme="dark"] {
-        --bg: #17130f;
-        --card: #201b16;
-        --ink: #f2ece2;
-        --body: #cfc6b8;
-        --muted: #a89e90;
-        --accent: #ff8a3d;
-        --accent-dark: #ffa25e;
-        --accent-soft: #332418;
-        --border: #3a332a;
+        --bg: #16140f;
+        --surface: #1c1913;
+        --ink: #f2efe6;
+        --muted: #9b948a;
+        --hairline: #2a251d;
+        --accent: #ff9d5c;
         color-scheme: dark;
       }
       /* No-JS fallback: follow the OS without a manual override */
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme]) {
-          --bg: #17130f;
-          --card: #201b16;
-          --ink: #f2ece2;
-          --body: #cfc6b8;
-          --muted: #a89e90;
-          --accent: #ff8a3d;
-          --accent-dark: #ffa25e;
-          --accent-soft: #332418;
-          --border: #3a332a;
+          --bg: #16140f;
+          --surface: #1c1913;
+          --ink: #f2efe6;
+          --muted: #9b948a;
+          --hairline: #2a251d;
+          --accent: #ff9d5c;
           color-scheme: dark;
         }
       }
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
       body {
-        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        font-family: var(--font-body);
         background: var(--bg);
         color: var(--ink);
         line-height: 1.65;
         -webkit-font-smoothing: antialiased;
       }
-      h1, h2, h3 {
-        font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
-        font-weight: 600;
+      h1, h2 {
+        font-family: var(--font-display);
+        font-weight: 400;
         letter-spacing: -0.01em;
-        line-height: 1.2;
+        line-height: 1.15;
         color: var(--ink);
       }
-      .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+      h3 {
+        font-family: var(--font-body);
+        font-weight: 600;
+        line-height: 1.4;
+        color: var(--ink);
+      }
+      ::selection { background: var(--accent); color: var(--bg); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      a {
+        color: var(--ink);
+        text-decoration: none;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        transition: color 0.15s ease, text-decoration-color 0.15s ease;
+      }
+      a:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+      }
+      .container {
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: clamp(1.5rem, 5vw, 3rem);
+      }
       nav {
-        display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 1.4rem;
-        padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 3.5rem;
+        display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.5rem;
+        padding-bottom: 1rem; border-bottom: 1px solid var(--hairline); margin-bottom: 3rem;
       }
-      nav a {
-        color: var(--ink); text-decoration: none; font-size: 0.95rem; font-weight: 500;
-        padding: 0.2rem 0; border-bottom: 2px solid transparent;
-        transition: color 0.15s ease, border-color 0.15s ease;
+      nav a { font-size: 0.9375rem; font-weight: 500; padding: 0.15rem 0; }
+      nav a.active {
+        text-decoration: underline;
+        text-decoration-color: var(--ink);
       }
-      nav a:hover { color: var(--accent); }
-      nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
-      nav a.cta {
-        margin-left: auto; padding: 0.4rem 0.95rem; border: 1px solid var(--accent);
-        border-radius: 999px; color: var(--accent); font-weight: 600;
-      }
-      nav a.cta:hover { background: var(--accent); color: #fff; }
+      nav a.active:hover { text-decoration-color: var(--accent); }
       .theme-toggle {
         display: inline-flex; align-items: center; justify-content: center;
         width: 2.1rem; height: 2.1rem; border-radius: 999px;
-        border: 1px solid var(--border); background: transparent; color: var(--ink);
-        cursor: pointer; margin-left: 0.15rem; padding: 0;
+        border: 1px solid var(--hairline); background: transparent; color: var(--muted);
+        cursor: pointer; margin-left: auto; padding: 0;
         transition: color 0.15s ease, border-color 0.15s ease;
       }
-      .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+      .theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
       .theme-toggle svg { width: 15px; height: 15px; display: block; }
       .theme-toggle .icon-sun { display: none; }
       [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
       main { min-height: 50vh; }
       footer {
-        margin-top: 4rem; padding-top: 1.75rem; border-top: 1px solid var(--border);
-        color: var(--muted); font-size: 0.875rem;
-        display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between;
+        margin-top: 5rem;
+        color: var(--muted);
+        font-size: 0.8125rem;
+        display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+        align-items: baseline;
       }
       footer .f-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-      footer a { color: var(--muted); text-decoration: none; }
-      footer a:hover { color: var(--accent); }
-      .eyebrow {
-        font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
-        letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.75rem;
+      footer a { color: var(--muted); }
+      footer a:hover { color: var(--ink); }
+      /* Tiny uppercase section labels */
+      .label, .eyebrow {
+        font-size: 0.8125rem; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.08em; color: var(--muted); line-height: 1;
       }
       .muted { color: var(--muted); }
+      /* Buttons — two styles only */
       .btn {
-        display: inline-block; padding: 0.6rem 1.25rem; border-radius: 8px;
-        font-weight: 600; font-size: 0.95rem; text-decoration: none;
-        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+        display: inline-block;
+        font-family: var(--font-body);
+        font-size: 1rem; font-weight: 500; line-height: 1;
+        border-radius: 6px;
+        padding: 0.625rem 1.25rem;
+        text-decoration: none;
+        transition: opacity 0.15s ease, color 0.15s ease;
       }
-      .btn-primary { background: var(--accent); color: #fff; }
-      .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232, 89, 12, 0.25); }
-      .btn-ghost { border: 1px solid var(--border); color: var(--ink); background: transparent; }
-      .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+      .btn:hover { text-decoration: none; }
+      .btn-primary { background: var(--ink); color: var(--bg); }
+      .btn-primary:hover { opacity: 0.85; }
+      .btn-secondary { padding: 0; color: var(--ink); background: transparent; }
+      .btn-secondary:hover { text-decoration: underline; text-decoration-color: var(--accent); color: var(--ink); }
+      .btn-ghost { padding: 0; color: var(--ink); background: transparent; }
+      .btn-ghost:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      /* Quiet cards (inner pages only) */
       .card {
-        border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem 1.5rem;
-        margin-bottom: 1rem; background: var(--card);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        border: 1px solid var(--hairline); border-radius: 10px; padding: 1.25rem 1.4rem;
+        margin-bottom: 1rem; background: var(--surface);
       }
-      .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
-      .card h3 { font-size: 1.15rem; margin-bottom: 0.35rem; }
-      .card p { color: var(--muted); font-size: 0.95rem; }
+      .card h3 { font-size: 1.125rem; margin-bottom: 0.35rem; }
+      .card p { color: var(--muted); font-size: 0.9375rem; }
       .status {
-        font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-        letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem;
+        font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.08em; color: var(--muted);
       }
       .chip {
-        display: inline-block; background: var(--accent-soft); color: var(--accent-dark);
+        display: inline-block; background: var(--accent-soft); color: var(--ink);
         border-radius: 999px; padding: 0.22rem 0.75rem; font-size: 0.83rem; font-weight: 500;
         margin: 0 0.4rem 0.4rem 0;
       }
       @media (max-width: 480px) {
-        .container { padding: 1.5rem 1.1rem 2.5rem; }
-        nav { gap: 0.3rem 1.1rem; margin-bottom: 2.5rem; }
-        nav a.cta { margin-left: 0; }
+        nav { gap: 0.35rem 1.15rem; margin-bottom: 2.5rem; }
+        .theme-toggle { margin-left: auto; }
       }
     </style>
     <script is:inline>
@@ -181,7 +211,7 @@ const year = new Date().getFullYear();
       <nav>
         {
           links.map((l) => (
-            <a href={l.href} class:list={[active === l.key && "active", l.key === "resume" && "cta"]}>
+            <a href={l.href} class:list={[active === l.key && "active"]}>
               {l.label}
             </a>
           ))
@@ -195,7 +225,7 @@ const year = new Date().getFullYear();
         <slot />
       </main>
       <footer>
-        <span>© {year} Chirag R Gandhi · Senior Product Manager · Luxembourg</span>
+        <span>© {year} Chirag R Gandhi</span>
         <div class="f-links">
           <a href="mailto:chirag0912@gmail.com">Email</a>
           <a href="https://www.linkedin.com/in/chirag-gandhi" rel="noopener">LinkedIn</a>
