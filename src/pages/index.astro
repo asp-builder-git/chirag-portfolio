@@ -1,0 +1,69 @@
+---
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Chirag Gandhi — Product Manager & Builder</title>
+		<meta name="description" content="Product Manager & Builder. I ship things in public — case studies, demos, and writing." />
+		<style>
+			:root { --ink: #1a1a1a; --muted: #666; --accent: #e8590c; --bg: #fffdf8; }
+			* { box-sizing: border-box; margin: 0; padding: 0; }
+			body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+			.container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+			nav { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid #eee; margin-bottom: 3rem; }
+			nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
+			nav a:hover { color: var(--accent); }
+			h1 { font-size: 2.5rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+			h2 { font-size: 1.3rem; margin: 2.5rem 0 0.75rem; }
+			.tagline { font-size: 1.2rem; color: var(--muted); margin-bottom: 1.5rem; }
+			p { margin-bottom: 1rem; }
+			.links { display: flex; gap: 1.25rem; margin-top: 1rem; }
+			.links a { color: var(--accent); font-weight: 600; text-decoration: none; }
+			.links a:hover { text-decoration: underline; }
+			.card { border: 1px solid #e5e5e5; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; background: #fff; }
+			.card h3 { margin-bottom: 0.25rem; }
+			.card .status { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+			.muted { color: var(--muted); }
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<nav>
+				<a href="/chirag-portfolio/">Home</a>
+				<a href="/chirag-portfolio/about">About</a>
+				<a href="/chirag-portfolio/projects">Projects</a>
+				<a href="/chirag-portfolio/writing">Writing</a>
+			</nav>
+
+			<h1>Chirag Gandhi</h1>
+			<div class="tagline">Product Manager &amp; Builder</div>
+			<p>
+				I build software and ship it in public. Everything on this site is a real project —
+				each one published as it reaches a shareable state. No vaporware, no "coming soon".
+			</p>
+			<p class="muted">
+				This site is itself the first project: built incrementally, in public, one feature at a time.
+			</p>
+			<div class="links">
+				<a href="/chirag-portfolio/projects">Projects</a>
+				<a href="/chirag-portfolio/writing">Writing</a>
+				<a href="https://github.com/asp-builder-git">GitHub</a>
+			</div>
+
+			<h2>Latest</h2>
+			<div class="card">
+				<div class="status">Project · in progress</div>
+				<h3>This site</h3>
+				<p>Personal portfolio, built with Astro, deployed to GitHub Pages. Public from day one.</p>
+			</div>
+			<div class="card">
+				<div class="status">Writing · planned</div>
+				<h3>First post coming soon</h3>
+				<p>The build-in-public story starts here.</p>
+			</div>
+		</div>
+	</body>
+</html>
