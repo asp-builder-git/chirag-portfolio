@@ -43,6 +43,72 @@
 - Dark palette keeps the cream/warm brand (deep brown-black bg, warm off-white ink, brighter orange accent #ff8a3d for contrast).
 - Card hover shadow switched to neutral black-alpha so it works on dark cards.
 
+## M5 — Benchmark P0+P1 execution (2026-08-30)
+
+**Decision: execute the P0 + P1 backlog from `benchmark/README.md` §4 on a branch, then show Chirag updated mocks for approval before merge.** Source of truth: benchmark master report (2026-08-28) + deep dives 02/03/04/05. No P2 items. Nothing touches `main` without Chirag's G4 approval.
+
+### G1 — Design note
+
+**Scope: P0 (7 items) + P1 (8 items) exactly as backlogged.**
+
+- **P0.1 Lead rewrite** (VOICE 5/8/9): `index.astro` lead → two plain verb sentences ("I build enterprise products at work. I build small tools at home.") with the serif italic on `build`; rule line ("A project counts when a stranger can open it.") becomes the third sentence, muted. Amazon + untraced "billion $" gone from home; also de-Amazoned the shared meta description (same VOICE violation in the `<head>`).
+- **P0.2 Writing out of nav + home** until a real post exists. `writing.astro` stays as the P2 slot (unlinked). Nav: About · Projects · Resume (3 items + toggle).
+- **P0.3 "More coming" card deleted** from `projects.astro`. Statuses now only Live / In progress.
+- **P0.4 Resume stripped**: 3-column skills grid removed; highlight-card hover lift (transform/shadow) removed. Contact links switch `--accent` → new `--accent-text` (#c2410c light / #ff9d5c dark) — accent-as-text was 3.6:1, fails 4.5:1 (benchmark §6).
+- **P0.5 Fonts self-hosted**: Google CDN link removed. Inter 400/500/600 + Instrument Serif 400/italic woff2 (latin subsets from `@fontsource`) copied to `public/fonts/`; hand-written `@font-face` with `font-display: swap` + unicode-range; serif preloaded. Metric-adjusted fallbacks (Georgia metrics for serif) via fontaine if it computes cleanly, else documented approximation.
+- **P0.6 Skip link**: `a.skip-link → #main`, first focusable element, styled on focus (mxb pattern).
+- **P0.7 Reduced motion**: `scroll-behavior: smooth` gated behind `prefers-reduced-motion: no-preference`; full kill-switch for animations/transitions (mxb one-liner).
+- **P1.1 Home = two-band hub**: above fold = h1, role line, 3-sentence lead, two CTAs (Resume primary / Projects secondary). Below = Work band (3 rows, no employer names, numbers trace to resume: €0.9Bn / 400+ users / 10 markets / 5%→100% / 3.6M actions) + "Full resume →"; Projects band (4 rows, title links to case study) + "All projects →". No hero, no chips, no stats, no social row. "Elsewhere" line skipped: footer already carries Email/LinkedIn/GitHub — adding it would duplicate (deviation logged, SA-4 §4 listed it optional-ish; footer split is the structural home).
+- **P1.2 h2 → Inter 600, 1.5rem** (serif restricted to h1 + italic accents). Explicit h2 sizing = highest-value typography fix (SA-2 §4/§7).
+- **P1.3 `/projects/{slug}` case studies**: `src/data/projects.ts` + `src/pages/projects/[slug].astro`. Structure: title → proof row (status + Open it + Source) → Problem → What I built (one honest difficulty line) → Outcome (or "no outcome yet") → ← All projects. Four pages (portfolio Live; crawler/TrueReview/market-eval In progress). Private repos labeled private — no fake public links. Note for Chirag: SA-4 sitemap says case studies appear "when the project becomes public" — kept all four so he can decide; hiding in-progress ones is a one-line change.
+- **P1.4 About = three blocks** (Work / Personal / The meta): "at the intersection of…" killed; verb lists (Working on / Built / Learning, antfu pattern); build-in-public rule kept as the meta block.
+- **P1.5 Difficulty lines**: one honest line per project blurb (home + projects page + case studies), all traceable to real repo facts (review gate discipline, crawler matching, review-noise proof, keeping 4 agents on one brief).
+- **P1.6 Footer split explicit**: Professional (Email · LinkedIn) | Personal (GitHub) with tiny category labels.
+- **P1.7 `theme-color` meta** light `#fffdf8` / dark `#16140f` (paco pattern).
+- **P1.8 `--accent-soft` retired** (4th color stop; invisible on dark); `.chip` class dropped (unused anywhere).
+
+**Voice:** all copy written against VOICE.md (first person, short sentences, no claims without traces, no company names on home, statuses blunt).
+
+### G2 — Plan
+
+Files touched:
+- `package.json` — devDep `fontaine` only if fallback computation works; font files come from `@fontsource/*` (dev-only, not kept in deps once woff2 are copied).
+- `astro.config.mjs` — fontaine vite plugin (if used).
+- `src/layouts/Layout.astro` — fonts, skip link, reduced motion, h2, nav, footer, meta description, theme-color, accent tokens.
+- `src/pages/index.astro` — hub restructure + lead + difficulty lines.
+- `src/pages/about.astro` — three blocks.
+- `src/pages/projects.astro` — rule-as-subheader, links to case studies, difficulty lines, no "More coming".
+- `src/pages/resume.astro` — strip skills grid + hover lift; accent-text links.
+- `src/pages/writing.astro` — drop active nav state (page stays as P2 slot).
+- `src/data/projects.ts` (new) — project data incl. case-study content.
+- `src/pages/projects/[slug].astro` (new) — case-study template.
+- `public/fonts/*.woff2` (new) — self-hosted latin subsets.
+- `REVIEW.md` — this log + G4 review summary.
+
+Verification: `npm run build` exit 0 (G3) → `astro preview` + curl 200 → Playwright screenshots of all pages (light + dark) as the review mocks → G4 review summary → Chirag approval → merge → GitHub Actions deploy → live URL 200 (G5).
+
+### G3 — Implementation (build ✅)
+
+Implemented on `feat/p0-p1-benchmark`. All P0 (7) + P1 (8) items landed:
+
+- **Fonts self-hosted** (`public/fonts/`, latin woff2 subsets from `@fontsource`, ~21–24KB each): Google CDN removed, serif + Inter preloaded, `font-display: swap`, metric-adjusted fallback faces computed from real font metrics (Instrument Serif → Georgia `size-adjust 76.49%`; Inter → Arial `size-adjust 107.12%`; math per fontaine, values in `src/styles/fonts.css`).
+- **Home = two-band hub** with the 3-sentence lead ("I *build* enterprise products at work. I *build* small tools at home. A project counts when a stranger can open it."), Work band (3 rows, no employer names, all numbers trace to resume), Projects band (rows link to case studies). Writing section + nav item removed (page kept as P2 slot).
+- **h2 → Inter 600 1.5rem** (serif now h1 + italic accents only).
+- **Case studies**: `src/data/projects.ts` + `src/pages/projects/[slug].astro` — 4 pages (portfolio Live + proof links; crawler/TrueReview/market-eval In progress with honest private-repo/"no outcome yet" labels).
+- **About** = Work / Personal (verb lists) / The meta blocks; "intersection" phrase killed.
+- **Resume**: skills grid removed, hover-lift removed, contact links → ink-safe accent `#c2410c`.
+- **Skip link** (`#main`), **reduced-motion guard + kill-switch**, **theme-color** metas (light `#fffdf8` / dark `#16140f`), **footer split** (Professional: Email·LinkedIn | Personal: GitHub), **`--accent-soft` retired**.
+- Meta description de-Amazoned (same VOICE 8 violation as the old lead, one line below it).
+- `npm run build` exit 0 (9 pages). Preview served locally; all routes + fonts return 200.
+
+**Mocks (for review):** 12 full-page screenshots (6 pages × light/dark) at `~/.openclaw/workspace/tools/site-shots/shots/` — attached in chat. Local preview for hands-on review: `npm run preview -- --port 4321` → `http://localhost:4321/chirag-portfolio/`.
+
+**Deviations (logged):** ① "Elsewhere" line on home skipped — footer already carries Email/LinkedIn/GitHub; adding both would duplicate. ② In-progress projects keep case-study pages (SA-4 sitemap says case studies appear when public) — Chirag can drop the three in-progress pages if he wants the strict rule. ③ Pre-existing resume layout quirks ("Earlier" date spacing, Education date wrap) untouched — out of P0/P1 scope.
+
+### G4 — Review (⛔ awaiting Chirag's approval)
+
+**Status: awaiting approval.** Nothing merges until Chirag says go (chat or PR review).
+
 ## Known decisions
 
 - Repo name: `chirag-portfolio` (project site under GitHub Pages with `base` path) — final name TBD if custom domain added later.
