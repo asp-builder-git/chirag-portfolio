@@ -132,3 +132,21 @@ Implemented on `feat/p0-p1-benchmark`. All P0 (7) + P1 (8) items landed:
 - Intro mentions Amazon (per Chirag's exact copy) — note this deliberately overrides VOICE.md rule 8 for the home page; Chirag's explicit words win.
 - `nav a.active` uses a persistent ink underline (accent would violate the one-accent rule); hover still goes accent.
 - Fonts are now third-party (Google Fonts, ~60–120 KB) — first external dependency on the site; `display=swap` keeps CLS low. Self-hosting via @fontsource is the documented fallback if offline-first ever matters.
+
+## M6.1 — Design system foundation (2026-08-31, G4 ✅ → G5 ✅ SHIPPED)
+
+**Scope:** M6 redesign kickoff (per Chirag's M6 spec — used as UX/design blueprint only; all metrics replaced with real CV facts per VOICE.md rule 3).
+
+**Shipped (merged `dc326b3` → main, auto-deployed, live verified 200):**
+1. **Palette** cream/orange → slate/indigo engineering aesthetic: light `#F8FAFC / #FFFFFF / #0F172A / #475569 / #E2E8F0 / #4338CA`; dark `#0F172A / #1E293B / #F1F5F9 / #94A3B8 / #334155 / #818CF8` (+ `--accent-text #A5B4FC`). All 8 pairs WCAG AA (computed). theme-color metas updated.
+2. **JetBrains Mono** self-hosted (400/500, `public/fonts/`) → `--font-mono` token; applied to `.status` badges (Layout), resume `.highlight .num` metric chips, case-study `.proof` rows (spec: metric chips / status badges / integration labels).
+3. **CV number corrections** (the M5-pause flags): home Work rows + resume summary + Highlights + 2 bullets — €0.9Bn→**€0.36Bn/yr profitability**; 400+ users/10 markets→**~400 negotiators, 9 EU markets**; 5%→100%→**~5% voluntary→org-wide default** (+120% YoY added); $200M+ think-big→**82% of 40,937 audit entries** / VP-2026 automation vision; $10M→**$3M** defect costs.
+4. **M6-PLAN.md** added: 7-milestone roadmap + sub-agent execution contract + open questions.
+
+**Process notes / deviations (logged):**
+- **Edit-batch failure caught by Chirag:** first `Layout.astro` multi-edit failed atomically on one sub-edit; only the preload line was re-applied, so the palette never shipped in the build. Caught during Chirag's visual review ("looks the same"). Re-applied all 6 blocks, rebuilt, verified 11 new tokens / 0 old in CSS bundle. Lesson: after any multi-edit, verify the built CSS contains the expected tokens — not just build exit 0.
+- **Branch protection restructured (Chirag-approved 2026-08-31):** "1 approving review" was structurally impossible — every PR is authored by `asp-builder-git` (Chirag's account) because the tooling uses his GitHub identity, and GitHub forbids self-approval; admin bypass also rejected (HTTP 405, enforce_admins). Changed `required_approving_review_count` → **0** (enforce_admins stays). The real gate remains Chirag's explicit chat instruction + this REVIEW.md log + PR-only merges; GitHub's protection no longer double-enforces it.
+- **M5 PR #1 closed as superseded** — M5's commits (9b1e75b, eb6aeed) shipped inside PR #2 (branched from it). Nothing lost.
+- **Screenshot tool still broken** (Chromium missing `libnspr4.so`, needs sudo) — visual QA via preview; retry fix before M6.2.
+
+**Next:** M6.2 — home hero + operating philosophy (3 pillars) + platform impact metrics strip. One milestone per review round; sub-agent implementation (visible session), PM verify → Chirag review → merge → deploy → verify live.
