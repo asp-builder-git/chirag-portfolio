@@ -150,3 +150,22 @@ Implemented on `feat/p0-p1-benchmark`. All P0 (7) + P1 (8) items landed:
 - **Screenshot tool still broken** (Chromium missing `libnspr4.so`, needs sudo) — visual QA via preview; retry fix before M6.2.
 
 **Next:** M6.2 — home hero + operating philosophy (3 pillars) + platform impact metrics strip. One milestone per review round; sub-agent implementation (visible session), PM verify → Chirag review → merge → deploy → verify live.
+
+## M6.2 — Home: hero + operating philosophy + impact strip (2026-08-31, G1–G3 ✅, G4 ⏳ awaiting review)
+
+**Implementation:** sub-agent (visible session `m6-2-home`, deepseek-v4-pro) → branch `feat/m6-2-home` (commit `0ceb396`), 1 file: `src/pages/index.astro`.
+
+**Shipped bands (top of home; Projects section kept below):**
+1. **Hero** — H1 "Chirag R Gandhi" (brand mark kept, per PM recommendation on open Q §5) + system-role subhead "Internal Platform Product Manager — Workflow Orchestration & Enterprise Automation" + one plain first-person line + mono status chip "Luxembourg · EU · Remote-ready" + CTAs → /projects + /resume (both exist — no dead links; case-studies CTA swaps in with M6.3).
+2. **Operating philosophy — 3 pillars** (mono index 01–03): internal employees are the customer (~400 negotiators) · data over opinions (40,937 audit entries, 82% standardized → deterministic > conversational AI, VP-2026) · automation that compounds (~3.6M actions +120% YoY, +148 bps).
+3. **Impact strip — 5 mono metric chips**: €0.36Bn/yr · ~3.6M actions (+120% YoY) · ~400 negotiators / 9 EU markets · +148bps (94.87%→96.35%) · 8h→1h vendor prep.
+
+**Verification (PM):** build exit 0 (9 pages); dist contains all key M6.2 strings; tokens only (no new colors — AA inherited from M6.1 palette); responsive (pillars grid→stack @640px, metrics flex-wrap); preview :4321 serving M6.2, 200. No other pages touched; no regression (Writing section absent on main already).
+
+**Deviations / decisions to review:**
+- Old M4-era "Work" band removed — its facts absorbed into hero/metrics (no information lost; site reads tighter).
+- Hero CTAs point at existing pages (Projects/Resume) until case studies ship in M6.3 — no "coming soon" theater per VOICE.
+- Status chip wording chosen: "Luxembourg · EU · Remote-ready" (factual, CV-backed). Swap for "open to opportunities" if Chirag prefers.
+- Pillar 2 wording: "VP-level 2026 priority" kept (real, from CV); pillar 3 states reliability gain plainly.
+
+**Next:** M6.3 — 3 case studies (6-part anatomy) at /case-studies. Needs Chirag's pick of 3rd deep-dive (warehouse vs GenAI accelerator) + nav question.
