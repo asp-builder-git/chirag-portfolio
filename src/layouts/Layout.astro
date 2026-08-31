@@ -34,21 +34,22 @@ const base = import.meta.env.BASE_URL;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#fffdf8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)" />
     <link rel="preload" href={`${base}/fonts/instrument-serif-400.woff2`} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={`${base}/fonts/instrument-serif-400-italic.woff2`} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={`${base}/fonts/inter-400.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}/fonts/jetbrains-mono-400.woff2`} as="font" type="font/woff2" crossorigin />
     <style is:global>
       :root {
-        --bg: #fffdf8;
-        --surface: #fffefb;
-        --ink: #1a1a1a;
-        --muted: #6b655c;
-        --hairline: #e9e5da;
-        --accent: #e8590c;
-        /* accent as text (links, contact info) — ink-safe shade */
-        --accent-text: #c2410c;
+        --bg: #F8FAFC;
+        --surface: #FFFFFF;
+        --ink: #0F172A;
+        --muted: #475569;
+        --hairline: #E2E8F0;
+        --accent: #4338CA;
+        /* accent as text (links, contact info) — AA-safe on light */
+        --accent-text: #4338CA;
         /* legacy aliases so inner pages keep working */
         --card: var(--surface);
         --border: var(--hairline);
@@ -56,28 +57,29 @@ const base = import.meta.env.BASE_URL;
         --accent-dark: var(--accent);
         --font-display: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
         --font-body: "Inter", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
         color-scheme: light;
       }
       :root[data-theme="dark"] {
-        --bg: #16140f;
-        --surface: #1c1913;
-        --ink: #f2efe6;
-        --muted: #9b948a;
-        --hairline: #2a251d;
-        --accent: #ff9d5c;
-        --accent-text: #ff9d5c;
+        --bg: #0F172A;
+        --surface: #1E293B;
+        --ink: #F1F5F9;
+        --muted: #94A3B8;
+        --hairline: #334155;
+        --accent: #818CF8;
+        --accent-text: #A5B4FC;
         color-scheme: dark;
       }
       /* No-JS fallback: follow the OS without a manual override */
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme]) {
-          --bg: #16140f;
-          --surface: #1c1913;
-          --ink: #f2efe6;
-          --muted: #9b948a;
-          --hairline: #2a251d;
-          --accent: #ff9d5c;
-          --accent-text: #ff9d5c;
+          --bg: #0F172A;
+          --surface: #1E293B;
+          --ink: #F1F5F9;
+          --muted: #94A3B8;
+          --hairline: #334155;
+          --accent: #818CF8;
+          --accent-text: #A5B4FC;
           color-scheme: dark;
         }
       }
@@ -86,7 +88,7 @@ const base = import.meta.env.BASE_URL;
         font-family: var(--font-body);
         background: var(--bg);
         color: var(--ink);
-        line-height: 1.65;
+        line-height: 1.5;
         -webkit-font-smoothing: antialiased;
       }
       h1 {
@@ -216,8 +218,9 @@ const base = import.meta.env.BASE_URL;
       .card h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
       .card p { color: var(--muted); font-size: 0.9375rem; }
       .status {
-        font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-        letter-spacing: 0.08em; color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+        letter-spacing: 0.06em; color: var(--muted);
       }
       /* Smooth scroll only for users who want it; kill motion otherwise */
       @media (prefers-reduced-motion: no-preference) {
