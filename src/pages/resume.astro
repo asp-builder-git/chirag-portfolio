@@ -7,7 +7,7 @@ import Layout from "../layouts/Layout.astro";
     .head h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.35rem; }
     .head .role { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
     .contact { display: flex; flex-wrap: wrap; gap: 0.3rem 1.3rem; color: var(--muted); font-size: 0.92rem; }
-    .contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .contact a { color: var(--accent-text); text-decoration: none; font-weight: 600; }
     .contact a:hover { text-decoration: underline; }
     .summary {
       font-size: 1.02rem; color: var(--body); border-left: 3px solid var(--accent);
@@ -17,9 +17,7 @@ import Layout from "../layouts/Layout.astro";
     .highlight {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
       padding: 1.1rem 1.2rem;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .highlight:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
     .highlight .num { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
     .highlight .label { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.45; }
     .job { margin-bottom: 2.2rem; }

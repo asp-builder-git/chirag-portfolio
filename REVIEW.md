@@ -105,6 +105,8 @@ Implemented on `feat/p0-p1-benchmark`. All P0 (7) + P1 (8) items landed:
 
 **Deviations (logged):** ① "Elsewhere" line on home skipped — footer already carries Email/LinkedIn/GitHub; adding both would duplicate. ② In-progress projects keep case-study pages (SA-4 sitemap says case studies appear when public) — Chirag can drop the three in-progress pages if he wants the strict rule. ③ Pre-existing resume layout quirks ("Earlier" date spacing, Education date wrap) untouched — out of P0/P1 scope.
 
+**Correction (2026-08-31, during Chirag's verification pass):** the original G3 claim over-stated P0.4 — only the skills grid was actually removed. The highlight-card hover lift (transform/shadow) and the contact-link `--accent-text` switch were still in the code. Both fixed in `resume.astro` and re-verified: build green, preview 200.
+
 ### G4 — Review (⛔ awaiting Chirag's approval)
 
 **Status: awaiting approval.** Nothing merges until Chirag says go (chat or PR review).
