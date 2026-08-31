@@ -2,51 +2,112 @@
 import Layout from "../layouts/Layout.astro";
 import { projects } from "../data/projects";
 ---
-<Layout title="Chirag R Gandhi — Senior Technical Product Manager, Builder">
+<Layout title="Chirag R Gandhi — Internal Platform Product Manager">
   <style>
+    /* Hero */
     .intro h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.25rem);
+      font-size: clamp(2.5rem, 2rem + 3.5vw, 4rem);
       font-weight: 400;
-      line-height: 1.05;
+      line-height: 1.02;
       letter-spacing: -0.01em;
       margin: 0;
     }
-    .intro .tagline {
-      font-size: 1.125rem;
+    .intro .role {
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.2rem);
       font-weight: 500;
-      color: var(--muted);
       line-height: 1.4;
-      margin-top: 0.5rem;
-    }
-    .intro p.lead {
-      font-size: 1.125rem;
-      line-height: 1.7;
-      max-width: 65ch;
-      margin-top: 1rem;
-      color: var(--ink);
-    }
-    .intro p.lead em {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--ink);
-    }
-    .intro p.rule {
-      font-size: 1rem;
       color: var(--muted);
       margin-top: 0.5rem;
+      max-width: 46ch;
+    }
+    .intro .plain {
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--ink);
+      margin-top: 1rem;
+      max-width: 60ch;
+    }
+    .intro .status-chip {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 1.1rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
     }
     .intro .cta-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 1rem 1.5rem;
-      margin-top: 1.5rem;
+      margin-top: 1.75rem;
     }
-    .intro { margin-bottom: 3rem; }
+    .intro { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+
     .section + .section { margin-top: clamp(3rem, 6vw, 4.5rem); }
     .section .label { display: block; margin-bottom: 1.25rem; }
+
+    /* Operating philosophy — 3 pillars */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem 1.75rem;
+      border-top: 1px solid var(--hairline);
+      padding-top: 1.5rem;
+    }
+    .pillar .pillar-index {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+    .pillar h3 {
+      font-size: 1.0625rem;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .pillar p {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* Impact strip — metric chips */
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      border-top: 1px solid var(--hairline);
+      padding-top: 1.5rem;
+    }
+    .metric {
+      flex: 1 1 150px;
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      background: var(--surface);
+    }
+    .metric .metric-num {
+      font-family: var(--font-mono);
+      font-size: 1.35rem;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .metric .metric-label {
+      font-size: 0.8125rem;
+      line-height: 1.45;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Projects section (kept) */
     .row {
       border-top: 1px solid var(--hairline);
       padding: 1.25rem 0;
@@ -70,40 +131,68 @@ import { projects } from "../data/projects";
       max-width: 60ch;
     }
     .section .more { margin-top: 1.25rem; }
+
+    @media (max-width: 640px) {
+      .pillars { grid-template-columns: 1fr; gap: 1.25rem; }
+    }
   </style>
 
   <header class="intro">
     <h1>Chirag R Gandhi</h1>
-    <p class="tagline">Senior Technical Product Manager · Builder</p>
-    <p class="lead">
-      I <em>build</em> enterprise products at work. I <em>build</em> small tools at home.
-    </p>
-    <p class="rule">A project counts when a stranger can open it.</p>
+    <p class="role">Internal Platform Product Manager — Workflow Orchestration &amp; Enterprise Automation</p>
+    <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~400 negotiators across 9 EU markets.</p>
+    <span class="status status-chip">Luxembourg · EU · Remote-ready</span>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/chirag-portfolio/resume">Resume — work history &amp; results</a>
-      <a class="btn btn-secondary" href="/chirag-portfolio/projects">Projects →</a>
+      <a class="btn btn-primary" href="/chirag-portfolio/projects">See the work</a>
+      <a class="btn btn-secondary" href="/chirag-portfolio/resume">Resume</a>
     </div>
   </header>
 
   <section class="section">
-    <h2 class="label">Work</h2>
-
-    <div class="row">
-      <div class="row-title">Senior Product Manager — Enterprise Negotiations Platform</div>
-      <p>~400 negotiators across 9 EU markets run their negotiations through it.</p>
+    <h2 class="label">Operating philosophy</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="pillar-index">01</span>
+        <h3>Internal employees are the customer</h3>
+        <p>Product-market fit is measured in daily use, not downloads. The platform's ~400 negotiators decide if it lives or dies.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">02</span>
+        <h3>Data over opinions</h3>
+        <p>40,937 audit entries showed 82% of requests were standardized and repeatable. That evidence, not instinct, drove the argument for deterministic automation over conversational AI — now a VP-level 2026 priority.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">03</span>
+        <h3>Automation that compounds</h3>
+        <p>~3.6M actions a year, up 120%+ YoY, and reliability up +148 bps (94.87% → 96.35%). Every deterministic workflow removes a human-in-the-loop step and makes the next one cheaper.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="row">
-      <div class="row-title">€0.36Bn a year in profitability</div>
-      <p>Supported by negotiations running on the platform.</p>
+  <section class="section">
+    <h2 class="label">Impact</h2>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-num">€0.36Bn/yr</div>
+        <div class="metric-label">Profitability supported by platform negotiations</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">~3.6M</div>
+        <div class="metric-label">Actions/year on the platform (+120% YoY)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">~400</div>
+        <div class="metric-label">Negotiators across 9 EU markets</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">+148bps</div>
+        <div class="metric-label">Reliability gain (94.87% → 96.35%)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">8h → 1h</div>
+        <div class="metric-label">Vendor prep time with GenAI accelerator</div>
+      </div>
     </div>
-
-    <div class="row">
-      <div class="row-title">~5% voluntary adoption → org-wide default</div>
-      <p>In 3 years — 3.6M actions a year, up 120%+ YoY.</p>
-    </div>
-
-    <a class="btn btn-secondary more" href="/chirag-portfolio/resume">Full resume →</a>
   </section>
 
   <section class="section">
