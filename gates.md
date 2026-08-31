@@ -12,5 +12,7 @@
 
 ## Change log
 
+- 2026-08-30 M5 (feat/p0-p1-benchmark): benchmark P0+P1 execution — two-band home, self-hosted fonts, case-study pages, skip link, reduced-motion, theme-color, resume stripped. G3 ✅ (build green, preview 200s). G4 ⛔ awaiting Chirag approval before merge.
+
 - 2026-08-27 M4 (bc4cd38): homepage v4 taste pass — **landed via direct push before the review-gate policy existed**. Logged as the incident that created this policy. Reviewed live by Chirag afterward (accepted).
 - 2026-08-27: Review-gate policy + branch protection enacted.

@@ -3,25 +3,54 @@ import Layout from "../layouts/Layout.astro";
 ---
 <Layout title="About — Chirag Gandhi" active="about">
   <style>
-    h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 1rem; }
-    p { margin-bottom: 1rem; font-size: 1.02rem; color: var(--body); }
-    p.lead { font-size: 1.15rem; color: var(--ink); }
+    h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 2rem; }
+    .block { margin-bottom: 2.5rem; }
+    .block h2 { margin-bottom: 0.75rem; }
+    .block p { margin-bottom: 0.9rem; font-size: 1.02rem; color: var(--body); max-width: 62ch; }
+    .block p:last-child { margin-bottom: 0; }
+    .block strong { font-weight: 600; color: var(--ink); }
+    .block .rule {
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+    }
   </style>
 
   <div class="eyebrow">About</div>
   <h1>Product manager by day, builder by default.</h1>
 
-  <p class="lead">
-    I'm Chirag — a Product Manager and builder. I work at the intersection of product thinking and
-    hands-on engineering: I run multi-agent pipelines, build crawlers, dashboards, and tools, and I
-    care about shipping things people can actually use.
-  </p>
-  <p>
-    My style: build small, ship publicly, iterate. This site is the standing example — every project
-    here reached a state a stranger could open and try.
-  </p>
-  <p>
-    Currently based in Luxembourg. Also learning Luxembourgish, which has spawned a few projects of
-    its own.
-  </p>
+  <section class="block">
+    <h2>Work</h2>
+    <p>
+      I'm a product manager. My day job is building enterprise products with
+      engineering teams — strategy, discovery, delivery, end to end. The formal
+      record — companies, numbers, dates — lives on the <a href="/chirag-portfolio/resume">resume</a>.
+    </p>
+  </section>
+
+  <section class="block">
+    <h2>Personal</h2>
+    <p>
+      <strong>Working on:</strong> the Luxembourg property crawler, this
+      portfolio site, a market study run by four agents in one day.
+    </p>
+    <p>
+      <strong>Built:</strong> multi-agent pipelines, crawlers, dashboards, small
+      tools — with Claude, Cursor, and OpenClaw.
+    </p>
+    <p>
+      <strong>Learning:</strong> Luxembourgish — which has spawned a few
+      projects of its own.
+    </p>
+    <p>Currently based in Luxembourg.</p>
+  </section>
+
+  <section class="block">
+    <h2>The meta</h2>
+    <p class="rule">
+      A project counts when a stranger can open it. Everything on this site is
+      real — each project published as it reaches a shareable state. No
+      vaporware, no "coming soon".
+    </p>
+    <p>My style: build small, ship publicly, iterate. This site is the standing example.</p>
+  </section>
 </Layout>

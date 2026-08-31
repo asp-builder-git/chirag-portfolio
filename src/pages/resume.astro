@@ -7,7 +7,7 @@ import Layout from "../layouts/Layout.astro";
     .head h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.35rem; }
     .head .role { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
     .contact { display: flex; flex-wrap: wrap; gap: 0.3rem 1.3rem; color: var(--muted); font-size: 0.92rem; }
-    .contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .contact a { color: var(--accent-text); text-decoration: none; font-weight: 600; }
     .contact a:hover { text-decoration: underline; }
     .summary {
       font-size: 1.02rem; color: var(--body); border-left: 3px solid var(--accent);
@@ -17,10 +17,8 @@ import Layout from "../layouts/Layout.astro";
     .highlight {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
       padding: 1.1rem 1.2rem;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .highlight:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
-    .highlight .num { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
+    .highlight .num { font-family: var(--font-mono); font-size: 1.45rem; font-weight: 500; line-height: 1.2; }
     .highlight .label { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.45; }
     .job { margin-bottom: 2.2rem; }
     .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.2rem 1rem; margin-bottom: 0.45rem; }
@@ -29,12 +27,6 @@ import Layout from "../layouts/Layout.astro";
     .job .company { font-weight: 600; color: var(--accent-dark); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
     .job ul { margin: 0 0 0 1.15rem; }
     .job li { margin-bottom: 0.45rem; color: var(--body); }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .skills-col { border: 1px solid var(--border); border-radius: 12px; background: var(--card); padding: 1.2rem 1.3rem; }
-    .skills-col h3 { font-size: 1rem; margin-bottom: 0.6rem; }
-    .skills-col ul { list-style: none; }
-    .skills-col li { font-size: 0.9rem; color: var(--muted); padding: 0.18rem 0; border-bottom: 1px dashed var(--border); }
-    .skills-col li:last-child { border-bottom: none; }
     .edu { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; }
     .edu .d { font-size: 0.85rem; color: var(--muted); }
     .sec { margin-bottom: 2.5rem; }
@@ -57,26 +49,27 @@ import Layout from "../layouts/Layout.astro";
   </section>
 
   <p class="summary">
-    Enterprise product leader with 11+ years of experience, currently at Amazon. Owns a negotiations
-    platform that enables €0.9Bn in business for 400+ users across 10 markets — driving adoption from
-    5% to 100% and 120%+ YoY throughput. Strategic AI/automation builder: 3 full-stack applications
-    and multiple assistants shipped to production.
+    Enterprise product leader with 11+ years of experience, currently at Amazon. Owns an internal
+    platform used by ~400 negotiators across 9 EU markets, grown from ~5% voluntary adoption to the
+    org-wide default — ~3.6M actions/year (up 120%+ YoY) supporting negotiations that drive €0.36Bn/yr
+    in profitability. Strategic AI/automation builder: 3 full-stack applications and multiple assistants
+    shipped to production.
   </p>
 
   <section class="sec">
     <h2 class="sec-title">Highlights</h2>
     <div class="highlights" aria-label="Career highlights">
       <div class="highlight">
-        <div class="num">€0.9Bn</div>
-        <div class="label">Platform value under management — 400+ users, 10 markets</div>
+        <div class="num">€0.36Bn/yr</div>
+        <div class="label">Profitability supported by negotiations on the platform — ~400 negotiators, 9 EU markets</div>
       </div>
       <div class="highlight">
-        <div class="num">5% → 100%</div>
-        <div class="label">Adoption in 3 years · 3.6M actions/year</div>
+        <div class="num">~5% → default</div>
+        <div class="label">Voluntary adoption grown to the org-wide default · 3.6M actions/year (+120% YoY)</div>
       </div>
       <div class="highlight">
-        <div class="num">$200M+</div>
-        <div class="label">Think-big opportunity — VP-level priority for 2026</div>
+        <div class="num">82%</div>
+        <div class="label">Of 40,937 audit entries were standardized, repeatable requests — the case for automation</div>
       </div>
       <div class="highlight">
         <div class="num">11+ yrs</div>
@@ -95,8 +88,8 @@ import Layout from "../layouts/Layout.astro";
       </div>
       <div class="company">Amazon</div>
       <ul>
-        <li>Identified a <strong>$200M+ think-big opportunity</strong> — now a VP-level priority for 2026.</li>
-        <li>Drove adoption from <strong>5% to 100%</strong> in 3 years; platform now handles <strong>3.6M actions/year</strong>.</li>
+        <li>Wrote the vision for a scalable automation layer — now a <strong>VP-level 2026 priority</strong>; 40,937 audit entries showed <strong>82% of requests were standardized and repeatable</strong>, arguing for deterministic automation over conversational AI.</li>
+        <li>Grew voluntary adoption from <strong>~5% to the org-wide default</strong> in 3 years; the platform now runs <strong>~3.6M actions/year</strong>, up 120%+ YoY.</li>
         <li>Ran an AI innovation program: <strong>6 ideas, 4 shipped</strong>; cut negotiation prep time from <strong>8h → 1h</strong>.</li>
         <li>Shipped <strong>2 full-stack apps</strong> (SQL → Lambda → S3 → React) to production.</li>
         <li>Improved reliability <strong>+148bps</strong>; piloted ML-powered recommendations; delivered <strong>7 features in 18 months</strong>; secured <strong>9 HC</strong>.</li>
@@ -123,7 +116,7 @@ import Layout from "../layouts/Layout.astro";
       <div class="company">Amazon</div>
       <ul>
         <li>Stood up a warehouse <strong>from scratch in 2 months</strong> — 1M units/year capacity.</li>
-        <li>Cut <strong>$10M in defect costs</strong> by attacking 8 root causes.</li>
+        <li>Cut <strong>$3M in defect costs</strong>.</li>
       </ul>
     </div>
 
@@ -160,45 +153,6 @@ import Layout from "../layouts/Layout.astro";
         <li><strong>Godrej Security Solutions</strong> (2012–2014): grew channel revenue <strong>+43%</strong>.</li>
         <li><strong>Citicorp</strong> (2007–2009): research analyst.</li>
       </ul>
-    </div>
-  </section>
-
-  <section class="sec">
-    <h2 class="sec-title">Skills</h2>
-    <div class="skills-grid">
-      <div class="skills-col">
-        <h3>Product</h3>
-        <ul>
-          <li>Platform strategy</li>
-          <li>AI agent design</li>
-          <li>ML product management</li>
-          <li>0 → 1</li>
-          <li>RICE &amp; OKR</li>
-        </ul>
-      </div>
-      <div class="skills-col">
-        <h3>Technical</h3>
-        <ul>
-          <li>SQL</li>
-          <li>Python</li>
-          <li>GenAI tools</li>
-          <li>API design</li>
-          <li>Data pipelines</li>
-          <li>UX prototyping</li>
-          <li>A/B testing</li>
-        </ul>
-      </div>
-      <div class="skills-col">
-        <h3>Domain</h3>
-        <ul>
-          <li>Enterprise SaaS</li>
-          <li>Decision intelligence</li>
-          <li>Negotiation systems</li>
-          <li>Marketplace operations</li>
-          <li>Change management</li>
-          <li>Agile</li>
-        </ul>
-      </div>
     </div>
   </section>
 

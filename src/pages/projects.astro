@@ -1,43 +1,27 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { projects } from "../data/projects";
 ---
 <Layout title="Projects — Chirag Gandhi" active="projects">
   <style>
     h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.5rem; }
     .sub { color: var(--muted); margin-bottom: 2rem; }
+    .card p { margin-top: 0.2rem; }
   </style>
 
   <div class="eyebrow">Projects</div>
   <h1>Projects</h1>
-  <div class="sub">Each project is published when it reaches a shareable state. New ones land as they ship.</div>
+  <div class="sub">A project counts when a stranger can open it.</div>
 
-  <div class="card">
-    <div class="status">Live</div>
-    <h3>This portfolio site</h3>
-    <p>Astro + GitHub Pages, built in public. The meta-project: proof I can finish things.</p>
-  </div>
-
-  <div class="card">
-    <div class="status">In progress</div>
-    <h3>Luxembourg Property Asymmetry Crawler</h3>
-    <p>Compares broker listings against the atHome aggregator inventory to find what's listed where, and what's missing. Full pipeline: crawl → snapshot → match → dashboard.</p>
-  </div>
-
-  <div class="card">
-    <div class="status">In progress</div>
-    <h3>TrueReview</h3>
-    <p>Honest restaurant ratings: analyzes Google reviews for suspicious patterns and shows the adjusted "true" rating.</p>
-  </div>
-
-  <div class="card">
-    <div class="status">In progress</div>
-    <h3>Market Evaluation — 4 Agents, 1 Day</h3>
-    <p>A 4-week market study compressed into a single day using a 4-agent pipeline. Three ranked, ready-to-build business ideas.</p>
-  </div>
-
-  <div class="card">
-    <div class="status">Planned</div>
-    <h3>More coming</h3>
-    <p>Stock experiment, Luxembourgish Anki pipeline, and more — each shipped here as it reaches a shareable state.</p>
-  </div>
+  {
+    projects.map((p) => (
+      <div class="card">
+        <div class="status">{p.status}</div>
+        <h3><a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a></h3>
+        <p>
+          {p.blurb} {p.difficulty}
+        </p>
+      </div>
+    ))
+  }
 </Layout>

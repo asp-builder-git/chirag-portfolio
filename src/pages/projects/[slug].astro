@@ -1,0 +1,71 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const displayUrl = (url: string) => url.replace(/^https?:\/\//, "");
+---
+<Layout title={`${project.name} — Chirag Gandhi`} active="projects">
+  <style>
+    h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 1rem; }
+    .proof {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: 0.3rem 1.25rem;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .proof a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+    .proof a:hover { text-decoration-color: var(--accent); }
+    h2 { margin: 2.5rem 0 0.75rem; }
+    p { margin-bottom: 1rem; color: var(--body); max-width: 62ch; }
+    p:last-child { margin-bottom: 0; }
+    .difficulty {
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+      color: var(--ink);
+    }
+    .back { margin-top: 3rem; }
+    .back a { color: var(--muted); }
+    .back a:hover { color: var(--ink); }
+  </style>
+
+  <div class="eyebrow">Case study</div>
+  <h1>{project.name}</h1>
+
+  <div class="proof">
+    <span class="status">{project.status}</span>
+    {project.url && (
+      <a href={project.url}>Open it: {displayUrl(project.url)}</a>
+    )}
+    {project.repo && project.repoPublic && (
+      <a href={project.repo}>Source: {displayUrl(project.repo)}</a>
+    )}
+    {project.repo && !project.repoPublic && (
+      <span>Source: private repo — opens when it ships</span>
+    )}
+  </div>
+
+  <h2>Problem</h2>
+  {project.problem.map((para) => <p>{para}</p>)}
+
+  <h2>What I built</h2>
+  {project.built.map((para) => <p>{para}</p>)}
+  <p class="difficulty">{project.difficulty}</p>
+
+  <h2>Outcome</h2>
+  {project.outcome.map((para) => <p>{para}</p>)}
+
+  <p class="back"><a href={`${base}projects`}>← All projects</a></p>
+</Layout>
