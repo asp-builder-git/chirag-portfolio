@@ -1,0 +1,384 @@
+---
+import "../styles/fonts.css";
+import "../styles/design-lab-variants.css";
+import "../styles/design-lab-personas.css";
+import "../styles/design-lab-fx.css";
+import type { DesignSpec } from "../design/types";
+import { designSpecToCssVars } from "../design/css";
+
+interface Props {
+  spec: DesignSpec;
+  seed: string;
+  title?: string;
+  active?: "home" | "projects";
+  pageLabel?: string;
+}
+
+const { spec, seed, title = "Design Lab", active, pageLabel = "Home" } = Astro.props;
+
+const cssVars = designSpecToCssVars(spec);
+const rootStyle = Object.entries(cssVars)
+  .map(([k, v]) => `${k}: ${v}`)
+  .join("; ");
+const light = spec.colors.light;
+const dark = spec.colors.dark;
+
+const DARK_PERSONAS = [
+  "matrix", "terminal", "neonTokyo", "voidMono", "retroTerminal", "luxurySerif",
+  "acid", "glitch", "cyberpunk", "bloodMoon", "arcade",
+];
+const forceDark = spec.creative.themePersona !== "default" && DARK_PERSONAS.includes(spec.creative.themePersona);
+const hideSections = spec.creative.hiddenSections.join(" ");
+const chaosEffects = spec.creative.chaosEffects.join(" ");
+const labBase = "/chirag-portfolio/design-lab";
+const seedParam = spec.seedId;
+const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
+const hasMatrixRain = spec.creative.chaosEffects.includes("matrix-rain");
+const matrixCols = hasMatrixRain ? Array.from({ length: 24 }, (_, i) => i) : [];
+const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789";
+function matrixColumnText(col: number): string {
+  let out = "";
+  for (let r = 0; r < 20; r++) {
+    out += MATRIX_CHARS[(col * 7 + r * 13 + seedParam.charCodeAt(r % seedParam.length)) % MATRIX_CHARS.length];
+    if (r < 19) out += "\n";
+  }
+  return out;
+}
+---
+
+<!doctype html>
+<html
+  lang="en"
+  style={rootStyle}
+  data-archetype={spec.archetype}
+  data-pillar-layout={spec.pillarLayout}
+  data-btn-variant={spec.buttonVariant}
+  data-font-pairing={spec.fontPairing}
+  data-hero-layout={spec.heroLayout}
+  data-hero-scale={spec.heroScale}
+  data-text-align={spec.textAlign}
+  data-cta-layout={spec.ctaLayout}
+  data-interaction={spec.interaction}
+  data-nav-style={spec.navStyle}
+  data-metric-layout={spec.metricLayout}
+  data-section-style={spec.sectionStyle}
+  data-label-style={spec.labelStyle}
+  data-projects-layout={spec.projectsLayout}
+  data-theme-persona={spec.creative.themePersona}
+  data-hero-mode={spec.creative.heroMode}
+  data-name-placement={spec.creative.namePlacement}
+  data-nav-position={spec.creative.navPosition}
+  data-content-width={spec.creative.contentWidth}
+  data-hide={hideSections}
+  data-chaos={chaosEffects}
+  data-force-dark={forceDark ? "true" : "false"}
+  data-wildness={spec.creative.wildness}
+  data-visual-layout={spec.creative.visualLayout}
+  data-hero-shell={spec.creative.heroShell}
+>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} — {spec.seedId}</title>
+    <meta name="theme-color" content={light.bg} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={dark.bg} media="(prefers-color-scheme: dark)" />
+    <link rel="preload" href={`${base}/fonts/instrument-serif-400.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}/fonts/inter-400.woff2`} as="font" type="font/woff2" crossorigin />
+    <style is:global>
+      :root {
+        color-scheme: light;
+      }
+      :root[data-theme="dark"] {
+        --bg: var(--bg-dark);
+        --surface: var(--surface-dark);
+        --ink: var(--ink-dark);
+        --muted: var(--muted-dark);
+        --hairline: var(--hairline-dark);
+        --accent: var(--accent-dark-mode);
+        --accent-text: var(--accent-text-dark);
+        --card: var(--surface-dark);
+        --border: var(--hairline-dark);
+        --body: var(--ink-dark);
+        --accent-dark: var(--accent-dark-mode);
+        --shadow-md: var(--shadow-md-dark);
+        color-scheme: dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme]) {
+          --bg: var(--bg-dark);
+          --surface: var(--surface-dark);
+          --ink: var(--ink-dark);
+          --muted: var(--muted-dark);
+          --hairline: var(--hairline-dark);
+          --accent: var(--accent-dark-mode);
+          --accent-text: var(--accent-text-dark);
+          --card: var(--surface-dark);
+          --border: var(--hairline-dark);
+          --body: var(--ink-dark);
+          --shadow-md: var(--shadow-md-dark);
+          color-scheme: dark;
+        }
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--ink);
+        line-height: var(--line-height-body, 1.5);
+        -webkit-font-smoothing: antialiased;
+      }
+      h1 {
+        font-family: var(--font-display);
+        font-weight: var(--display-weight, 400);
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+        color: var(--ink);
+      }
+      h2 {
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: calc(1.5rem * var(--type-scale, 1));
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+      }
+      h3 {
+        font-family: var(--font-body);
+        font-weight: 600;
+        line-height: 1.4;
+        color: var(--ink);
+      }
+      ::selection { background: var(--accent); color: var(--bg); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      a {
+        color: var(--ink);
+        text-decoration: none;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        transition: color 0.15s ease, text-decoration-color 0.15s ease;
+      }
+      a:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+      }
+      .lab-banner {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-btn, 6px);
+        padding: 0.5rem 0.75rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.25rem;
+        align-items: center;
+      }
+      .lab-banner strong { color: var(--ink); font-weight: 500; }
+      .lab-banner a { color: var(--accent-text); font-weight: 500; }
+      .lab-tabs {
+        display: flex;
+        gap: 0.75rem;
+        margin-left: auto;
+      }
+      .lab-tabs a {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: var(--radius-btn, 6px);
+        border: 1px solid var(--hairline);
+      }
+      .lab-tabs a.active {
+        background: var(--ink);
+        color: var(--bg);
+        text-decoration: none;
+      }
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0.75rem;
+        background: var(--bg);
+        color: var(--ink);
+        border: 1px solid var(--accent);
+        border-radius: var(--radius-btn, 6px);
+        padding: 0.6rem 1rem;
+        font-weight: 500;
+        z-index: 100;
+      }
+      .skip-link:focus { left: 0.75rem; text-decoration: none; }
+      .container {
+        max-width: var(--container-max, 42rem);
+        margin: 0 auto;
+        padding: clamp(1.5rem, 5vw, 3rem);
+      }
+      nav {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.5rem;
+        padding-bottom: 1rem; border-bottom: 1px solid var(--hairline); margin-bottom: 2rem;
+      }
+      nav a { font-size: 0.9375rem; font-weight: 500; padding: 0.15rem 0; }
+      nav a.active { text-decoration: underline; text-decoration-color: var(--ink); }
+      .theme-toggle {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 2.1rem; height: 2.1rem; border-radius: 999px;
+        border: 1px solid var(--hairline); background: transparent; color: var(--muted);
+        cursor: pointer; margin-left: auto; padding: 0;
+      }
+      .theme-toggle svg { width: 15px; height: 15px; display: block; }
+      .theme-toggle .icon-sun { display: none; }
+      [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+      [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+      main { min-height: 50vh; }
+      footer {
+        margin-top: 5rem;
+        color: var(--muted);
+        font-size: 0.8125rem;
+      }
+      .label, .eyebrow {
+        font-size: 0.8125rem; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.08em; color: var(--muted); line-height: 1;
+      }
+      .btn {
+        display: inline-block;
+        font-family: var(--font-body);
+        font-size: 1rem; font-weight: 500; line-height: 1;
+        border-radius: var(--radius-btn, 6px);
+        padding: 0.625rem 1.25rem;
+        text-decoration: none;
+        transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      }
+      .btn:hover { text-decoration: none; }
+      .btn-primary { background: var(--ink); color: var(--bg); border: 1px solid var(--ink); }
+      .btn-primary:hover { opacity: 0.85; }
+      .btn-secondary { padding: 0; color: var(--ink); background: transparent; border: none; }
+      .btn-secondary:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      [data-btn-variant="outline"] .btn-primary {
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--ink);
+      }
+      [data-btn-variant="outline"] .btn-primary:hover { background: var(--surface); opacity: 1; }
+      [data-btn-variant="ghost"] .btn-primary {
+        background: transparent;
+        color: var(--accent-text);
+        border: none;
+        padding: 0;
+      }
+      [data-btn-variant="ghost"] .btn-primary:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        opacity: 1;
+      }
+      .card {
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-card, 10px);
+        padding: 1.25rem 1.4rem;
+        margin-bottom: 1rem;
+        background: var(--surface);
+        box-shadow: var(--shadow-md, none);
+      }
+      .card h3 { font-size: 1.125rem; margin-bottom: 0.35rem; }
+      .card p { color: var(--muted); font-size: 0.9375rem; }
+      .status {
+        font-family: var(--font-mono);
+        font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+        letter-spacing: 0.06em; color: var(--muted);
+      }
+      [data-archetype="paco"] .section .label { letter-spacing: 0.12em; }
+      [data-archetype="antfu"] body { font-size: 0.9375rem; }
+      [data-archetype="brutalist"] .card,
+      [data-archetype="brutalist"] .btn { border-width: 2px; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <script is:inline define:vars={{ forceDark }}>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem("theme"); } catch (e) {}
+        var dark = forceDark ||
+          stored === "dark" ||
+          (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+      })();
+    </script>
+  </head>
+  <body>
+    {spec.creative.ghostText && (
+      <div class="ghost-bg" aria-hidden="true">
+        <span>{spec.creative.ghostText}</span>
+      </div>
+    )}
+
+    {hasMatrixRain && (
+      <div class="matrix-rain" aria-hidden="true">
+        {matrixCols.map((i) => (
+          <div
+            class="col"
+            style={`left:${(i / matrixCols.length) * 100}%;animation-duration:${8 + (i % 7) * 2}s;animation-delay:${-(i % 5)}s`}
+          >
+            {matrixColumnText(i)}
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div class="page-wrap">
+      <div class="container">
+        <a class="skip-link" href="#main">Skip to content</a>
+
+        <div class="lab-banner">
+          <span>
+            <strong>{spec.creative.galleryLabel ?? spec.seedId}</strong>
+            · wild {spec.creative.wildness} · {spec.creative.themePersona}
+          </span>
+          <span>hero:{spec.creative.heroMode} · {spec.textAlign} · {spec.creative.heroShell}</span>
+          <div class="lab-tabs">
+            <a href={`${labBase}/${seedParam}/home`} class:list={[active === "home" && "active"]}>Home</a>
+            <a href={`${labBase}/${seedParam}/projects`} class:list={[active === "projects" && "active"]}>Projects</a>
+            <a href={`${labBase}`}>Gallery</a>
+          </div>
+        </div>
+
+        <nav class="lab-nav-top">
+          <a href={`${labBase}/${seedParam}/home`} class:list={[active === "home" && "active"]}>Home</a>
+          <a href={`${labBase}/${seedParam}/projects`} class:list={[active === "projects" && "active"]}>Projects</a>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/></svg>
+          </button>
+        </nav>
+
+        <main id="main">
+          <slot />
+        </main>
+
+        <footer>
+          <span>
+            Design lab · {pageLabel} · seed {seedParam}
+            {spec.creative.showNameInFooter && " · Chirag R Gandhi"}
+            · © {year}
+          </span>
+        </footer>
+      </div>
+    </div>
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+          var next = cur === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try { localStorage.setItem("theme", next); } catch (e) {}
+        });
+      })();
+    </script>
+  </body>
+</html>

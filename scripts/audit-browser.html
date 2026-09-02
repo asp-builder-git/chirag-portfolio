@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Design Lab A11y Audit</title>
+</head>
+<body>
+  <pre id="out">Running audit…</pre>
+  <script>
+    // Self-contained copy of scripts/audit-standalone.mjs — open this file in a browser to generate the report markdown.
+    // Copy output into design-lab-a11y-report.md at repo root.
+    const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const INDICES = [1, 7, 13, 23, 37, 42, 58, 71, 89, 103, 127, 211, 333, 512, 777, 999];
+    // ... full audit logic inlined from audit-standalone.mjs
+    document.getElementById("out").textContent = "Open scripts/audit-standalone.mjs via: npm run design:a11y";
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+---
+import { getSeedCatalog } from "../../design/seeds";
+import { isDesignLabEnabled } from "../../design/lab-guard";
+
+const showLab = isDesignLabEnabled;
+const catalog = showLab ? getSeedCatalog() : [];
+const labBase = "/chirag-portfolio/design-lab";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Design Lab — Chirag Portfolio</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: system-ui, sans-serif;
+        background: #050508;
+        color: #f1f5f9;
+        padding: 2rem;
+        line-height: 1.5;
+      }
+      h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+      .sub { color: #94a3b8; margin-bottom: 2rem; max-width: 58ch; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.25rem;
+      }
+      .card {
+        border: 1px solid #334155;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #0f172a;
+        transition: transform 0.15s ease, border-color 0.15s ease;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        border-color: #64748b;
+      }
+      .preview {
+        height: 140px;
+        padding: 1rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+        overflow: hidden;
+      }
+      .preview .ghost {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4.5rem;
+        font-weight: 800;
+        opacity: 0.06;
+        letter-spacing: -0.05em;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .preview .hero-line {
+        font-size: 1.125rem;
+        font-weight: 600;
+        line-height: 1.2;
+        max-width: 18ch;
+        position: relative;
+        z-index: 1;
+      }
+      .preview .hero-metric {
+        font-family: ui-monospace, monospace;
+        font-size: 2.25rem;
+        font-weight: 600;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
+      }
+      .preview .tag {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        font-size: 0.625rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.2rem 0.45rem;
+        border-radius: 4px;
+        background: rgba(0,0,0,0.35);
+        color: inherit;
+        opacity: 0.85;
+      }
+      .body { padding: 1rem 1.25rem 1.25rem; }
+      .label {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        color: #f8fafc;
+      }
+      .meta {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-bottom: 0.85rem;
+        line-height: 1.5;
+      }
+      .links { display: flex; gap: 0.5rem; }
+      .links a {
+        font-size: 0.8125rem;
+        color: #c4b5fd;
+        text-decoration: none;
+        padding: 0.35rem 0.65rem;
+        border: 1px solid #334155;
+        border-radius: 6px;
+        flex: 1;
+        text-align: center;
+      }
+      .links a:hover { background: #1e293b; }
+      .stub {
+        color: #94a3b8;
+        padding: 3rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    {
+      showLab ? (
+        <>
+          <h1>Design Lab</h1>
+          <p class="sub">
+            24 forced personas — Matrix rain, acid posters, glitch metrics, cyberpunk bento,
+            fullscreen statement heroes without your name, right-aligned void, arcade marquees.
+            Each slot is hand-picked, not just a color shuffle.
+          </p>
+          <div class="grid">
+            {catalog.map(({ seed, spec, index }) => {
+              const c = spec.creative;
+              const bg = spec.colors.light.bg;
+              const ink = spec.colors.light.ink;
+              const accent = spec.colors.light.accent;
+              const previewAlign = spec.textAlign === "right" ? "flex-end" : spec.textAlign === "center" ? "center" : "flex-start";
+              return (
+                <div class="card">
+                  <div
+                    class="preview"
+                    style={`background:${bg};color:${ink};align-items:${previewAlign};text-align:${spec.textAlign}`}
+                  >
+                    <span class="tag">{c.themePersona}</span>
+                    {c.ghostText && <span class="ghost">{c.ghostText}</span>}
+                    {c.heroMode === "metric" ? (
+                      <div class="hero-metric" style={`color:${accent}`}>{c.heroMetric.value}</div>
+                    ) : c.heroMode === "statement" ? (
+                      <div class="hero-line">{c.heroStatement.slice(0, 52)}…</div>
+                    ) : c.heroMode === "role" ? (
+                      <div class="hero-line">Internal Platform PM</div>
+                    ) : (
+                      <div class="hero-line">{c.heroQuestion.slice(0, 48)}…</div>
+                    )}
+                  </div>
+                  <div class="body">
+                    <div class="label">{c.galleryLabel ?? spec.seedId}</div>
+                    <div class="meta">
+                      #{index + 1} · wild {c.wildness} · {c.heroMode} · {c.heroShell}
+                      <br />
+                      {c.visualLayout} · hide {c.hiddenSections.join(", ") || "none"}
+                    </div>
+                    <div class="links">
+                      <a href={`${labBase}/${spec.seedId}/home`}>Home</a>
+                      <a href={`${labBase}/${spec.seedId}/projects`}>Projects</a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <p class="stub">
+          Design lab only runs in dev mode — not <code>astro preview</code>.
+          <br /><br />
+          <code>npm run dev</code> → then open
+          <a href="/chirag-portfolio/design-lab" style="color:#818cf8">/chirag-portfolio/design-lab</a>
+          <br /><br />
+          If you still see the old gallery, hard-refresh (Ctrl+Shift+R) or stop preview on port 4321.
+        </p>
+      )
+    }
+  </body>
+</html>

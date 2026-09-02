@@ -1,0 +1,31 @@
+---
+import { projects } from "../../data/projects";
+---
+
+<style>
+  h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.5rem; }
+  .sub { color: var(--muted); margin-bottom: 2rem; }
+  .card {
+    box-shadow: var(--shadow-md, none);
+    border-radius: var(--radius-card, 10px);
+  }
+  .card p { margin-top: 0.2rem; }
+</style>
+
+<div class="eyebrow">Projects</div>
+<h1>Projects</h1>
+<div class="sub">A project counts when a stranger can open it.</div>
+
+<div class="project-list">
+{
+  projects.map((p) => (
+    <div class="card">
+      <div class="status">{p.status}</div>
+      <h3><a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a></h3>
+      <p>
+        {p.blurb} {p.difficulty}
+      </p>
+    </div>
+  ))
+}
+</div>
