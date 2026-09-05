@@ -16,6 +16,15 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 **NO direct pushes to main. NO merging without review.** Read SKILL.md + gates.md. Every change: branch → `npm run build` passes → review summary for Chirag → his approval → merge → verify live URL. Sub-agents must never push to main or merge without Chirag's recorded approval.
 
+## Model routing (mandatory)
+
+Use the right tier so we don't rework. Details: `.cursor/rules/model-routing.mdc`.
+
+- Prefixes: `[precise]` / `[opus]` = max care; `[deep]` = complex reasoning; no prefix = default only for low-risk work.
+- **Auto-elevate to precise** for theme/dark mode, Appearance/playground chrome, live prod bugs, design-token mismatches — even without a prefix.
+- Subagents: UI/theme/prod bugs → `generalPurpose` + `inherit` (never `composer-2.5-fast`). Git/ship → `shell`. Broad search → `explore`.
+- Interactive chrome is not done until the control is verified; `npm run build` alone is insufficient.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
