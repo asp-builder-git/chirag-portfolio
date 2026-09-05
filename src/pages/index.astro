@@ -1,7 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import HomeLayout from "../layouts/HomeLayout.astro";
 import HomeContent from "../components/pages/HomeContent.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { parseAppearanceParams, applyAppearance } from "../design/presets";
+
+const appearance = parseAppearanceParams(Astro.url.searchParams);
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<Layout title="Chirag R Gandhi — Internal Platform Product Manager">
-  <HomeContent />
-</Layout>
+
+<HomeLayout
+  spec={spec}
+  appearance={appearance}
+  title="Chirag R Gandhi — Platform Product Manager"
+  active="home"
+>
+  <HomeContent spec={spec} />
+</HomeLayout>

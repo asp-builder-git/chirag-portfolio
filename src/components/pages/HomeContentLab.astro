@@ -1,7 +1,7 @@
 ---
 import type { DesignSpec } from "../../design/types";
-import type { SectionId } from "../../design/types";
 import { projects } from "../../data/projects";
+import { PILLARS, IMPACT_METRICS } from "../../data/home-content";
 
 interface Props {
   spec: DesignSpec;
@@ -12,31 +12,9 @@ const c = spec.creative;
 const showMarquee = c.visualLayout === "marquee";
 const marqueeText = `${c.themePersona} · ${c.heroMode} · ${c.heroShell} · wild ${c.wildness}`;
 
-const pillars = [
-  {
-    index: "01",
-    title: "Internal employees are the customer",
-    body: "Product-market fit is measured in daily use, not downloads. The platform's ~400 negotiators decide if it lives or dies.",
-  },
-  {
-    index: "02",
-    title: "Data over opinions",
-    body: "40,937 audit entries showed 82% of requests were standardized and repeatable. That evidence, not instinct, drove the argument for deterministic automation over conversational AI — now a VP-level 2026 priority.",
-  },
-  {
-    index: "03",
-    title: "Automation that compounds",
-    body: "~3.6M actions a year, up 120%+ YoY, and reliability up +148 bps (94.87% → 96.35%). Every deterministic workflow removes a human-in-the-loop step and makes the next one cheaper.",
-  },
-];
-
-const metrics = [
-  { num: "€0.36Bn/yr", label: "Profitability supported by platform negotiations" },
-  { num: "~3.6M", label: "Actions/year on the platform (+120% YoY)" },
-  { num: "~400", label: "Negotiators across 9 EU markets" },
-  { num: "+148bps", label: "Reliability gain (94.87% → 96.35%)" },
-  { num: "8h → 1h", label: "Vendor prep time with GenAI accelerator" },
-];
+const pillars = PILLARS;
+const metrics = IMPACT_METRICS;
+const liveProjects = projects.filter((p) => p.status === "Live");
 
 ---
 
@@ -162,6 +140,9 @@ const metrics = [
 )}
 
 <header class="intro">
+  {c.namePlacement === "above-statement" && (
+    <h1 class="hero-name-label">Chirag R Gandhi</h1>
+  )}
   {c.heroMode === "statement" && (
     <p class="hero-statement" data-text={c.heroStatement}>{c.heroStatement}</p>
   )}
@@ -175,20 +156,20 @@ const metrics = [
     <p class="hero-question">{c.heroQuestion}</p>
   )}
   {c.heroMode === "role" && (
-    <p class="role">Internal Platform Product Manager — Workflow Orchestration &amp; Enterprise Automation</p>
+    <p class="role">Platform Product Manager — Enterprise Platforms &amp; AI Automation</p>
   )}
   {(c.heroMode === "name" || c.namePlacement === "hero") && c.heroMode === "name" && (
     <h1 class="hero-name">Chirag R Gandhi</h1>
   )}
   {c.heroMode === "name" && (
     <>
-      <p class="role">Internal Platform Product Manager — Workflow Orchestration &amp; Enterprise Automation</p>
-      <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~400 negotiators across 9 EU markets.</p>
+      <p class="role">Platform Product Manager — Enterprise Platforms &amp; AI Automation</p>
+      <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~850 negotiators across EU and NA.</p>
       <span class="status status-chip">Luxembourg · EU · Remote-ready</span>
     </>
   )}
   {(c.heroMode === "statement" || c.heroMode === "metric" || c.heroMode === "question") && (
-    <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~400 negotiators across 9 EU markets.</p>
+    <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~850 negotiators across EU and NA.</p>
   )}
   {c.namePlacement === "byline" && (
     <span class="hero-byline">Chirag R Gandhi</span>
@@ -241,7 +222,7 @@ const metrics = [
         <section class="section projects">
           <h2 class="label">Projects</h2>
           <div class="project-list">
-            {projects.map((p) => (
+            {liveProjects.map((p) => (
               <div class="row">
                 <div class="row-title">
                   <a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a>

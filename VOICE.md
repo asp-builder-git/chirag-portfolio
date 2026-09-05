@@ -13,7 +13,7 @@ A stranger should read the home page and feel like they sat down with him for co
 1. **First person, conversational.** "I build…", "I own…", "I enjoy…" — never third-person marketing ("Chirag is a results-driven…").
 2. **No buzzwords.** Banished: synergy, leverage, results-driven, passionate about, best-in-class, end-to-end solutions, thought leader, dynamic, innovative (unless genuinely earned), "platform strategy" as a standalone claim. If a word would look at home in a LinkedIn influencer post, it's out.
 3. **Ground everything in reality.** Every claim traces back to something real (the resume, a shipped project, a number). Never invent. When in doubt, state the concrete fact and stop.
-4. **Numbers over adjectives.** "€0.9Bn across 10 markets" beats "massive impact". "5% to 100% adoption" beats "industry-leading adoption". One strong number is worth three adjectives.
+4. **Numbers over adjectives.** "~€0.36Bn/yr across EU & NA" beats "massive impact". "Near-zero → org-wide default" beats "industry-leading adoption". One strong number is worth three adjectives.
 5. **Short sentences. Plain words.** Write like he talks — direct, few subordinate clauses. If a sentence needs a semicolon to survive, split it.
 6. **Honest about difficulty.** Real work is hard; saying so is credibility. "This was harder than it looked" reads better than "seamless execution".
 7. **No hype, no "coming soon" theater.** The site only shows real things. "In progress" is fine — it's honest. "Revolutionary" is not.

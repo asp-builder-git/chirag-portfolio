@@ -188,6 +188,29 @@
   to { transform: translateY(200vh); }
 }
 
+/* Swiss brutal: black glyph drift (light), white/low-opacity (dark) */
+[data-theme-persona="swissBrutal"] .matrix-rain {
+  opacity: 1;
+}
+[data-theme-persona="swissBrutal"] .matrix-rain .col {
+  color: #000000;
+  text-shadow: none;
+  opacity: 0.15;
+}
+:root[data-theme="dark"][data-theme-persona="swissBrutal"] .matrix-rain .col,
+[data-theme-persona="swissBrutal"][data-force-dark="true"] .matrix-rain .col {
+  color: #ffffff;
+  opacity: 0.08;
+}
+[data-texture="off"] .matrix-rain,
+[data-motion="off"] .matrix-rain {
+  display: none !important;
+}
+[data-texture="subtle"] .matrix-rain,
+[data-motion="full"] .matrix-rain {
+  display: block;
+}
+
 /* --- Scanlines --- */
 [data-chaos~="scanlines"] body::before {
   content: "";

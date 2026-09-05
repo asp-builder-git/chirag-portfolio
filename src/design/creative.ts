@@ -1,22 +1,23 @@
-import type { HeroMode, SectionId, TextAlign, ThemePersona, CreativeProfile, VisualLayout, HeroShell } from "./types";
+import type { HeroMode, PaletteColors, SectionId, TextAlign, ThemePersona, CreativeProfile, VisualLayout, HeroShell } from "./types";
 import { charSum, digitDensity, maxRunLength, uppercaseRatio, vowelRatio, zoneHash } from "./patterns";
 
-/** Approved one-liners — VOICE.md compliant, from real site copy */
+/** Approved one-liners — VOICE.md compliant; career numbers match CV v8 */
 export const HERO_STATEMENTS = [
   "I build internal platforms that turn manual work into deterministic automation.",
   "I build enterprise products at work. I build small tools at home.",
   "A project counts when a stranger can open it.",
-  "~400 negotiators across 9 EU markets depend on what I ship.",
-  "Data over opinions — 82% of requests were standardized and repeatable.",
-  "Automation that compounds: ~3.6M actions a year, up 120%+ YoY.",
+  "~850 negotiators across EU and NA depend on what I ship.",
+  "Data over opinions — 41K requests argued for deterministic workflows over an AI chatbot.",
+  "Automation that compounds: +175 bps successful-schedule rate, protecting >$1.05M/yr.",
+  "I revel in watching a well-built solution come alive.",
 ] as const;
 
 export const HERO_METRICS = [
-  { value: "~3.6M", label: "actions a year on the platform" },
   { value: "€0.36Bn/yr", label: "profitability supported by negotiations" },
-  { value: "~400", label: "negotiators across 9 EU markets" },
-  { value: "+148bps", label: "reliability gain (94.87% → 96.35%)" },
-  { value: "8h → 1h", label: "vendor prep with GenAI accelerator" },
+  { value: "~850", label: "negotiators across EU and NA" },
+  { value: "+175bps", label: "successful-schedule rate · protecting >$1.05M/yr" },
+  { value: "€87MM", label: "negotiation entitlement from a solo 5-week build" },
+  { value: "Near-zero → default", label: "failed platform relaunched for ~850 users" },
 ] as const;
 
 export interface ThemeOverride {
@@ -256,6 +257,51 @@ export const THEME_OVERRIDES: Record<Exclude<ThemePersona, "default">, ThemeOver
   },
 };
 
+/** Dark-mode palette swaps for personas that need real dark themes (not CSS invert). */
+export const THEME_DARK_OVERRIDES: Partial<Record<ThemePersona, PaletteColors>> = {
+  warmPaper: {
+    bg: "#1c1917",
+    surface: "#292524",
+    ink: "#faf6f0",
+    muted: "#a8a29e",
+    hairline: "#44403c",
+    accent: "#ea580c",
+    accentText: "#fb923c",
+  },
+  swissBrutal: {
+    bg: "#000000",
+    surface: "#0a0a0a",
+    ink: "#ffffff",
+    muted: "#b3b3b3",
+    hairline: "#333333",
+    accent: "#ff0000",
+    accentText: "#ff3333",
+  },
+};
+
+function themeOverrideToPalette(override: ThemeOverride): PaletteColors {
+  return {
+    bg: override.bg,
+    surface: override.surface,
+    ink: override.ink,
+    muted: override.muted,
+    hairline: override.hairline,
+    accent: override.accent,
+    accentText: override.accentText,
+  };
+}
+
+/** Light + dark palette pair for a theme persona, when overrides exist. */
+export function getPersonaPalettes(persona: ThemePersona): { light: PaletteColors; dark: PaletteColors } | null {
+  if (persona === "default") return null;
+  const lightOverride = THEME_OVERRIDES[persona];
+  if (!lightOverride) return null;
+  const light = themeOverrideToPalette(lightOverride);
+  const darkOverride = THEME_DARK_OVERRIDES[persona];
+  const dark = darkOverride ?? { ...light };
+  return { light, dark };
+}
+
 const THEME_PERSONAS: ThemePersona[] = [
   "default",
   "matrix",
@@ -303,7 +349,7 @@ export function resolveCreativeProfile(
   const stmtIdx = charSum(zones.a + zones.j) % HERO_STATEMENTS.length;
   const metricIdx = charSum(zones.b + zones.h) % HERO_METRICS.length;
 
-  const heroQuestion = "What happens when ~400 people depend on your platform every day?";
+  const heroQuestion = "What happens when ~850 people depend on your platform every day?";
 
   const orderIdx = (entropy + charSum(zones.j)) % SECTION_ORDERS.length;
   const sectionOrder = [...SECTION_ORDERS[orderIdx]];

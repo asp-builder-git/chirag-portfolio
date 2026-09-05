@@ -127,7 +127,23 @@
   font-family: var(--font-mono);
 }
 [data-name-placement="footer"] .intro .hero-byline,
-[data-name-placement="hidden"] .intro .hero-byline { display: none; }
+[data-name-placement="hidden"] .intro .hero-byline,
+[data-name-placement="above-statement"] .intro .hero-byline { display: none; }
+
+[data-name-placement="above-statement"] .intro .hero-name-label {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1rem + 0.25vw, 1.125rem);
+  font-weight: 500;
+  line-height: 1.3;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.75rem;
+  margin: 0 0 1rem;
+  letter-spacing: 0.01em;
+}
+[data-name-placement="above-statement"] .intro .hero-name { display: none; }
+[data-theme-persona="swissBrutal"][data-hero-mode="statement"] .intro .hero-statement {
+  text-shadow: none;
+}
 
 /* --- Matrix theme --- */
 [data-theme-persona="matrix"] {
@@ -247,8 +263,9 @@
 
 /* --- Chaos effects --- */
 [data-chaos~="oversized-type"] .intro .hero-statement {
-  font-size: clamp(2.5rem, 2rem + 4vw, 5rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 1.6rem + 3vw, 3.75rem);
+  line-height: 1.08;
+  max-width: 18ch;
 }
 [data-chaos~="asymmetric-grid"] .pillars {
   grid-template-columns: 1.2fr 0.8fr 1fr;

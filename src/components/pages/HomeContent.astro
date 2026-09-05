@@ -1,16 +1,54 @@
 ---
+import type { DesignSpec } from "../../design/types";
 import { projects } from "../../data/projects";
+import { HERO_COPY, PILLARS, IMPACT_METRICS } from "../../data/home-content";
+
+interface Props {
+  spec: DesignSpec;
+}
+
+const { spec } = Astro.props;
+const c = spec.creative;
+const base = import.meta.env.BASE_URL;
+const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
 ---
 
 <style>
-  /* Hero */
-  .intro h1 {
+  .intro h1.hero-name {
     font-family: var(--font-display);
     font-size: clamp(var(--hero-size-min, 2.5rem), var(--hero-size-mid, 2rem + 3.5vw), var(--hero-size-max, 4rem));
     font-weight: var(--display-weight, 400);
     line-height: 1.02;
     letter-spacing: -0.01em;
     margin: 0;
+  }
+  .intro .hero-statement {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.4rem + 2vw, 3rem);
+    font-weight: var(--display-weight, 400);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+    margin: 0;
+    text-shadow: none;
+  }
+  .intro .hero-sub {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 0.95rem + 0.35vw, 1.125rem);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-top: 0.85rem;
+    max-width: 42ch;
+  }
+  .intro .tagline {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-top: 1.1rem;
+    max-width: 52ch;
   }
   .intro .role {
     font-family: var(--font-body);
@@ -21,35 +59,10 @@ import { projects } from "../../data/projects";
     margin-top: 0.5rem;
     max-width: 46ch;
   }
-  .intro .plain {
-    font-size: 1.0625rem;
-    line-height: var(--line-height-body, 1.65);
-    color: var(--ink);
-    margin-top: 1rem;
-    max-width: 60ch;
-  }
-  .intro .status-chip {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 1.1rem;
-    padding: 0.35rem 0.7rem;
-    border: 1px solid var(--hairline);
-    border-radius: 999px;
-  }
-  .intro .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.5rem;
-    margin-top: 1.75rem;
-  }
+  .intro .hero-byline { display: none; }
   .intro { margin-bottom: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1)); }
-
-  .section + .section {
-    margin-top: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1));
-  }
+  .section + .section { margin-top: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1)); }
   .section .label { display: block; margin-bottom: 1.25rem; }
-
   .pillars {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -57,9 +70,7 @@ import { projects } from "../../data/projects";
     border-top: 1px solid var(--hairline);
     padding-top: 1.5rem;
   }
-  :global([data-pillar-layout="stack"]) .pillars {
-    grid-template-columns: 1fr;
-  }
+  :global([data-pillar-layout="stack"]) .pillars { grid-template-columns: 1fr; }
   .pillar .pillar-index {
     display: block;
     font-family: var(--font-mono);
@@ -69,45 +80,43 @@ import { projects } from "../../data/projects";
     color: var(--muted);
     margin-bottom: 0.6rem;
   }
-  .pillar h3 {
-    font-size: 1.0625rem;
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
-  }
-  .pillar p {
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    color: var(--muted);
-  }
+  .pillar h3 { font-size: 1.0625rem; line-height: 1.3; margin-bottom: 0.5rem; }
+  .pillar p { font-size: 0.9375rem; line-height: 1.6; color: var(--muted); }
 
-  .metrics {
+  /* Single horizontal impact band */
+  .impact-strip {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.85rem;
-    border-top: 1px solid var(--hairline);
-    padding-top: 1.5rem;
-  }
-  .metric {
-    flex: 1 1 150px;
+    align-items: baseline;
+    gap: 0.65rem 1.5rem;
     border: 1px solid var(--hairline);
-    border-radius: var(--radius-card, 10px);
-    padding: 1rem 1.1rem;
-    background: var(--surface);
-    box-shadow: var(--shadow-md, none);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    background: transparent;
   }
-  .metric .metric-num {
+  .impact-strip .impact-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.6rem;
+    min-width: 0;
+  }
+  .impact-strip .impact-item + .impact-item {
+    border-left: 1px solid var(--hairline);
+    padding-left: 1.5rem;
+  }
+  .impact-strip .metric-num {
     font-family: var(--font-mono);
-    font-size: 1.35rem;
-    font-weight: 500;
+    font-size: 0.9375rem;
+    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: -0.01em;
     color: var(--ink);
+    white-space: nowrap;
   }
-  .metric .metric-label {
-    font-size: 0.8125rem;
-    line-height: 1.45;
+  .impact-strip .metric-label {
+    font-size: 0.75rem;
+    line-height: 1.35;
     color: var(--muted);
-    margin-top: 0.35rem;
   }
 
   .row {
@@ -117,7 +126,6 @@ import { projects } from "../../data/projects";
   .row .row-title {
     font-size: 1.125rem;
     font-weight: 600;
-    line-height: 1.4;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -125,96 +133,112 @@ import { projects } from "../../data/projects";
   }
   .row .row-title a { text-decoration: none; }
   .row .row-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
-  .row p {
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--muted);
-    margin-top: 0.3rem;
-    max-width: 60ch;
-  }
+  .row p { font-size: 0.9375rem; color: var(--muted); margin-top: 0.3rem; max-width: 60ch; }
   .section .more { margin-top: 1.25rem; }
-
+  .section .more-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    margin-top: 1.25rem;
+  }
+  .section .more-row .more { margin-top: 0; }
   @media (max-width: 640px) {
-    .pillars { grid-template-columns: 1fr; gap: 1.25rem; }
+    .pillars { grid-template-columns: 1fr; }
+    .impact-strip .impact-item + .impact-item {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid var(--hairline);
+      padding-top: 0.65rem;
+      width: 100%;
+    }
   }
 </style>
 
 <header class="intro">
-  <h1>Chirag R Gandhi</h1>
-  <p class="role">Internal Platform Product Manager — Workflow Orchestration &amp; Enterprise Automation</p>
-  <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~400 negotiators across 9 EU markets.</p>
-  <span class="status status-chip">Luxembourg · EU · Remote-ready</span>
-  <div class="cta-row">
-    <a class="btn btn-primary" href="/chirag-portfolio/projects">See the work</a>
-    <a class="btn btn-secondary" href="/chirag-portfolio/resume">Resume</a>
-  </div>
+  {c.heroMode === "metric" && (
+    <>
+      <h1 class="hero-metric" data-text={c.heroMetric.value}>{c.heroMetric.value}</h1>
+      <p class="hero-metric-label">{c.heroMetric.label}</p>
+    </>
+  )}
+  {c.heroMode === "name" && (
+    <>
+      <h1 class="hero-name">{HERO_COPY.name}</h1>
+      <p class="role">Platform Product Manager</p>
+    </>
+  )}
+  {c.heroMode === "statement" && (
+    <>
+      <h1 class="hero-statement" data-text={HERO_COPY.statement}>{HERO_COPY.statement}</h1>
+      <p class="hero-sub">{HERO_COPY.subhero}</p>
+      <p class="tagline">{HERO_COPY.tagline}</p>
+    </>
+  )}
+  {c.namePlacement === "byline" && c.heroMode !== "statement" && (
+    <span class="hero-byline">{HERO_COPY.name}</span>
+  )}
 </header>
 
-<section class="section">
-  <h2 class="label">Operating philosophy</h2>
-  <div class="pillars">
-    <div class="pillar">
-      <span class="pillar-index">01</span>
-      <h3>Internal employees are the customer</h3>
-      <p>Product-market fit is measured in daily use, not downloads. The platform's ~400 negotiators decide if it lives or dies.</p>
-    </div>
-    <div class="pillar">
-      <span class="pillar-index">02</span>
-      <h3>Data over opinions</h3>
-      <p>40,937 audit entries showed 82% of requests were standardized and repeatable. That evidence, not instinct, drove the argument for deterministic automation over conversational AI — now a VP-level 2026 priority.</p>
-    </div>
-    <div class="pillar">
-      <span class="pillar-index">03</span>
-      <h3>Automation that compounds</h3>
-      <p>~3.6M actions a year, up 120%+ YoY, and reliability up +148 bps (94.87% → 96.35%). Every deterministic workflow removes a human-in-the-loop step and makes the next one cheaper.</p>
-    </div>
-  </div>
-</section>
+{
+  c.sectionOrder.map((sectionId) => {
+    if (c.hiddenSections.includes(sectionId)) return null;
 
-<section class="section">
-  <h2 class="label">Impact</h2>
-  <div class="metrics">
-    <div class="metric">
-      <div class="metric-num">€0.36Bn/yr</div>
-      <div class="metric-label">Profitability supported by platform negotiations</div>
-    </div>
-    <div class="metric">
-      <div class="metric-num">~3.6M</div>
-      <div class="metric-label">Actions/year on the platform (+120% YoY)</div>
-    </div>
-    <div class="metric">
-      <div class="metric-num">~400</div>
-      <div class="metric-label">Negotiators across 9 EU markets</div>
-    </div>
-    <div class="metric">
-      <div class="metric-num">+148bps</div>
-      <div class="metric-label">Reliability gain (94.87% → 96.35%)</div>
-    </div>
-    <div class="metric">
-      <div class="metric-num">8h → 1h</div>
-      <div class="metric-label">Vendor prep time with GenAI accelerator</div>
-    </div>
-  </div>
-</section>
+    if (sectionId === "philosophy") {
+      return (
+        <section class="section philosophy">
+          <h2 class="label">Operating philosophy</h2>
+          <div class="pillars">
+            {PILLARS.map((p) => (
+              <div class="pillar">
+                <span class="pillar-index">{p.index}</span>
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
 
-<section class="section">
-  <h2 class="label">Projects</h2>
+    if (sectionId === "impact") {
+      return (
+        <section class="section impact">
+          <h2 class="label">Impact</h2>
+          <div class="impact-strip" role="list">
+            {IMPACT_METRICS.map((m) => (
+              <div class="impact-item" role="listitem">
+                <span class="metric-num">{m.num}</span>
+                <span class="metric-label">{m.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
 
-  <div class="project-list">
-  {
-    projects.map((p) => (
-      <div class="row">
-        <div class="row-title">
-          <a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a>
-          <span class="status">{p.status}</span>
-        </div>
-        <p>
-          {p.blurb} {p.difficulty}
-        </p>
-      </div>
-    ))
-  }
-  </div>
+    if (sectionId === "projects") {
+      return (
+        <section class="section projects">
+          <h2 class="label">Projects</h2>
+          <div class="project-list">
+            {homeProjects.map((p) => (
+              <div class="row">
+                <div class="row-title">
+                  <a href={`${base}projects/${p.slug}`}>{p.name}</a>
+                  <span class="status">{p.status}</span>
+                </div>
+                <p>{p.blurb} {p.difficulty}</p>
+              </div>
+            ))}
+          </div>
+          <div class="more-row">
+            <a class="btn btn-secondary more" href={`${base}playground`}>View this site in different themes →</a>
+            <a class="btn btn-secondary more" href={`${base}projects`}>All projects →</a>
+          </div>
+        </section>
+      );
+    }
 
-  <a class="btn btn-secondary more" href="/chirag-portfolio/projects">All projects →</a>
-</section>
+    return null;
+  })
+}

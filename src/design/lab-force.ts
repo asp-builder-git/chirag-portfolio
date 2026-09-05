@@ -1,5 +1,5 @@
 import type { DesignSpec, TextAlign, CreativeProfile } from "./types";
-import { getThemeOverride } from "./creative";
+import { getPersonaPalettes, getThemeOverride } from "./creative";
 
 type ForceCreative = Partial<CreativeProfile> & {
   visualLayout?: CreativeProfile["visualLayout"];
@@ -32,7 +32,22 @@ export const LAB_FORCES: LabForce[] = [
   { label: "Acid · work line", creative: { themePersona: "acid", heroMode: "statement", namePlacement: "footer", showNameInFooter: true, visualLayout: "immersive", heroShell: "fullscreen", chaosEffects: ["acid-bg", "oversized-type"], wildness: 99, ghostText: "PLATFORM" }, textAlign: "center" },
   { label: "Matrix · metric rain", creative: { themePersona: "matrix", heroMode: "metric", namePlacement: "footer", showNameInFooter: true, visualLayout: "immersive", heroShell: "fullscreen", hiddenSections: ["philosophy", "projects"], chaosEffects: ["matrix-rain", "text-glow", "scanlines"], wildness: 97 }, textAlign: "right" },
   { label: "Neon · statement", creative: { themePersona: "neonTokyo", heroMode: "statement", namePlacement: "footer", showNameInFooter: true, navPosition: "side", visualLayout: "bento", heroShell: "breakout", chaosEffects: ["gradient-border", "text-glow"], wildness: 93 }, textAlign: "center" },
-  { label: "Swiss · statement poster", creative: { themePersona: "swissBrutal", heroMode: "statement", namePlacement: "hidden", visualLayout: "poster", heroShell: "fullscreen", hiddenSections: ["impact", "projects"], chaosEffects: ["thick-rules", "all-caps-nav", "oversized-type"], wildness: 96 }, containerMax: "60rem" },
+  {
+    label: "Swiss · statement poster",
+    creative: {
+      themePersona: "swissBrutal",
+      heroMode: "statement",
+      namePlacement: "hidden",
+      showNameInFooter: false,
+      visualLayout: "poster",
+      heroShell: "fullscreen",
+      hiddenSections: ["impact", "projects"],
+      chaosEffects: ["thick-rules", "all-caps-nav", "oversized-type", "matrix-rain"],
+      heroStatement: "I revel in watching a well-built solution come alive.",
+      wildness: 96,
+    },
+    containerMax: "60rem",
+  },
   { label: "Glitch · metric", creative: { themePersona: "glitch", heroMode: "metric", namePlacement: "hidden", showNameInFooter: true, visualLayout: "poster", heroShell: "fullscreen", hiddenSections: ["impact"], chaosEffects: ["glitch-text", "oversized-type"], wildness: 98 } },
   { label: "Cyberpunk · statement", creative: { themePersona: "cyberpunk", heroMode: "statement", namePlacement: "byline", visualLayout: "bento", heroShell: "fullscreen", navPosition: "bottom", chaosEffects: ["text-glow", "gradient-border", "oversized-type"], wildness: 97 }, containerMax: "68rem" },
   { label: "Void · projects first", creative: { themePersona: "voidMono", heroMode: "question", namePlacement: "footer", showNameInFooter: true, sectionOrder: ["projects", "impact", "philosophy"], visualLayout: "standard", heroShell: "diagonal", hiddenSections: ["philosophy"], wildness: 89 }, textAlign: "right" },
@@ -66,6 +81,7 @@ export function applyLabForce(spec: DesignSpec, galleryIndex: number): DesignSpe
     chaosEffects: [...new Set([...(fc.chaosEffects ?? []), ...(spec.creative.chaosEffects ?? [])])],
   };
 
+  const palettes = getPersonaPalettes(creative.themePersona);
   const themeOverride = getThemeOverride(creative.themePersona);
   const textAlign = force.textAlign ?? themeOverride?.textAlign ?? spec.textAlign;
   const containerMax = force.containerMax ?? spec.containerMax;
@@ -73,18 +89,9 @@ export function applyLabForce(spec: DesignSpec, galleryIndex: number): DesignSpe
   let light = { ...spec.colors.light };
   let dark = { ...spec.colors.dark };
 
-  if (themeOverride) {
-    const c = {
-      bg: themeOverride.bg,
-      surface: themeOverride.surface,
-      ink: themeOverride.ink,
-      muted: themeOverride.muted,
-      hairline: themeOverride.hairline,
-      accent: themeOverride.accent,
-      accentText: themeOverride.accentText,
-    };
-    light = { ...c };
-    dark = { ...c };
+  if (palettes) {
+    light = { ...palettes.light };
+    dark = { ...palettes.dark };
   }
 
   return {

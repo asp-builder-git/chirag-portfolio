@@ -1,10 +1,45 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import HomeLayout from "../layouts/HomeLayout.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
+
+const appearance = DEFAULT_APPEARANCE;
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<Layout title="Resume — Chirag R Gandhi" active="resume">
+<HomeLayout
+  spec={spec}
+  appearance={appearance}
+  title="Resume — Chirag R Gandhi"
+  active="resume"
+  showAppearance={false}
+>
   <style>
     .head { margin-bottom: 2.5rem; }
-    .head h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.35rem; }
+    .head-top {
+      display: flex; flex-wrap: wrap; align-items: flex-start;
+      justify-content: space-between; gap: 0.75rem 1.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .head h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin: 0; }
+    .copy-resume {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--hairline);
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .copy-resume:hover { border-color: var(--ink); }
+    .copy-status {
+      font-size: 0.75rem;
+      color: var(--muted);
+      min-height: 1.2em;
+    }
     .head .role { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
     .contact { display: flex; flex-wrap: wrap; gap: 0.3rem 1.3rem; color: var(--muted); font-size: 0.92rem; }
     .contact a { color: var(--accent-text); text-decoration: none; font-weight: 600; }
@@ -15,31 +50,43 @@ import Layout from "../layouts/Layout.astro";
     }
     .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; }
     .highlight {
-      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 1.1rem 1.2rem;
+      background: transparent; border: 1px solid var(--hairline); border-radius: 0;
+      padding: 1rem 1.1rem;
     }
-    .highlight .num { font-family: var(--font-mono); font-size: 1.45rem; font-weight: 500; line-height: 1.2; }
+    .highlight .num { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 500; line-height: 1.2; }
     .highlight .label { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.45; }
     .job { margin-bottom: 2.2rem; }
     .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.2rem 1rem; margin-bottom: 0.45rem; }
     .job-head h3 { font-size: 1.15rem; }
     .job-head .dates { font-size: 0.85rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
-    .job .company { font-weight: 600; color: var(--accent-dark); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
+    .job .company { font-weight: 600; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
     .job ul { margin: 0 0 0 1.15rem; }
     .job li { margin-bottom: 0.45rem; color: var(--body); }
     .edu { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; }
     .edu .d { font-size: 0.85rem; color: var(--muted); }
+    .skills { color: var(--body); }
+    .skills p { margin-bottom: 0.75rem; }
+    .skills p:last-child { margin-bottom: 0; }
     .sec { margin-bottom: 2.5rem; }
-    .sec-title { font-size: 1.35rem; margin-bottom: 1.1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .sec-title { font-size: 1.35rem; margin-bottom: 1.1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--hairline); }
     @media (max-width: 480px) {
       .job-head .dates { white-space: normal; }
     }
   </style>
 
+  <div id="resume-body">
   <section class="head">
-    <div class="eyebrow">Résumé</div>
-    <h1>Chirag R Gandhi</h1>
-    <div class="role">Senior Product Manager</div>
+    <div class="head-top">
+      <div>
+        <div class="eyebrow">Résumé</div>
+        <h1>Chirag R Gandhi</h1>
+      </div>
+      <div>
+        <button type="button" class="copy-resume" id="copy-resume-btn">Copy résumé text</button>
+        <div class="copy-status" id="copy-resume-status" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="role">Senior Technical Product Manager (PM-T) | Enterprise Platforms &amp; AI Automation</div>
     <div class="contact">
       <span>Luxembourg</span>
       <a href="mailto:chirag0912@gmail.com">chirag0912@gmail.com</a>
@@ -49,11 +96,14 @@ import Layout from "../layouts/Layout.astro";
   </section>
 
   <p class="summary">
-    Enterprise product leader with 11+ years of experience, currently at Amazon. Owns an internal
-    platform used by ~400 negotiators across 9 EU markets, grown from ~5% voluntary adoption to the
-    org-wide default — ~3.6M actions/year (up 120%+ YoY) supporting negotiations that drive €0.36Bn/yr
-    in profitability. Strategic AI/automation builder: 3 full-stack applications and multiple assistants
-    shipped to production.
+    Senior Technical Product Manager (PM-T) who makes the product and technical-tradeoff calls and
+    ships full-stack products end to end with agentic AI tooling, then drives them to org-wide
+    adoption. Relaunched a failed negotiations platform into the EU/NA default for ~850 users,
+    supporting ~€0.36Bn/yr in profitability, and built a new profitability tool solo in weeks.
+    Leads through technical judgment and cross-org influence, not authority; chose deterministic
+    automation over the AI-chatbot trend on the evidence (now a funded 2026 VP goal) and diagnosed
+    reliability gaps protecting &gt;$1M/yr in at-risk profit. Targeting a Senior or Lead PM-T role
+    where product judgment and hands-on building are the same job.
   </p>
 
   <section class="sec">
@@ -61,19 +111,19 @@ import Layout from "../layouts/Layout.astro";
     <div class="highlights" aria-label="Career highlights">
       <div class="highlight">
         <div class="num">€0.36Bn/yr</div>
-        <div class="label">Profitability supported by negotiations on the platform — ~400 negotiators, 9 EU markets</div>
+        <div class="label">Profitability supported by negotiations on the platform — ~850 negotiators, EU &amp; NA</div>
       </div>
       <div class="highlight">
-        <div class="num">~5% → default</div>
-        <div class="label">Voluntary adoption grown to the org-wide default · 3.6M actions/year (+120% YoY)</div>
+        <div class="num">Near-zero → default</div>
+        <div class="label">Failed platform relaunched into the org-wide EU/NA default for ~850 users</div>
       </div>
       <div class="highlight">
-        <div class="num">82%</div>
-        <div class="label">Of 40,937 audit entries were standardized, repeatable requests — the case for automation</div>
+        <div class="num">+175 bps</div>
+        <div class="label">Successful-schedule rate · 7 fixes in 6 months · protecting &gt;$1.05M/yr contribution profit</div>
       </div>
       <div class="highlight">
-        <div class="num">11+ yrs</div>
-        <div class="label">Enterprise product &amp; program leadership</div>
+        <div class="num">€87MM</div>
+        <div class="label">Negotiation entitlement surfaced by a full-stack profitability app built solo in 5 weeks</div>
       </div>
     </div>
   </section>
@@ -83,16 +133,16 @@ import Layout from "../layouts/Layout.astro";
 
     <div class="job">
       <div class="job-head">
-        <h3>Senior Product Manager — Enterprise Negotiations Platform</h3>
+        <h3>Senior Product Manager — Tech, Negotiations Platform</h3>
         <span class="dates">2023 – Present</span>
       </div>
-      <div class="company">Amazon</div>
+      <div class="company">Amazon EU</div>
       <ul>
-        <li>Wrote the vision for a scalable automation layer — now a <strong>VP-level 2026 priority</strong>; 40,937 audit entries showed <strong>82% of requests were standardized and repeatable</strong>, arguing for deterministic automation over conversational AI.</li>
-        <li>Grew voluntary adoption from <strong>~5% to the org-wide default</strong> in 3 years; the platform now runs <strong>~3.6M actions/year</strong>, up 120%+ YoY.</li>
-        <li>Ran an AI innovation program: <strong>6 ideas, 4 shipped</strong>; cut negotiation prep time from <strong>8h → 1h</strong>.</li>
-        <li>Shipped <strong>2 full-stack apps</strong> (SQL → Lambda → S3 → React) to production.</li>
-        <li>Improved reliability <strong>+148bps</strong>; piloted ML-powered recommendations; delivered <strong>7 features in 18 months</strong>; secured <strong>9 HC</strong>.</li>
+        <li>Relaunched a failed platform from near-zero adoption into the org-wide default for <strong>~850 negotiators across EU and NA</strong>. Rebuilt it around three user segments the original ignored and won executive buy-in to sunset the legacy tools; the negotiations it supports drive <strong>~€0.36Bn/yr</strong> in profitability.</li>
+        <li>Built and shipped a full-stack profitability app <strong>solo in 5 weeks</strong>. Owned the product and UX and built it end to end with agentic AI tooling (Redshift → Lambda → Harmony). Surfaced <strong>€87MM</strong> in negotiation entitlement with <strong>25 weekly active users</strong> (of 50 key target users).</li>
+        <li>Drove a central team's cost-opportunity product to EU launch, off their roadmap. Built the full-stack portal whose randomly sampled user validation (across <strong>1.49M EU opportunities</strong>) was the go/no-go prerequisite. Now live in UCP.</li>
+        <li>Diagnosed the design gaps undermining reliability of the system that applies negotiated selection actions; traced how intents propagate downstream and found where they silently failed. Drove engineering and 5 partner teams to ship <strong>7 fixes in 6 months</strong>: <strong>+175 bps</strong> successful-schedule rate, protecting <strong>&gt;$1.05M/yr</strong> in at-risk contribution profit.</li>
+        <li>Chose deterministic workflows over an AI chatbot for the platform's automation layer, against the industry trend, validated by my analysis of <strong>41K requests</strong> and funded as a <strong>2026 VP goal</strong> ($200MM sized entitlement).</li>
       </ul>
     </div>
 
@@ -101,70 +151,77 @@ import Layout from "../layouts/Layout.astro";
         <h3>Senior Product Manager — Cross-Border Commerce</h3>
         <span class="dates">2021 – 2023</span>
       </div>
-      <div class="company">Amazon</div>
+      <div class="company">Amazon EU</div>
       <ul>
-        <li>Unblocked <strong>144K products</strong> across 7 projects.</li>
-        <li>Built an OCR label-language identification product → <strong>€300M+ incremental revenue</strong>.</li>
+        <li>Applied OCR to automate a compliance check that gated Pan-EU cross-border selection. Auto-identifying product-label languages to identify &amp; expand compliant selection, replacing manual processes for <strong>270K product listings/year</strong>.</li>
+        <li>Unblocked <strong>144K products</strong> for Pan-EU cross-border sale, part of a cross-border program that enabled <strong>€300MM+</strong> in incremental revenue.</li>
       </ul>
     </div>
 
     <div class="job">
       <div class="job-head">
-        <h3>Senior Program Manager — Ops &amp; Logistics</h3>
+        <h3>Senior Program Manager — Trade-In Program</h3>
         <span class="dates">2019 – 2021</span>
       </div>
-      <div class="company">Amazon</div>
+      <div class="company">Amazon India</div>
       <ul>
-        <li>Stood up a warehouse <strong>from scratch in 2 months</strong> — 1M units/year capacity.</li>
-        <li>Cut <strong>$3M in defect costs</strong>.</li>
+        <li>Stood up warehouse operations from scratch in 2 months, doubling capacity to <strong>1M units/year</strong>. Ran a defect-reduction charter that cut defect value from <strong>17.8% to ~12%</strong> ($3M saved).</li>
       </ul>
     </div>
 
     <div class="job">
       <div class="job-head">
-        <h3>Program Manager — Marketplace Programs</h3>
-        <span class="dates">2016 – 2019</span>
+        <h3>Earlier — Amazon India &amp; Pre-Amazon</h3>
+        <span class="dates">2007 – 2019</span>
       </div>
-      <div class="company">Amazon</div>
+      <div class="company">Amazon India · Godrej Security Solutions · Citicorp</div>
       <ul>
-        <li>Launched 2 revenue programs (<strong>$3M+ / $15M+</strong>); expanded coverage from <strong>12 to 68 cities</strong>.</li>
-        <li>Grew data coverage from <strong>7.8% to 99%</strong>.</li>
+        <li>Program management and business development building Amazon India's trade-in business (2014–2019): launched revenue programs, closed a data-coverage gap (<strong>7.8% → 99%</strong>) that was blocking launch, and grew a 3P marketplace category from <strong>6.5% to 25%</strong> share against a 15% target.</li>
+        <li>Pre-Amazon: Channel Manager, Godrej Security Solutions; Research Analyst, Citicorp.</li>
       </ul>
     </div>
+  </section>
 
-    <div class="job">
-      <div class="job-head">
-        <h3>Business Development Manager — 3P Marketplace</h3>
-        <span class="dates">2014 – 2016</span>
-      </div>
-      <div class="company">Amazon</div>
-      <ul>
-        <li>Grew category share from <strong>6.5% to 25%</strong>; lifted sell-through <strong>+12.3pp</strong>.</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-head">
-        <h3>Earlier</h3>
-        <span class="dates">2007 – 2014</span>
-      </div>
-      <div class="company">Godrej Security Solutions · Citicorp</div>
-      <ul>
-        <li><strong>Godrej Security Solutions</strong> (2012–2014): grew channel revenue <strong>+43%</strong>.</li>
-        <li><strong>Citicorp</strong> (2007–2009): research analyst.</li>
-      </ul>
+  <section class="sec">
+    <h2 class="sec-title">Skills</h2>
+    <div class="skills">
+      <p><strong>Technical</strong> (working proficiency): SQL and Python (analysis, prototyping); builds full-stack prototypes end-to-end with agentic AI tooling (React/Cloudscape → Lambda → Redshift); reads schemas and system designs and reasons about how services interact. Tooling: Kiro, Claude Code.</p>
+      <p><strong>Domain:</strong> Enterprise SaaS, decision intelligence, vendor-negotiation &amp; cost-optimization systems, marketplace operations.</p>
     </div>
   </section>
 
   <section class="sec">
     <h2 class="sec-title">Education</h2>
     <div class="edu">
-      <div><strong>MBA</strong> — Xavier Institute of Management (2012), exchange at Neoma Business School</div>
+      <div><strong>MBA</strong> — Xavier Institute of Management, Bhubaneswar + Neoma Business School, Reims</div>
       <div class="d">2012</div>
     </div>
     <div class="edu" style="margin-top: 0.4rem">
-      <div><strong>B.Com</strong> — Narsee Monjee College of Commerce &amp; Economics</div>
+      <div><strong>B.Com</strong> — Narsee Monjee College, Mumbai</div>
       <div class="d">2007</div>
     </div>
   </section>
-</Layout>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var btn = document.getElementById("copy-resume-btn");
+      var status = document.getElementById("copy-resume-status");
+      var body = document.getElementById("resume-body");
+      if (!btn || !body) return;
+      btn.addEventListener("click", function () {
+        var text = body.innerText.replace(/\n{3,}/g, "\n\n").trim();
+        navigator.clipboard.writeText(text).then(function () {
+          if (status) status.textContent = "Copied";
+          btn.textContent = "Copied";
+          setTimeout(function () {
+            btn.textContent = "Copy résumé text";
+            if (status) status.textContent = "";
+          }, 2000);
+        }).catch(function () {
+          if (status) status.textContent = "Copy failed";
+        });
+      });
+    })();
+  </script>
+</HomeLayout>

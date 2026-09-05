@@ -40,7 +40,7 @@ export type SectionId = "philosophy" | "impact" | "projects";
 
 export type NavPosition = "top" | "bottom" | "side";
 export type ContentWidth = "narrow" | "standard" | "wide" | "full";
-export type NamePlacement = "hero" | "byline" | "footer" | "hidden";
+export type NamePlacement = "hero" | "byline" | "footer" | "hidden" | "above-statement";
 export type CtaLayout = "row" | "column" | "stacked";
 export type InteractionStyle = "underline" | "accent" | "lift" | "glow";
 export type NavStyle = "minimal" | "underline" | "spaced";

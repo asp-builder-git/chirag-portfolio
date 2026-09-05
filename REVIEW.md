@@ -169,3 +169,213 @@ Implemented on `feat/p0-p1-benchmark`. All P0 (7) + P1 (8) items landed:
 - Pillar 2 wording: "VP-level 2026 priority" kept (real, from CV); pillar 3 states reliability gain plainly.
 
 **Next:** M6.3 — 3 case studies (6-part anatomy) at /case-studies. Needs Chirag's pick of 3rd deep-dive (warehouse vs GenAI accelerator) + nav question.
+
+## Design Lab — Deterministic UX Exploration (2026-09-01, G1 ✅)
+
+**Decision:** build a local-only design lab that maps 100-character alphanumeric seeds to full design specs (colors, shadows, buttons, radius, typography, layout archetypes). 16 curated seeds span the design space. Production `Layout.astro` untouched until Chirag picks a winner.
+
+**Scope:**
+- `src/design/*` — deterministic `resolveDesign(seed)` pipeline with 10 zones, pattern extractors, WCAG AA nudge logic
+- `src/layouts/DesignLabLayout.astro` — injects resolved CSS vars per seed; archetype modifiers (`leerob`, `paco`, `mxb`, `antfu`, `brutalist`)
+- `src/components/pages/HomeContent.astro` + `ProjectsContent.astro` — shared markup; production pages refactored to import them
+- `/design-lab` gallery + `/design-lab/[seed]/home` + `/design-lab/[seed]/projects` — local dev review only
+- Production guard: `[seed]` routes return empty `getStaticPaths()` in PROD; gallery index shows dev-only stub
+
+**Voice (SA-Voice sign-off):** lab pages reuse production copy verbatim from `HomeContent` / `ProjectsContent`. No new marketing text. Banner/footer labels are lab chrome only.
+
+**Review workflow:**
+1. `astro dev --background` → `http://localhost:4321/chirag-portfolio/design-lab`
+2. Gallery shows 16 variants with swatches + archetype tags
+3. Click Home / Projects per seed; shortlist 2–3 seed IDs
+4. Winner → separate PR folds tokens into production `Layout.astro`
+
+**Artifacts:** `design-lab-a11y-report.md` (contrast audit), `npm run design:seeds` (terminal catalog)
+
+**Next:** Chirag reviews gallery locally → picks seed → G4 approval → production token migration PR.
+
+## Swiss Home + Parametric Playground (2026-09-02, G3 ✅ — awaiting G4)
+
+**Decision:** Ship Swiss statement poster as production home default. Recruiters get name + role + statement + resume path; builders get `/playground` and the expanded portfolio case study. Design lab stays dev-only.
+
+**Branch:** `feat/design-lab`
+
+### What changed
+
+**Home (`/`):**
+- New `HomeLayout.astro` — sticky ATF bar (Chirag R Gandhi · Home · Projects · Resume), theme toggle, appearance drawer
+- Statement-dominant hero: name label (red rule) → Platform Product Manager → approved statement → plain sentence
+- CTAs: Resume primary, Projects secondary; status chip removed
+- 3 impact metrics (from resume highlights); philosophy band unchanged
+- Projects band: `this-portfolio-site` only
+
+**Appearance drawer (5 knobs):** Preset · Theme · Hero mode · Density · Texture (glyph drift off by default)
+
+**Playground (`/playground`):** Full preset picker, share-link copy, intro, links to home + case study
+
+**Case study:** `this-portfolio-site` expanded; proof row adds "Try presets →"
+
+**Design system (lab):** `namePlacement: above-statement`, Swiss brutal dark palette, black matrix rain on card #18
+
+### G3 verification
+
+- `npm run build` — exit 0, 11 pages (includes `/`, `/playground`)
+- No linter errors on new files
+
+### What to review
+
+1. **`/`** — sticky bar, statement hero, 3 metrics, single project row
+2. **Appearance drawer** (gear) — try presets, dark mode, texture
+3. **`/playground`** — share link, preset switching
+4. **`/projects/this-portfolio-site`** — updated copy + playground link
+5. **Dev lab card #18** — `npm run dev` → `/design-lab` → Swiss · statement poster
+
+### Deviations (logged)
+
+- Playground link on home project row omitted (lives in case study proof row only)
+- Drawer knob labeled "Texture" not "Motion" (same Off/Subtle behavior)
+
+## Feedback pass — Swiss home polish (2026-09-03)
+
+**Applied from Chirag review:**
+- Sticky bar: larger name + orange `|` separator before nav links
+- Hero: removed name/role above statement; statement = "I revel in watching a well-built solution come alive."; sub-hero = enterprise/agent line; tagline = "Platform Product Manager | Agent-supported Builder | Lifelong Learner"
+- Impact: compact metric cards (smaller type/padding)
+- Portfolio project: voice-rewritten blurb + case study
+- Footer: removed Professional / Personal tags (home + site-wide Layout)
+- Playground: theme preset as buttons under "View this site in different themes:"
+- Home projects row links to playground themes
+
+**Open:** Operating philosophy — no prior plan comment found beyond "keep existing copy." Awaiting Chirag's rewrite/hide/shorten direction.
+
+**G3:** build green after this pass.
+
+## Resume sync — CV v8 (2026-09-03)
+
+**Source:** `Chirag-Gandhi-Resume-v8.docx`. Replaced all legacy `/resume` content with v8-accurate copy. Home page left untouched (no Amazon name dumps; VOICE rule 8).
+
+### Legacy → v8 deltas (key numbers)
+
+| Area | Legacy (on site) | CV v8 |
+| --- | --- | --- |
+| Role title | Senior Product Manager | Senior Technical Product Manager (PM-T) \| Enterprise Platforms & AI Automation |
+| Platform users | ~400 negotiators, 9 EU markets | ~850 negotiators, EU & NA |
+| Adoption story | ~5% voluntary → org-wide default; ~3.6M actions/year (+120% YoY) | Near-zero → org-wide default (no 3.6M / +120% YoY in v8) |
+| Reliability | +148 bps | +175 bps; protecting >$1.05M/yr contribution profit |
+| Automation case | 82% of 40,937 audit entries | 41K requests; funded 2026 VP goal; $200MM entitlement |
+| New (v8 only) | — | Solo profitability app in 5 weeks; €87MM entitlement; 25 WAU / 50 target; 1.49M EU opportunities portal → UCP |
+| Cross-border | OCR → €300M+; 144K products | Same core + 270K listings/year; €300MM+ wording |
+| Trade-in / warehouse | 1M units/year capacity; $3M defect costs | Doubling capacity to 1M units/year; defect value 17.8% → ~12% ($3M) |
+| Earlier roles | Separate PM / BD roles with $3M+/$15M+, 12→68 cities, +12.3pp, Godrej +43% | Condensed 2007–2019 block; kept 7.8%→99%, 6.5%→25% (vs 15% target); Godrej Channel Manager + Citicorp Research Analyst |
+| Skills | Absent on page | Technical (SQL/Python, React/Cloudscape→Lambda→Redshift, Kiro/Claude Code) + Domain |
+| Highlights strip | €0.36Bn · ~5%→default · 82% · 11+ yrs | €0.36Bn/yr · Near-zero→default · +175 bps · €87MM |
+
+**Files:** `src/pages/resume.astro`, `REVIEW.md`. Layout meta already aligned (PM-T).
+
+**Build:** run `npm run build` on `feat/design-lab` before commit (shell unavailable in the sync session — verify locally).
+
+## Home / design-lab CV v8 metric sync (2026-09-03)
+
+Aligned non-resume career numbers with resume v8 (VOICE.md; no Amazon on home). Philosophy stays hidden on production-default.
+
+| Metric | Legacy | Now (v8) |
+| --- | --- | --- |
+| Platform reach | ~400 / 9 EU | ~850 users, EU & NA |
+| Profitability | €0.36Bn/yr (kept) | €0.36Bn/yr |
+| Adoption | ~3.6M actions / +120% YoY; ~5%→default | Near-zero → org-wide default |
+| Reliability | +148 bps | +175 bps; >$1.05M/yr protected |
+| Automation evidence | 82% of 40,937 | 41K requests → funded 2026 VP goal ($200MM) |
+
+**Impact cards (3):** €0.36Bn/yr · Near-zero → default · +175 bps  
+**Files:** `src/data/home-content.ts`, `src/design/creative.ts`, `src/components/pages/HomeContentLab.astro` (imports shared copy), `REVIEW.md`. `about.astro` had no outdated career claims.
+
+**G3:** `npm run build` on this pass.
+
+## UX designer P0/P1 pass (2026-09-03)
+
+**Decisions:** Hide operating philosophy on Swiss production/playground default; Swiss red (`#ff0000` / `var(--accent)`) replaces orange sticky `|`.
+
+**P0**
+- Philosophy hidden via `hiddenSections: ["philosophy"]` in production-default + swiss-statement `applyAppearance`; visible bands **Impact → Projects**
+- Fullscreen intro capped: `min-height: min(80svh, 36rem)` (production override)
+- Tagline muted/smaller; dropped “Lifelong Learner”
+- Metric hero uses real `<h1>`
+
+**P1**
+- Impact un-carded (hairline left rules, no fill/radius); `.metric-num` ~1.125rem
+- Sticky `|` + bottom border use `var(--accent)`; site-name ~1.25rem; nav ~0.8125rem
+- Appearance drawer: Preset + Theme removed (playground buttons + sticky toggle own those)
+
+**G3:** re-run `npm run build` after this pass.
+
+## Content audit — rest of site vs CV v8 (2026-09-03)
+
+**Source:** `Chirag-Gandhi-Resume-v8.docx` (facts via resume-agent extract + REVIEW legacy→v8 table). Scope: all non-resume career copy. `resume.astro` owned by resume agent — not edited here.
+
+### Outdated claims found (legacy → removed/replaced)
+
+| Claim (legacy on site) | CV v8 truth |
+| --- | --- |
+| ~400 negotiators, 9 EU markets | ~850 negotiators, EU & NA |
+| ~5% voluntary → org-wide default; ~3.6M actions/year (+120% YoY) | Near-zero → org-wide EU/NA default (no 3.6M / +120% YoY in v8) |
+| +148 bps (94.87% → 96.35%) | +175 bps successful-schedule rate; protecting >$1.05M/yr |
+| 82% of 40,937 audit entries | 41K requests → deterministic workflows; funded 2026 VP goal ($200MM) |
+| 8h → 1h GenAI / vendor prep | Not in v8 — removed from lab/creative metrics |
+| Role: “Internal Platform PM — Workflow Orchestration…” (lab) | Aligned to Enterprise Platforms & AI Automation (no Amazon on home) |
+
+### Content audit table
+
+| Page / string | Old | New / status |
+| --- | --- | --- |
+| `home-content.ts` HERO_COPY | statement / subhero / tagline | unchanged verified (no career numbers; tagline already without Lifelong Learner) |
+| `home-content.ts` HERO_METRIC | €0.36Bn/yr · profitability label | unchanged verified (€0.36Bn/yr still in v8) |
+| `home-content.ts` PILLARS 01 | ~400 negotiators | ~850 negotiators across EU and NA |
+| `home-content.ts` PILLARS 02 | 40,937 / 82% / VP-level 2026 priority | My analysis of 41K requests → deterministic over AI chatbot; funded 2026 VP goal ($200MM) |
+| `home-content.ts` PILLARS 03 | ~3.6M / +120% YoY / +148 bps | +175 bps · 7 fixes in 6 months · >$1.05M/yr |
+| `home-content.ts` IMPACT_METRICS | €0.36Bn · ~5%→default · 82% | €0.36Bn/yr · Near-zero→default · +175 bps (CV highlights) |
+| `HomeContent.astro` | imports shared copy | unchanged verified (inherits home-content) |
+| `HomeContentLab.astro` pillars/metrics | hardcoded legacy 5-chip set | imports PILLARS + IMPACT_METRICS; plain line ~850 EU/NA; role title aligned |
+| `creative.ts` HERO_STATEMENTS | ~400 / 82% / 3.6M | ~850 / 41K / +175 bps |
+| `creative.ts` HERO_METRICS | 3.6M · ~400 · +148bps · 8h→1h | €0.36Bn · ~850 · +175bps · €87MM · Near-zero→default |
+| `creative.ts` heroQuestion | ~400 people | ~850 people |
+| `about.astro` | no career metrics | unchanged verified |
+| `projects.ts` | personal project blurbs only | unchanged verified (no career claims) |
+| `Layout.astro` title/meta | Senior Technical Product Manager | unchanged verified (matches CV PM-T register; no Amazon) |
+| `HomeLayout.astro` meta | Platform Product Manager; enterprise/agent line | unchanged verified |
+| `VOICE.md` example numbers | €0.9Bn / 5%→100% | updated examples to v8-shaped numbers |
+
+### CV v8 on resume but not on home (intentional)
+
+Kept on `/resume` only (VOICE rule 8 / home density): Amazon employer names; €87MM solo 5-week app (available in lab `HERO_METRICS`); 25 WAU/50; 1.49M EU opportunities → UCP; cross-border OCR 270K/144K/€300MM+; warehouse 1M units + defect 17.8%→~12%; earlier 7.8%→99% / 6.5%→25%; education/skills detail.
+
+**Build:** `npm run build` exit 0 (11 pages).
+
+## Swiss home polish — tomorrow backlog (2026-09-03)
+
+**Branch:** `feat/design-lab`
+
+### Changes
+1. **Playground fixed** — preset clicks now apply that preset’s hero + density (Classic/Metric/Terminal no longer stuck under Swiss poster defaults). `PRESET_APPEARANCE` + `appearanceForPreset`.
+2. **Projects + Resume** use `HomeLayout` Swiss shell (sticky ATF, tokens, dark mode). Appearance drawer hidden on those pages.
+3. **Impact** rebuilt as one horizontal strip (compact mono nums + short labels from CV v8).
+4. **Dark mode** — user `localStorage` theme choice wins over persona `forceDark`; warmPaper dark palette added; swiss dark hairline softened.
+5. **Copy** — sub-hero: “experiments at home” (dropped agent-built).
+6. **Hero CTAs removed** — Resume/Projects only in sticky nav.
+7. **Resume** — “Copy résumé text” button with ARIA-live feedback.
+
+**G3:** verify with `npm run build`. **G4:** awaiting Chirag.
+
+## Swiss home ship — impact rewrite + projects cleanup (2026-09-05)
+
+**Branch:** `feat/design-lab` → PR → `main`
+
+### Changes since polish backlog
+1. **Impact strip** — Build → Scale → Defend: `€87M surfaced` / `850 negotiators` / `$1.05M/yr protected` (product-leader "why does it matter" rewrite).
+2. **Projects page** — removed duplicate "Projects" eyebrow + subtitle "A project counts when a stranger can open it."
+3. **In-progress projects** — filtered off public `/projects` list and case-study paths until ready.
+4. Prior Swiss home polish still on this branch (playground presets, HomeLayout on Projects/Resume, dark mode, copy, resume copy button, hero CTAs removed).
+
+**G3:** `npm run build` exit 0.
+**G4:** Chirag approved in chat 2026-09-05 — "let's push these change to git and deploy to prod."
+**G5:** pending merge → GitHub Pages → verify https://asp-builder-git.github.io/chirag-portfolio/
+
+
