@@ -1,0 +1,37 @@
+---
+import { projects } from "../../data/projects";
+
+const base = import.meta.env.BASE_URL;
+/** In-progress projects stay in data but off the public list until ready */
+const liveProjects = projects.filter((p) => p.status === "Live");
+---
+
+<style>
+  h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.5rem; }
+  .sub { color: var(--muted); margin-bottom: 2rem; }
+  .project-row {
+    border-top: 1px solid var(--hairline);
+    padding: 1.25rem 0;
+  }
+  .project-row .status { margin-bottom: 0.35rem; }
+  .project-row h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .project-row h3 a { text-decoration: none; }
+  .project-row h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  .project-row p { color: var(--muted); font-size: 0.9375rem; max-width: 60ch; }
+</style>
+
+<h1>Projects</h1>
+
+<div class="project-list">
+{
+  liveProjects.map((p) => (
+    <div class="project-row">
+      <div class="status">{p.status}</div>
+      <h3><a href={`${base}projects/${p.slug}`}>{p.name}</a></h3>
+      <p>
+        {p.blurb} {p.difficulty}
+      </p>
+    </div>
+  ))
+}
+</div>

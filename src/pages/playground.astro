@@ -1,0 +1,80 @@
+---
+import HomeLayout from "../layouts/HomeLayout.astro";
+import HomeContent from "../components/pages/HomeContent.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import {
+  parseAppearanceParams,
+  applyAppearance,
+  appearanceToSearchParams,
+  appearanceForPreset,
+  PRESET_OPTIONS,
+  type PresetId,
+} from "../design/presets";
+
+const appearance = parseAppearanceParams(Astro.url.searchParams);
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
+const base = import.meta.env.BASE_URL;
+
+function presetHref(presetId: PresetId): string {
+  const next = appearanceForPreset(presetId, appearance);
+  const params = appearanceToSearchParams(next);
+  // Always include preset when not swiss default so Classic/Metric/Terminal stick
+  if (presetId !== "swiss-statement") params.set("preset", presetId);
+  const qs = params.toString();
+  return qs ? `${base}playground?${qs}` : `${base}playground`;
+}
+---
+
+<HomeLayout
+  spec={spec}
+  appearance={appearance}
+  title="Playground — Chirag R Gandhi"
+  active="playground"
+  drawerExpanded={false}
+>
+  <style>
+    .playground-intro {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 58ch;
+      margin-bottom: 1.5rem;
+    }
+    .playground-intro a { color: var(--ink); }
+    .playground-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      font-size: 0.875rem;
+      margin-top: 0.75rem;
+    }
+    .playground-links a { color: var(--muted); }
+  </style>
+
+  <div class="playground-intro">
+    <p>
+      This site is parametric: a seed resolves to a design spec, which drives the CSS — type, color, hero, motion. Pick a theme below. The wilder 24-persona lab stays local-only.
+    </p>
+    <div class="playground-links">
+      <a href={base}>← Home</a>
+      <a href={`${base}projects/this-portfolio-site`}>Case study →</a>
+    </div>
+  </div>
+
+  <div class="theme-presets" role="group" aria-label="Theme presets">
+    <p class="theme-presets-label">View this site in different themes:</p>
+    <div class="theme-presets-row">
+      {PRESET_OPTIONS.map((p) => (
+        <a
+          href={presetHref(p.id)}
+          class:list={["preset-btn", appearance.preset === p.id && "active"]}
+          title={p.label}
+        >
+          {p.shortLabel}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <HomeContent spec={spec} />
+</HomeLayout>

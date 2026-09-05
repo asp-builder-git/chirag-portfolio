@@ -16,6 +16,8 @@ export interface Project {
   problem: string[];
   built: string[];
   outcome: string[];
+  /** Optional link to the parametric playground preset picker */
+  playgroundUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -23,21 +25,24 @@ export const projects: Project[] = [
     slug: "this-portfolio-site",
     name: "This portfolio site",
     status: "Live",
-    blurb: "Astro + GitHub Pages, built in public — the meta-project.",
+    blurb: "The meta-project — a portfolio with a design system visitors can try.",
     difficulty:
-      "The hard part wasn't the build — it was the discipline: every change goes through a review gate before it ships.",
+      "The hard part wasn't Astro. It was the discipline: every change goes through a review gate before it ships.",
     url: "https://asp-builder-git.github.io/chirag-portfolio/",
     repo: "https://github.com/asp-builder-git/chirag-portfolio",
     repoPublic: true,
+    playgroundUrl: "/chirag-portfolio/playground",
     problem: [
-      "Every portfolio I'd seen was either a template or a promise. I wanted one that only shows real things: projects a stranger can open, a resume for the formal record, nothing marked \u201ccoming soon\u201d.",
+      "Most portfolios are a template or a promise. I wanted one that only shows real things — and that shows how I think about systems, not just what I shipped.",
       "The rule that runs it: a project counts when a stranger can open it.",
     ],
     built: [
-      "A static site with Astro, deployed to GitHub Pages. No framework JavaScript, two self-hosted fonts, one accent color, dark mode with no flash on load.",
+      "A static Astro site on GitHub Pages. A seed string resolves to a design spec, which drives the CSS — typography, palette, hero, motion.",
+      "Four curated presets visitors can try on /playground. Twenty-four wilder ones stay in a local design lab.",
+      "Every change ships through a review gate: branch, build, approval, then merge.",
     ],
     outcome: [
-      "Live since August 2026, deployed from main through a review-gated pipeline. It's the meta-project: proof I can finish things.",
+      "Live since August 2026. Open /playground to switch themes. The meta-project is proof I can finish things.",
     ],
   },
   {

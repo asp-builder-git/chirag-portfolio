@@ -1,0 +1,26 @@
+---
+import DesignLabLayout from "../../../layouts/DesignLabLayout.astro";
+import ProjectsContent from "../../../components/pages/ProjectsContent.astro";
+import { CURATED_SEEDS, resolveLabDesign } from "../../../design/seeds";
+import { isDesignLabEnabled } from "../../../design/lab-guard";
+
+export function getStaticPaths() {
+  if (!isDesignLabEnabled) return [];
+  return CURATED_SEEDS.map((seed, index) => ({
+    params: { seed: seed.slice(0, 8) },
+    props: { fullSeed: seed, galleryIndex: index },
+  }));
+}
+
+interface Props {
+  fullSeed: string;
+  galleryIndex: number;
+}
+
+const { fullSeed, galleryIndex } = Astro.props;
+const spec = resolveLabDesign(fullSeed, galleryIndex);
+---
+
+<DesignLabLayout spec={spec} seed={fullSeed} title="Design Lab — Projects" active="projects" pageLabel="Projects">
+  <ProjectsContent />
+</DesignLabLayout>

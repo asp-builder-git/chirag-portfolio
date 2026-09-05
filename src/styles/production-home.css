@@ -1,0 +1,271 @@
+/* Production home — sticky ATF bar, appearance drawer */
+
+.sticky-atf {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.25rem;
+  padding: 0.75rem 0;
+  margin: 0 0 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--accent);
+}
+
+.sticky-atf .site-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--ink);
+  margin-right: 0;
+}
+
+.sticky-atf .site-name:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+}
+
+.sticky-atf .name-sep {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0 0.15rem 0 0.35rem;
+  user-select: none;
+}
+
+.sticky-atf .nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.25rem;
+}
+
+.sticky-atf .nav-links a {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.15rem 0;
+}
+
+/* Beat chaos all-caps-nav 0.75rem so sticky links stay readable */
+[data-chaos~="all-caps-nav"] .sticky-atf .nav-links a {
+  font-size: 0.8125rem;
+}
+
+.sticky-atf .nav-links a.active {
+  text-decoration: underline;
+  text-decoration-color: var(--ink);
+}
+
+.sticky-atf .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.appearance-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.appearance-trigger:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.appearance-trigger svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.appearance-drawer[hidden] {
+  display: none;
+}
+
+.appearance-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(22rem, 100vw);
+  height: 100%;
+  background: var(--bg);
+  border-left: 1px solid var(--hairline);
+  padding: 1.25rem 1.5rem 2rem;
+  overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.drawer-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.drawer-close:hover {
+  color: var(--ink);
+}
+
+.drawer-form fieldset {
+  border: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.drawer-form legend {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.drawer-form select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-btn, 6px);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.drawer-hint {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.btn-copy-link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-btn, 6px);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.btn-copy-link:hover {
+  border-color: var(--ink);
+}
+
+body.drawer-open {
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .sticky-atf {
+    gap: 0.35rem 0.85rem;
+  }
+  .sticky-atf .nav-links {
+    gap: 0.35rem 0.85rem;
+  }
+}
+
+/* Production Swiss: keep character without 3rem section titles */
+[data-theme-persona="swissBrutal"] .section .label {
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  letter-spacing: -0.02em;
+}
+
+/* Shrink fullscreen ATF waste under sticky bar */
+[data-hero-shell="fullscreen"] .intro {
+  min-height: min(80svh, 36rem);
+}
+
+/* Impact: single horizontal strip */
+[data-theme-persona="swissBrutal"] .section.impact .impact-strip {
+  border-color: var(--hairline);
+}
+[data-theme-persona="swissBrutal"] .section.impact .metric-num {
+  font-size: 0.9375rem;
+}
+
+/* Theme preset buttons — playground + optional home strip */
+.theme-presets {
+  margin: 0 0 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.theme-presets .theme-presets-label {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.theme-presets .theme-presets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.theme-presets .preset-btn {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-btn, 6px);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+}
+.theme-presets .preset-btn:hover {
+  border-color: var(--ink);
+  text-decoration: none;
+}
+.theme-presets .preset-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+[data-theme-persona="swissBrutal"] .theme-presets .preset-btn {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

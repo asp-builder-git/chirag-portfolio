@@ -1,0 +1,228 @@
+/* Design lab — full language variants driven by data-* on <html> */
+
+/* --- Text alignment --- */
+[data-text-align="center"] .intro,
+[data-text-align="center"] .section {
+  text-align: center;
+}
+[data-text-align="center"] .intro .role,
+[data-text-align="center"] .intro .plain,
+[data-text-align="center"] .row p {
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-text-align="center"] .cta-row {
+  justify-content: center;
+}
+
+/* --- Hero layouts --- */
+[data-hero-layout="centered"] .intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+[data-hero-layout="airy"] .intro {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+[data-hero-layout="airy"] .intro h1 { margin-bottom: 0.75rem; }
+[data-hero-layout="airy"] .intro .role { margin-top: 1.25rem; }
+[data-hero-layout="airy"] .intro .plain { margin-top: 1.5rem; }
+[data-hero-layout="compact"] .intro { margin-bottom: calc(clamp(2rem, 4vw, 3rem) * var(--space-section, 1)); }
+[data-hero-layout="compact"] .intro .status-chip { display: none; }
+[data-hero-layout="statement"] .intro .role {
+  border-top: 2px solid var(--ink);
+  padding-top: 1rem;
+  margin-top: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* --- Hero scale (h1 clamp from CSS vars) --- */
+.intro h1 {
+  font-size: clamp(var(--hero-size-min, 2.5rem), var(--hero-size-mid, 2rem + 3.5vw), var(--hero-size-max, 4rem));
+}
+
+/* --- CTA layout --- */
+[data-cta-layout="column"] .cta-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+[data-cta-layout="stacked"] .cta-row {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+[data-text-align="center"][data-cta-layout="column"] .cta-row,
+[data-text-align="center"][data-cta-layout="stacked"] .cta-row {
+  align-items: center;
+}
+
+/* --- Label styles --- */
+[data-label-style="sentence"] .label,
+[data-label-style="sentence"] .eyebrow {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+[data-label-style="mono"] .label,
+[data-label-style="mono"] .eyebrow {
+  font-family: var(--font-mono);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+/* --- Section styles --- */
+[data-section-style="spaced"] .section + .section {
+  margin-top: calc(clamp(4rem, 8vw, 6rem) * var(--space-section, 1));
+}
+[data-section-style="band"] .section {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card, 10px);
+  padding: 1.5rem 1.25rem;
+  box-shadow: var(--shadow-md, none);
+}
+[data-section-style="band"] .section .pillars,
+[data-section-style="band"] .section .metrics {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* --- Metric layouts --- */
+[data-metric-layout="grid2"] .metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+[data-metric-layout="grid3"] .metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+[data-metric-layout="bar"] .metrics {
+  flex-direction: column;
+}
+[data-metric-layout="bar"] .metric {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: none;
+}
+[data-metric-layout="bar"] .metric .metric-label {
+  margin-top: 0;
+  text-align: right;
+}
+
+/* --- Font pairings --- */
+[data-font-pairing="editorial"] h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+[data-font-pairing="monoDense"] h1,
+[data-font-pairing="monoDense"] .metric-num {
+  letter-spacing: -0.03em;
+}
+[data-font-pairing="sansClean"] h1 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+[data-font-pairing="system"] h1,
+[data-font-pairing="system"] h2,
+[data-font-pairing="system"] h3 {
+  font-family: var(--font-body);
+}
+
+/* --- Interaction styles --- */
+[data-interaction="accent"] a:hover {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+[data-interaction="lift"] .metric:hover,
+[data-interaction="lift"] .card:hover,
+[data-interaction="lift"] .row:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md, none);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+[data-interaction="glow"] .btn-primary:hover {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+[data-interaction="glow"] a:hover {
+  text-decoration-color: var(--accent);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* --- Nav styles --- */
+[data-nav-style="underline"] nav {
+  gap: 1.5rem 2rem;
+  border-bottom-width: 2px;
+}
+[data-nav-style="underline"] nav a.active {
+  text-decoration-thickness: 2px;
+}
+[data-nav-style="spaced"] nav {
+  justify-content: space-between;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+}
+
+/* --- Projects page layouts --- */
+[data-projects-layout="rows"] .project-list .card {
+  border: none;
+  border-radius: 0;
+  border-top: 1px solid var(--hairline);
+  box-shadow: none;
+  padding: 1.25rem 0;
+  background: transparent;
+}
+[data-projects-layout="rows"] .project-list .card:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+[data-projects-layout="compact"] .project-list .card {
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.5rem;
+}
+[data-projects-layout="compact"] .project-list .card h3 {
+  font-size: 1rem;
+}
+[data-projects-layout="cards"] .project-list .card {
+  box-shadow: var(--shadow-md, none);
+}
+[data-projects-layout="cards"] .project-list .card:hover {
+  border-color: var(--accent);
+}
+[data-projects-layout="cards"] .project-list .row {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card, 10px);
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  background: var(--surface);
+  box-shadow: var(--shadow-md, none);
+}
+[data-projects-layout="cards"] .project-list .row {
+  border-top: 1px solid var(--hairline);
+}
+[data-projects-layout="compact"] .project-list .row {
+  padding: 0.75rem 0;
+}
+[data-projects-layout="compact"] .project-list .row p {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  [data-metric-layout="grid2"] .metrics,
+  [data-metric-layout="grid3"] .metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-interaction="lift"] .metric:hover,
+  [data-interaction="lift"] .card:hover,
+  [data-interaction="lift"] .row:hover {
+    transform: none;
+  }
+}

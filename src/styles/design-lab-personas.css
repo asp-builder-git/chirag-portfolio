@@ -1,0 +1,289 @@
+/* Creative persona themes — structural + atmospheric */
+
+/* --- Right alignment --- */
+[data-text-align="right"] .intro,
+[data-text-align="right"] .section,
+[data-text-align="right"] .project-list {
+  text-align: right;
+}
+[data-text-align="right"] .intro .role,
+[data-text-align="right"] .intro .plain,
+[data-text-align="right"] .row p,
+[data-text-align="right"] .metric-label {
+  margin-left: auto;
+  margin-right: 0;
+}
+[data-text-align="right"] .cta-row {
+  justify-content: flex-end;
+}
+[data-text-align="right"] .pillars,
+[data-text-align="right"] .metrics {
+  direction: rtl;
+}
+[data-text-align="right"] .pillars > *,
+[data-text-align="right"] .metrics > * {
+  direction: ltr;
+}
+
+/* --- Content width --- */
+[data-content-width="narrow"] .container { max-width: 32rem; }
+[data-content-width="wide"] .container { max-width: 56rem; }
+[data-content-width="full"] .container { max-width: 72rem; }
+
+/* --- Nav positions --- */
+[data-nav-position="bottom"] .container {
+  display: flex;
+  flex-direction: column;
+}
+[data-nav-position="bottom"] nav.lab-nav-top { order: 3; margin-top: 3rem; margin-bottom: 0; border-bottom: none; border-top: 1px solid var(--hairline); padding-top: 1rem; }
+[data-nav-position="side"] .page-wrap {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 2rem;
+}
+[data-nav-position="side"] .container {
+  display: contents;
+}
+[data-nav-position="side"] .lab-banner {
+  grid-column: 1 / -1;
+}
+[data-nav-position="side"] nav.lab-nav-top {
+  flex-direction: column;
+  align-items: flex-start;
+  border: none;
+  padding: 0;
+  margin: 0;
+  grid-column: 1;
+  grid-row: 2;
+}
+[data-nav-position="side"] main,
+[data-nav-position="side"] footer {
+  grid-column: 2;
+}
+@media (max-width: 640px) {
+  [data-nav-position="side"] .page-wrap { grid-template-columns: 1fr; display: block; }
+  [data-nav-position="side"] .container { display: block; }
+}
+
+/* --- Hero modes --- */
+[data-hero-mode="statement"] .intro .hero-name { display: none; }
+[data-hero-mode="statement"] .intro .status-chip,
+[data-hero-mode="metric"] .intro .status-chip,
+[data-hero-mode="question"] .intro .status-chip,
+[data-hero-mode="role"] .intro .status-chip { display: none; }
+[data-hero-mode="statement"] .intro .hero-statement {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 2vw, 3rem);
+  font-weight: var(--display-weight, 400);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 28ch;
+}
+[data-text-align="right"][data-hero-mode="statement"] .intro .hero-statement { margin-left: auto; }
+[data-text-align="center"][data-hero-mode="statement"] .intro .hero-statement { margin-inline: auto; }
+
+[data-hero-mode="metric"] .intro .hero-name,
+[data-hero-mode="metric"] .intro .role,
+[data-hero-mode="metric"] .intro .plain { display: none; }
+[data-hero-mode="metric"] .intro .hero-metric {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 2.5rem + 5vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+[data-hero-mode="metric"] .intro .hero-metric-label {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+  max-width: 30ch;
+}
+
+[data-hero-mode="role"] .intro .hero-name { display: none; }
+[data-hero-mode="role"] .intro .role {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.6rem + 2.5vw, 3.5rem);
+  font-weight: 400;
+  color: var(--ink);
+  max-width: none;
+}
+
+[data-hero-mode="question"] .intro .hero-name,
+[data-hero-mode="question"] .intro .role { display: none; }
+[data-hero-mode="question"] .intro .hero-question {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  font-style: italic;
+  line-height: 1.3;
+  max-width: 32ch;
+}
+
+[data-name-placement="byline"] .intro .hero-byline {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+}
+[data-name-placement="footer"] .intro .hero-byline,
+[data-name-placement="hidden"] .intro .hero-byline,
+[data-name-placement="above-statement"] .intro .hero-byline { display: none; }
+
+[data-name-placement="above-statement"] .intro .hero-name-label {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1rem + 0.25vw, 1.125rem);
+  font-weight: 500;
+  line-height: 1.3;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.75rem;
+  margin: 0 0 1rem;
+  letter-spacing: 0.01em;
+}
+[data-name-placement="above-statement"] .intro .hero-name { display: none; }
+[data-theme-persona="swissBrutal"][data-hero-mode="statement"] .intro .hero-statement {
+  text-shadow: none;
+}
+
+/* --- Matrix theme --- */
+[data-theme-persona="matrix"] {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.35);
+}
+[data-theme-persona="matrix"] .intro .hero-statement,
+[data-theme-persona="matrix"] h1,
+[data-theme-persona="matrix"] .hero-metric {
+  text-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+}
+[data-theme-persona="matrix"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+}
+[data-theme-persona="matrix"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+}
+[data-theme-persona="matrix"] .btn-primary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+[data-theme-persona="matrix"] .lab-banner {
+  border-color: var(--hairline);
+  font-family: var(--font-mono);
+}
+
+/* --- Terminal theme --- */
+[data-theme-persona="terminal"] .intro::before {
+  content: "$ whoami";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+[data-theme-persona="terminal"] .intro .hero-name::before { content: "> "; color: var(--accent); }
+
+/* --- Newspaper --- */
+[data-theme-persona="newspaper"] .section.philosophy .pillars {
+  column-count: 2;
+  column-gap: 2rem;
+  display: block;
+}
+[data-theme-persona="newspaper"] .section.philosophy .pillar {
+  break-inside: avoid;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 640px) {
+  [data-theme-persona="newspaper"] .section.philosophy .pillars { column-count: 1; }
+}
+
+/* --- Swiss brutal --- */
+[data-theme-persona="swissBrutal"] .label,
+[data-theme-persona="swissBrutal"] .eyebrow {
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+[data-theme-persona="swissBrutal"] .section {
+  border-top: 4px solid var(--ink);
+  padding-top: 2rem;
+}
+[data-theme-persona="swissBrutal"] .btn {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+}
+
+/* --- Neon Tokyo --- */
+[data-theme-persona="neonTokyo"] .metric,
+[data-theme-persona="neonTokyo"] .card {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(255, 45, 149, 0.15);
+}
+[data-theme-persona="neonTokyo"] .intro .hero-statement,
+[data-theme-persona="neonTokyo"] .hero-metric {
+  background: linear-gradient(90deg, var(--accent), var(--accent-text));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* --- Void mono --- */
+[data-theme-persona="voidMono"] .section + .section {
+  margin-top: 6rem;
+}
+[data-theme-persona="voidMono"] .label { opacity: 0.4; }
+
+/* --- Luxury serif --- */
+[data-theme-persona="luxurySerif"] .intro .hero-statement,
+[data-theme-persona="luxurySerif"] .intro h1 {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+}
+
+/* --- Chaos effects --- */
+[data-chaos~="oversized-type"] .intro .hero-statement {
+  font-size: clamp(2rem, 1.6rem + 3vw, 3.75rem);
+  line-height: 1.08;
+  max-width: 18ch;
+}
+[data-chaos~="asymmetric-grid"] .pillars {
+  grid-template-columns: 1.2fr 0.8fr 1fr;
+}
+[data-chaos~="all-caps-nav"] nav a {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+}
+[data-chaos~="thick-rules"] .row,
+[data-chaos~="thick-rules"] .section {
+  border-top-width: 3px;
+}
+
+/* --- Hidden sections --- */
+[data-hide~="philosophy"] .section.philosophy { display: none; }
+[data-hide~="impact"] .section.impact { display: none; }
+[data-hide~="projects"] .section.projects { display: none; }
+
+/* --- Force dark themes --- */
+[data-force-dark="true"] { color-scheme: dark; }

@@ -1,128 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { projects } from "../data/projects";
+import HomeLayout from "../layouts/HomeLayout.astro";
+import HomeContent from "../components/pages/HomeContent.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { parseAppearanceParams, applyAppearance } from "../design/presets";
+
+const appearance = parseAppearanceParams(Astro.url.searchParams);
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<Layout title="Chirag R Gandhi — Senior Technical Product Manager, Builder">
-  <style>
-    .intro h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.25rem);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      margin: 0;
-    }
-    .intro .tagline {
-      font-size: 1.125rem;
-      font-weight: 500;
-      color: var(--muted);
-      line-height: 1.4;
-      margin-top: 0.5rem;
-    }
-    .intro p.lead {
-      font-size: 1.125rem;
-      line-height: 1.7;
-      max-width: 65ch;
-      margin-top: 1rem;
-      color: var(--ink);
-    }
-    .intro p.lead em {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--ink);
-    }
-    .intro p.rule {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-top: 0.5rem;
-    }
-    .intro .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .intro { margin-bottom: 3rem; }
-    .section + .section { margin-top: clamp(3rem, 6vw, 4.5rem); }
-    .section .label { display: block; margin-bottom: 1.25rem; }
-    .row {
-      border-top: 1px solid var(--hairline);
-      padding: 1.25rem 0;
-    }
-    .row .row-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      line-height: 1.4;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.3rem 0.75rem;
-    }
-    .row .row-title a { text-decoration: none; }
-    .row .row-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
-    .row p {
-      font-size: 0.9375rem;
-      line-height: 1.5;
-      color: var(--muted);
-      margin-top: 0.3rem;
-      max-width: 60ch;
-    }
-    .section .more { margin-top: 1.25rem; }
-  </style>
 
-  <header class="intro">
-    <h1>Chirag R Gandhi</h1>
-    <p class="tagline">Senior Technical Product Manager · Builder</p>
-    <p class="lead">
-      I <em>build</em> enterprise products at work. I <em>build</em> small tools at home.
-    </p>
-    <p class="rule">A project counts when a stranger can open it.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="/chirag-portfolio/resume">Resume — work history &amp; results</a>
-      <a class="btn btn-secondary" href="/chirag-portfolio/projects">Projects →</a>
-    </div>
-  </header>
-
-  <section class="section">
-    <h2 class="label">Work</h2>
-
-    <div class="row">
-      <div class="row-title">Senior Product Manager — Enterprise Negotiations Platform</div>
-      <p>~400 negotiators across 9 EU markets run their negotiations through it.</p>
-    </div>
-
-    <div class="row">
-      <div class="row-title">€0.36Bn a year in profitability</div>
-      <p>Supported by negotiations running on the platform.</p>
-    </div>
-
-    <div class="row">
-      <div class="row-title">~5% voluntary adoption → org-wide default</div>
-      <p>In 3 years — 3.6M actions a year, up 120%+ YoY.</p>
-    </div>
-
-    <a class="btn btn-secondary more" href="/chirag-portfolio/resume">Full resume →</a>
-  </section>
-
-  <section class="section">
-    <h2 class="label">Projects</h2>
-
-    {
-      projects.map((p) => (
-        <div class="row">
-          <div class="row-title">
-            <a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a>
-            <span class="status">{p.status}</span>
-          </div>
-          <p>
-            {p.blurb} {p.difficulty}
-          </p>
-        </div>
-      ))
-    }
-
-    <a class="btn btn-secondary more" href="/chirag-portfolio/projects">All projects →</a>
-  </section>
-</Layout>
+<HomeLayout
+  spec={spec}
+  appearance={appearance}
+  title="Chirag R Gandhi — Platform Product Manager"
+  active="home"
+>
+  <HomeContent spec={spec} />
+</HomeLayout>

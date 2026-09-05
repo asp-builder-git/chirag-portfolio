@@ -1,0 +1,206 @@
+---
+import type { AppearanceState } from "../design/presets";
+import { DEFAULT_APPEARANCE, PRESET_APPEARANCE } from "../design/presets";
+
+interface Props {
+  appearance: AppearanceState;
+  expanded?: boolean;
+}
+
+const { appearance, expanded = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<div
+  id="appearance-drawer"
+  class="appearance-drawer"
+  hidden
+  role="dialog"
+  aria-labelledby="appearance-drawer-title"
+  aria-modal="true"
+>
+  <div class="drawer-backdrop" data-drawer-close></div>
+  <div class="drawer-panel">
+    <header class="drawer-header">
+      <h2 id="appearance-drawer-title">Appearance</h2>
+      <button type="button" class="drawer-close" data-drawer-close aria-label="Close appearance panel">×</button>
+    </header>
+
+    <form id="appearance-form" class="drawer-form">
+      <fieldset>
+        <legend>Hero mode</legend>
+        <select name="hero" id="appearance-hero">
+          <option value="statement" selected={appearance.hero === "statement"}>Statement</option>
+          <option value="name" selected={appearance.hero === "name"}>Name + role</option>
+          <option value="metric" selected={appearance.hero === "metric"}>Metric</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Density</legend>
+        <select name="density" id="appearance-density">
+          <option value="standard" selected={appearance.density === "standard"}>Standard</option>
+          <option value="poster" selected={appearance.density === "poster"}>Poster</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Texture</legend>
+        <select name="motion" id="appearance-motion">
+          <option value="off" selected={appearance.motion === "off"}>Off</option>
+          <option value="full" selected={appearance.motion === "full"}>Subtle</option>
+        </select>
+      </fieldset>
+
+      {expanded && (
+        <p class="drawer-hint">
+          <button type="button" class="btn-copy-link" id="copy-share-link">Copy share link</button>
+        </p>
+      )}
+    </form>
+  </div>
+</div>
+
+<button
+  type="button"
+  id="appearance-trigger"
+  class="appearance-trigger"
+  aria-label="Open appearance settings"
+  aria-expanded="false"
+  aria-controls="appearance-drawer"
+  title="Appearance"
+>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+  </svg>
+</button>
+
+<script define:vars={{ base, defaultAppearance: DEFAULT_APPEARANCE, presetAppearance: PRESET_APPEARANCE, expanded }}>
+  (function () {
+    var STORAGE_KEY = "chirag-appearance";
+    var drawer = document.getElementById("appearance-drawer");
+    var trigger = document.getElementById("appearance-trigger");
+    var form = document.getElementById("appearance-form");
+    var copyBtn = document.getElementById("copy-share-link");
+
+    function readState() {
+      var params = new URLSearchParams(window.location.search);
+      var preset = params.get("preset") || defaultAppearance.preset;
+      var presetDefaults = presetAppearance[preset] || { hero: defaultAppearance.hero, density: defaultAppearance.density };
+      return {
+        preset: preset,
+        theme: params.get("theme") || defaultAppearance.theme,
+        hero: params.get("hero") || presetDefaults.hero,
+        density: params.get("density") || presetDefaults.density,
+        motion: params.get("motion") || defaultAppearance.motion,
+      };
+    }
+
+    function saveState(state) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function loadStoredState() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return null;
+    }
+
+    function buildUrl(state) {
+      var params = new URLSearchParams();
+      var presetDefaults = presetAppearance[state.preset] || { hero: defaultAppearance.hero, density: defaultAppearance.density };
+      if (state.preset !== defaultAppearance.preset) params.set("preset", state.preset);
+      if (state.theme !== defaultAppearance.theme) params.set("theme", state.theme);
+      if (state.hero !== presetDefaults.hero) params.set("hero", state.hero);
+      if (state.density !== presetDefaults.density) params.set("density", state.density);
+      if (state.motion !== defaultAppearance.motion) params.set("motion", state.motion);
+      var qs = params.toString();
+      return window.location.pathname + (qs ? "?" + qs : "");
+    }
+
+    function navigateWithState(state) {
+      saveState(state);
+      window.location.assign(buildUrl(state));
+    }
+
+    function openDrawer() {
+      if (!drawer || !trigger) return;
+      drawer.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      document.body.classList.add("drawer-open");
+    }
+
+    function closeDrawer() {
+      if (!drawer || !trigger) return;
+      drawer.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("drawer-open");
+    }
+
+    if (trigger) {
+      trigger.addEventListener("click", function () {
+        if (drawer && drawer.hidden) openDrawer();
+        else closeDrawer();
+      });
+    }
+
+    document.querySelectorAll("[data-drawer-close]").forEach(function (el) {
+      el.addEventListener("click", closeDrawer);
+    });
+
+    if (form) {
+      form.querySelectorAll("select").forEach(function (sel) {
+        sel.addEventListener("change", function () {
+          var current = readState();
+          var state = {
+            preset: current.preset,
+            theme: current.theme,
+            hero: form.hero.value,
+            density: form.density.value,
+            motion: form.motion.value,
+          };
+          navigateWithState(state);
+        });
+      });
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function () {
+        var state = readState();
+        var url = window.location.origin + buildUrl(state);
+        navigator.clipboard.writeText(url).then(function () {
+          copyBtn.textContent = "Copied!";
+          setTimeout(function () { copyBtn.textContent = "Copy share link"; }, 2000);
+        });
+      });
+    }
+
+    // Only restore stored appearance on playground — not home (home stays swiss default)
+    var stored = loadStoredState();
+    var hasParams = window.location.search.length > 1;
+    var path = window.location.pathname.replace(/\/$/, "");
+    var isPlayground = path.endsWith("/playground");
+    if (stored && !hasParams && isPlayground) {
+      var needsRedirect = false;
+      ["preset", "theme", "hero", "density", "motion"].forEach(function (key) {
+        var presetDefaults = presetAppearance[stored.preset || defaultAppearance.preset] || defaultAppearance;
+        var fallback = key === "hero" || key === "density"
+          ? (presetDefaults[key] || defaultAppearance[key])
+          : defaultAppearance[key];
+        if (stored[key] && stored[key] !== fallback && !(key === "preset" && stored[key] === defaultAppearance.preset)) {
+          if (stored[key] !== defaultAppearance[key] && stored[key] !== fallback) needsRedirect = true;
+        }
+      });
+      if (stored.preset && stored.preset !== defaultAppearance.preset) needsRedirect = true;
+      if (needsRedirect) {
+        window.location.replace(buildUrl(stored));
+      }
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && drawer && !drawer.hidden) closeDrawer();
+    });
+  })();
+</script>

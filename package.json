@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "design:seeds": "node --experimental-strip-types scripts/design-seeds.ts",
+    "design:a11y": "node scripts/audit-standalone.mjs"
   },
   "dependencies": {
     "astro": "^7.2.9"

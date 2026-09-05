@@ -1,0 +1,242 @@
+---
+import type { DesignSpec } from "../../design/types";
+import { projects } from "../../data/projects";
+import { PILLARS, IMPACT_METRICS } from "../../data/home-content";
+
+interface Props {
+  spec: DesignSpec;
+}
+
+const { spec } = Astro.props;
+const c = spec.creative;
+const showMarquee = c.visualLayout === "marquee";
+const marqueeText = `${c.themePersona} · ${c.heroMode} · ${c.heroShell} · wild ${c.wildness}`;
+
+const pillars = PILLARS;
+const metrics = IMPACT_METRICS;
+const liveProjects = projects.filter((p) => p.status === "Live");
+
+---
+
+<style>
+  .intro h1.hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(var(--hero-size-min, 2.5rem), var(--hero-size-mid, 2rem + 3.5vw), var(--hero-size-max, 4rem));
+    font-weight: var(--display-weight, 400);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .intro .role {
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    max-width: 46ch;
+  }
+  .intro .plain {
+    font-size: 1.0625rem;
+    line-height: var(--line-height-body, 1.65);
+    color: var(--ink);
+    margin-top: 1rem;
+    max-width: 60ch;
+  }
+  .intro .status-chip {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1.1rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+  }
+  .intro .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .intro .hero-byline { display: none; }
+  .intro { margin-bottom: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1)); }
+  .section + .section { margin-top: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1)); }
+  .section .label { display: block; margin-bottom: 1.25rem; }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem 1.75rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.5rem;
+  }
+  :global([data-pillar-layout="stack"]) .pillars { grid-template-columns: 1fr; }
+  .pillar .pillar-index {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .pillar h3 { font-size: 1.0625rem; line-height: 1.3; margin-bottom: 0.5rem; }
+  .pillar p { font-size: 0.9375rem; line-height: 1.6; color: var(--muted); }
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.5rem;
+  }
+  .metric {
+    flex: 1 1 150px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-card, 10px);
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-md, none);
+  }
+  .metric .metric-num {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .metric .metric-label {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+  .row {
+    border-top: 1px solid var(--hairline);
+    padding: 1.25rem 0;
+  }
+  .row .row-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.75rem;
+  }
+  .row .row-title a { text-decoration: none; }
+  .row p { font-size: 0.9375rem; color: var(--muted); margin-top: 0.3rem; max-width: 60ch; }
+  .section .more { margin-top: 1.25rem; }
+  @media (max-width: 640px) {
+    .pillars { grid-template-columns: 1fr; }
+  }
+</style>
+
+{showMarquee && (
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      {Array.from({ length: 8 }).map(() => (
+        <span>{marqueeText}</span>
+      ))}
+    </div>
+  </div>
+)}
+
+<header class="intro">
+  {c.namePlacement === "above-statement" && (
+    <h1 class="hero-name-label">Chirag R Gandhi</h1>
+  )}
+  {c.heroMode === "statement" && (
+    <p class="hero-statement" data-text={c.heroStatement}>{c.heroStatement}</p>
+  )}
+  {c.heroMode === "metric" && (
+    <>
+      <div class="hero-metric" data-text={c.heroMetric.value}>{c.heroMetric.value}</div>
+      <p class="hero-metric-label">{c.heroMetric.label}</p>
+    </>
+  )}
+  {c.heroMode === "question" && (
+    <p class="hero-question">{c.heroQuestion}</p>
+  )}
+  {c.heroMode === "role" && (
+    <p class="role">Platform Product Manager — Enterprise Platforms &amp; AI Automation</p>
+  )}
+  {(c.heroMode === "name" || c.namePlacement === "hero") && c.heroMode === "name" && (
+    <h1 class="hero-name">Chirag R Gandhi</h1>
+  )}
+  {c.heroMode === "name" && (
+    <>
+      <p class="role">Platform Product Manager — Enterprise Platforms &amp; AI Automation</p>
+      <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~850 negotiators across EU and NA.</p>
+      <span class="status status-chip">Luxembourg · EU · Remote-ready</span>
+    </>
+  )}
+  {(c.heroMode === "statement" || c.heroMode === "metric" || c.heroMode === "question") && (
+    <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~850 negotiators across EU and NA.</p>
+  )}
+  {c.namePlacement === "byline" && (
+    <span class="hero-byline">Chirag R Gandhi</span>
+  )}
+  <div class="cta-row">
+    <a class="btn btn-primary" href="/chirag-portfolio/projects">See the work</a>
+    <a class="btn btn-secondary" href="/chirag-portfolio/resume">Resume</a>
+  </div>
+</header>
+
+{
+  c.sectionOrder.map((sectionId) => {
+    if (c.hiddenSections.includes(sectionId)) return null;
+
+    if (sectionId === "philosophy") {
+      return (
+        <section class="section philosophy">
+          <h2 class="label">Operating philosophy</h2>
+          <div class="pillars">
+            {pillars.map((p) => (
+              <div class="pillar">
+                <span class="pillar-index">{p.index}</span>
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    if (sectionId === "impact") {
+      return (
+        <section class="section impact">
+          <h2 class="label">Impact</h2>
+          <div class="metrics">
+            {metrics.map((m) => (
+              <div class="metric">
+                <div class="metric-num">{m.num}</div>
+                <div class="metric-label">{m.label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    if (sectionId === "projects") {
+      return (
+        <section class="section projects">
+          <h2 class="label">Projects</h2>
+          <div class="project-list">
+            {liveProjects.map((p) => (
+              <div class="row">
+                <div class="row-title">
+                  <a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a>
+                  <span class="status">{p.status}</span>
+                </div>
+                <p>{p.blurb} {p.difficulty}</p>
+              </div>
+            ))}
+          </div>
+          <a class="btn btn-secondary more" href="/chirag-portfolio/projects">All projects →</a>
+        </section>
+      );
+    }
+
+    return null;
+  })
+}

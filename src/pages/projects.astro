@@ -1,27 +1,19 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { projects } from "../data/projects";
+import HomeLayout from "../layouts/HomeLayout.astro";
+import ProjectsContent from "../components/pages/ProjectsContent.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
+
+const appearance = DEFAULT_APPEARANCE;
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<Layout title="Projects — Chirag Gandhi" active="projects">
-  <style>
-    h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.5rem; }
-    .sub { color: var(--muted); margin-bottom: 2rem; }
-    .card p { margin-top: 0.2rem; }
-  </style>
 
-  <div class="eyebrow">Projects</div>
-  <h1>Projects</h1>
-  <div class="sub">A project counts when a stranger can open it.</div>
-
-  {
-    projects.map((p) => (
-      <div class="card">
-        <div class="status">{p.status}</div>
-        <h3><a href={`/chirag-portfolio/projects/${p.slug}`}>{p.name}</a></h3>
-        <p>
-          {p.blurb} {p.difficulty}
-        </p>
-      </div>
-    ))
-  }
-</Layout>
+<HomeLayout
+  spec={spec}
+  appearance={appearance}
+  title="Projects — Chirag Gandhi"
+  active="projects"
+  showAppearance={false}
+>
+  <ProjectsContent />
+</HomeLayout>
