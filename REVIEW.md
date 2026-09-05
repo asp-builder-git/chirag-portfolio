@@ -376,6 +376,6 @@ Kept on `/resume` only (VOICE rule 8 / home density): Amazon employer names; €
 
 **G3:** `npm run build` exit 0.
 **G4:** Chirag approved in chat 2026-09-05 — "let's push these change to git and deploy to prod."
-**G5:** pending merge → GitHub Pages → verify https://asp-builder-git.github.io/chirag-portfolio/
+**G5:** ✅ SHIPPED — PR [#4](https://github.com/asp-builder-git/chirag-portfolio/pull/4) merged; [Actions success](https://github.com/asp-builder-git/chirag-portfolio/actions/runs/33967985442); live https://asp-builder-git.github.io/chirag-portfolio/ HTTP 200 (impact copy confirmed).
 
 

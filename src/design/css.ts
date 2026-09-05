@@ -29,18 +29,18 @@ export function designSpecToCssVars(spec: DesignSpec): Record<string, string> {
     : getFontStacks(spec.fontPairing);
   const hero = heroScaleVars(spec.heroScale);
 
+  // Light/dark palettes as dual tokens only — never set --bg/--ink on the
+  // inline style. Those must live in stylesheets so [data-theme="dark"] can
+  // remap them (inline custom props beat stylesheet rules on the same element).
   return {
-    "--bg": light.bg,
-    "--surface": light.surface,
-    "--ink": light.ink,
-    "--muted": light.muted,
-    "--hairline": light.hairline,
-    "--accent": light.accent,
-    "--accent-text": light.accentText,
-    "--card": light.surface,
-    "--border": light.hairline,
-    "--body": light.ink,
-    "--accent-dark": light.accent,
+    "--bg-light": light.bg,
+    "--surface-light": light.surface,
+    "--ink-light": light.ink,
+    "--muted-light": light.muted,
+    "--hairline-light": light.hairline,
+    "--accent-light": light.accent,
+    "--accent-text-light": light.accentText,
+    "--shadow-md-light": shadowValue(spec, "light"),
     "--font-display": fonts.display,
     "--font-body": fonts.body,
     "--font-mono": fonts.mono,
@@ -56,7 +56,6 @@ export function designSpecToCssVars(spec: DesignSpec): Record<string, string> {
     "--hero-size-max": hero.max,
     "--text-align": spec.textAlign,
     "--shadow-sm": shadowValue({ ...spec, shadows: { ...spec.shadows, depth: 1 } }, "light"),
-    "--shadow-md": shadowValue(spec, "light"),
     "--shadow-colored": spec.shadows.colored ? shadowValue(spec, "light") : "none",
     "--btn-variant": spec.buttonVariant,
     "--pillar-layout": spec.pillarLayout,
