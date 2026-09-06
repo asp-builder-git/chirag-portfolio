@@ -1,0 +1,20 @@
+---
+description: Design system — all styling goes through src/design tokens, never hardcoded values
+globs: src/**
+alwaysApply: false
+---
+
+# Design System — Use the Token Pipeline
+
+This site generates its design from a spec-driven system in `src/design/`. When changing anything visual, extend the system — don't bypass it.
+
+- **Extend the spec, then render:** add/change tokens in `src/design/types.ts` (`DesignSpec`), and generate CSS via `designSpecToCssVars` in `src/design/css.ts`. `src/design/resolve.ts` and `patterns.ts` hold the resolved spec and component patterns.
+- **Never hardcode** colors, radii, shadows, spacing, or typography values directly in `.astro` files or raw CSS. Pull from the design tokens (CSS vars emitted by the spec).
+- **Palettes:** pick from the `PaletteFamily` list in `types.ts` (slate, warmCream, forest, ocean, ink, sand, rose, mint, lavender, charcoal, terracotta, steel) — don't invent new hex codes inline.
+- **A11y is part of the design:** keep the skip link, reduced-motion handling, and `theme-color` behaviors that live in `src/design/a11y.ts` intact when touching chrome/layout.
+- **Theme tokens:** emit dual light/dark CSS vars (`--*-light` / dark counterparts) from `designSpecToCssVars` so `[data-theme]` remaps work. User theme preference beats persona `forceDark`.
+- **Fonts are self-hosted:** `public/fonts/*.woff2` + `@fontsource` (Inter, Instrument Serif, JetBrains Mono). Never add a Google Fonts CDN link.
+
+Patterns to follow (see `patterns.ts`): `ButtonVariant` = filled | outline | ghost; `RadiusMode` = sharp | subtle | soft | mixed; `PillarLayout` = grid | stack.
+
+When unsure how a token flows, read `src/design/resolve.ts` before writing any CSS.

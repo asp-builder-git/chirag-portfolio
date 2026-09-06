@@ -1,0 +1,19 @@
+---
+description: Standing product invariants — Appearance, theme, metrics, LinkedIn, Live projects
+alwaysApply: true
+---
+
+# Product invariants (do not regress)
+
+- **Production chrome:** sticky ATF + theme toggle only. Appearance drawer is **only** on `/playground` (`showAppearance={true}` there; false/default everywhere else including `/`, `/projects`, `/resume`).
+- **Theme:** user `localStorage` / explicit preference **wins** over persona `forceDark`. Emit dual light/dark CSS tokens; `[data-theme]` remaps must work on Swiss home.
+- **Impact chips (home):** Build → Scale → Defend — `€87M surfaced` / `850 negotiators` / `$1.05M/yr protected` (why-it-matters framing).
+- **Projects public list:** `status === "Live"` only until Chirag re-adds in-progress.
+- **LinkedIn:** `https://www.linkedin.com/in/chiraggandhi09` (never `chirag-gandhi`).
+- **Copy:** read `VOICE.md` before writing site text.
+
+Examples:
+
+- ✅ Home ships without Appearance button; playground keeps it.
+- ❌ “Build green” with Appearance on home or dark mode that ignores user toggle.
+- ❌ Shipping placeholder LinkedIn or in-progress projects on `/projects`.
