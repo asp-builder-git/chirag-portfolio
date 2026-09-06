@@ -208,10 +208,20 @@ body.drawer-open {
   }
 }
 
-/* Production Swiss: keep character without 3rem section titles */
+/* Production Swiss: keep character without 3rem section titles.
+   Lab persona sets .label/.eyebrow to 3rem/700 — fine for poster home labels
+   (overridden via .section .label), but inner pages use .eyebrow as a page chip
+   (Résumé, About, Case study). Without this, the chip outranks the h1. */
 [data-theme-persona="swissBrutal"] .section .label {
   font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
   letter-spacing: -0.02em;
+}
+[data-theme-persona="swissBrutal"] .eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--muted);
 }
 
 /* Shrink fullscreen ATF waste under sticky bar */

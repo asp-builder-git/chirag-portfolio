@@ -40,7 +40,15 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
       color: var(--muted);
       min-height: 1.2em;
     }
-    .head .role { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
+    /* Match home role strip: body 500 + muted, not ink 600 (competes with h1) */
+    .head .role {
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.15rem);
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
     .contact { display: flex; flex-wrap: wrap; gap: 0.3rem 1.3rem; color: var(--muted); font-size: 0.92rem; }
     .contact a { color: var(--ink); text-decoration: none; font-weight: 600; }
     .contact a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
@@ -55,8 +63,9 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
       padding: 0.85rem 0;
       background: transparent;
     }
+    /* JetBrains Mono self-host is 400/500 only — 600 faux-bolds */
     .highlight .num {
-      font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 600;
+      font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 500;
       line-height: 1.2; color: var(--ink);
     }
     .highlight .hl-label { font-size: 0.8125rem; color: var(--muted); line-height: 1.45; margin-top: 0.3rem; }
@@ -118,10 +127,6 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
   <section class="sec">
     <h2 class="sec-title">Highlights</h2>
     <div class="highlights" aria-label="Career highlights">
-      <div class="highlight">
-        <div class="num">€0.36Bn/yr</div>
-        <div class="hl-label">Profitability supported by negotiations on the platform — ~850 negotiators, EU &amp; NA</div>
-      </div>
       <div class="highlight">
         <div class="num">Near-zero → default</div>
         <div class="hl-label">Failed platform relaunched into the org-wide EU/NA default for ~850 users</div>
