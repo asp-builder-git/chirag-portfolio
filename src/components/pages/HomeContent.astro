@@ -2,6 +2,7 @@
 import type { DesignSpec } from "../../design/types";
 import { projects } from "../../data/projects";
 import { HERO_COPY, PILLARS, IMPACT_METRICS } from "../../data/home-content";
+import { withBase } from "../../lib/base";
 
 interface Props {
   spec: DesignSpec;
@@ -9,7 +10,6 @@ interface Props {
 
 const { spec } = Astro.props;
 const c = spec.creative;
-const base = import.meta.env.BASE_URL;
 const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
 ---
 
@@ -224,7 +224,7 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
             {homeProjects.map((p) => (
               <div class="row">
                 <div class="row-title">
-                  <a href={`${base}projects/${p.slug}`}>{p.name}</a>
+                  <a href={withBase(`projects/${p.slug}`)}>{p.name}</a>
                   <span class="status">{p.status}</span>
                 </div>
                 <p>{p.blurb} {p.difficulty}</p>
@@ -232,8 +232,8 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
             ))}
           </div>
           <div class="more-row">
-            <a class="btn btn-secondary more" href={`${base}playground`}>View this site in different themes →</a>
-            <a class="btn btn-secondary more" href={`${base}projects`}>All projects →</a>
+            <a class="btn btn-secondary more" href={withBase("playground")}>View this site in different themes →</a>
+            <a class="btn btn-secondary more" href={withBase("projects")}>All projects →</a>
           </div>
         </section>
       );

@@ -378,4 +378,26 @@ Kept on `/resume` only (VOICE rule 8 / home density): Amazon employer names; €
 **G4:** Chirag approved in chat 2026-09-05 — "let's push these change to git and deploy to prod."
 **G5:** ✅ SHIPPED — PR [#4](https://github.com/asp-builder-git/chirag-portfolio/pull/4) merged; [Actions success](https://github.com/asp-builder-git/chirag-portfolio/actions/runs/33967985442); live https://asp-builder-git.github.io/chirag-portfolio/ HTTP 200 (impact copy confirmed).
 
+## PR #5 — LinkedIn + dark mode + Appearance scope (2026-09-05)
+
+**G4:** Chirag — "merge the pr." **G5:** ✅ SHIPPED — [#5](https://github.com/asp-builder-git/chirag-portfolio/pull/5); [Actions](https://github.com/asp-builder-git/chirag-portfolio/actions/runs/33974775413); LinkedIn `chiraggandhi09`; Appearance absent on home, present on playground.
+
+## Fix — BASE_URL slash joins (2026-09-06)
+
+**Bug (live):** Astro 7 emits `BASE_URL` as `/chirag-portfolio` (no trailing slash). Templates used `${base}projects` → `/chirag-portfolioprojects` (same for resume/playground/font preloads). Sticky nav + home CTAs were broken on prod while absolute `/chirag-portfolio/projects/` curls still 200'd — content-only G5 missed the mashed hrefs. Chirag's reported “404 on /projects and /resume” = nav mashed paths (real pages exist: trailing-slash curls HTTP 200).
+
+**Fix (branch `fix/base-url-slash`, uncommitted WIP):** `src/lib/base.ts` `withBase()` + all nav/CTA/font preload call sites. `scripts/verify-live.sh` fails on mashed paths and checks Projects href. Case-study + projects-list playground links now resolve via `withBase`.
+
+**Coverage audit (asks from Chirag, 2026-09-06):**
+
+| Ask | Status | Evidence |
+| --- | --- | --- |
+| (1) Projects page matches home design language | **COVERED** (PR #4) + light polish on this branch | Live `/projects/` uses `HomeLayout` sticky ATF + theme toggle, no Appearance. WIP: project rows match home (title+status inline) + playground CTA. |
+| (2) Playground enabled for “this portfolio site” | **COVERED** (PR #4) + withBase wiring | Live case study has `Try presets →` → `/chirag-portfolio/playground` (correct slash). Data: `playgroundUrl`; home CTA “View this site in different themes →”. |
+| (3) Resume page matches home design language | **COVERED** shell (PR #4) + **PARTIAL→done** polish | Live `/resume/` on `HomeLayout`. This branch: highlights → hairline rows, muted company labels, uppercase section labels (Swiss tokens). |
+| (4) `/projects` + `/resume` 404 | **Nav bug, not missing pages** | Live: `/projects/` + `/resume/` HTTP 200; mashed `/chirag-portfolioprojects` + `/chirag-portfolioresume` HTTP 404. Fixed by `withBase` (awaiting ship). |
+
+**G3:** `npm run build` exit 0 (8 pages; `/projects`, `/resume`, `/playground` in dist). Dist hrefs: `/chirag-portfolio/projects`, `/chirag-portfolio/resume`, `/chirag-portfolio/playground` — no mashed joins.
+**G4:** awaiting Chirag approval before commit/push/merge.
+
 

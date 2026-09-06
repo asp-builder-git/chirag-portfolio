@@ -16,7 +16,7 @@ export interface Project {
   problem: string[];
   built: string[];
   outcome: string[];
-  /** Optional link to the parametric playground preset picker */
+  /** Optional site-relative path to the parametric playground (joined via withBase) */
   playgroundUrl?: string;
 }
 
@@ -31,7 +31,7 @@ export const projects: Project[] = [
     url: "https://asp-builder-git.github.io/chirag-portfolio/",
     repo: "https://github.com/asp-builder-git/chirag-portfolio",
     repoPublic: true,
-    playgroundUrl: "/chirag-portfolio/playground",
+    playgroundUrl: "playground",
     problem: [
       "Most portfolios are a template or a promise. I wanted one that only shows real things — and that shows how I think about systems, not just what I shipped.",
       "The rule that runs it: a project counts when a stranger can open it.",
