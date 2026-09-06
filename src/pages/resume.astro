@@ -42,24 +42,29 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
     }
     .head .role { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
     .contact { display: flex; flex-wrap: wrap; gap: 0.3rem 1.3rem; color: var(--muted); font-size: 0.92rem; }
-    .contact a { color: var(--accent-text); text-decoration: none; font-weight: 600; }
-    .contact a:hover { text-decoration: underline; }
+    .contact a { color: var(--ink); text-decoration: none; font-weight: 600; }
+    .contact a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
     .summary {
-      font-size: 1.02rem; color: var(--body); border-left: 3px solid var(--accent);
+      font-size: 1.02rem; color: var(--body); border-left: 2px solid var(--hairline);
       padding-left: 1.1rem; margin-bottom: 2.5rem;
     }
-    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; }
+    /* Match home: mono nums + hairline rows (not boxed cards) */
+    .highlights { display: flex; flex-direction: column; gap: 0; }
     .highlight {
-      background: transparent; border: 1px solid var(--hairline); border-radius: 0;
-      padding: 1rem 1.1rem;
+      border-top: 1px solid var(--hairline);
+      padding: 0.85rem 0;
+      background: transparent;
     }
-    .highlight .num { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 500; line-height: 1.2; }
-    .highlight .label { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.45; }
+    .highlight .num {
+      font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 600;
+      line-height: 1.2; color: var(--ink);
+    }
+    .highlight .hl-label { font-size: 0.8125rem; color: var(--muted); line-height: 1.45; margin-top: 0.3rem; }
     .job { margin-bottom: 2.2rem; }
     .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.2rem 1rem; margin-bottom: 0.45rem; }
     .job-head h3 { font-size: 1.15rem; }
     .job-head .dates { font-size: 0.85rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
-    .job .company { font-weight: 600; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
+    .job .company { font-weight: 600; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
     .job ul { margin: 0 0 0 1.15rem; }
     .job li { margin-bottom: 0.45rem; color: var(--body); }
     .edu { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; }
@@ -68,7 +73,11 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
     .skills p { margin-bottom: 0.75rem; }
     .skills p:last-child { margin-bottom: 0; }
     .sec { margin-bottom: 2.5rem; }
-    .sec-title { font-size: 1.35rem; margin-bottom: 1.1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--hairline); }
+    .sec-title {
+      font-size: 0.8125rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--muted); line-height: 1;
+      margin-bottom: 1.1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--hairline);
+    }
     @media (max-width: 480px) {
       .job-head .dates { white-space: normal; }
     }
@@ -111,19 +120,19 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
     <div class="highlights" aria-label="Career highlights">
       <div class="highlight">
         <div class="num">€0.36Bn/yr</div>
-        <div class="label">Profitability supported by negotiations on the platform — ~850 negotiators, EU &amp; NA</div>
+        <div class="hl-label">Profitability supported by negotiations on the platform — ~850 negotiators, EU &amp; NA</div>
       </div>
       <div class="highlight">
         <div class="num">Near-zero → default</div>
-        <div class="label">Failed platform relaunched into the org-wide EU/NA default for ~850 users</div>
+        <div class="hl-label">Failed platform relaunched into the org-wide EU/NA default for ~850 users</div>
       </div>
       <div class="highlight">
         <div class="num">+175 bps</div>
-        <div class="label">Successful-schedule rate · 7 fixes in 6 months · protecting &gt;$1.05M/yr contribution profit</div>
+        <div class="hl-label">Successful-schedule rate · 7 fixes in 6 months · protecting &gt;$1.05M/yr contribution profit</div>
       </div>
       <div class="highlight">
         <div class="num">€87MM</div>
-        <div class="label">Negotiation entitlement surfaced by a full-stack profitability app built solo in 5 weeks</div>
+        <div class="hl-label">Negotiation entitlement surfaced by a full-stack profitability app built solo in 5 weeks</div>
       </div>
     </div>
   </section>

@@ -8,6 +8,7 @@ import type { DesignSpec } from "../design/types";
 import type { AppearanceState } from "../design/presets";
 import { textureFromMotion } from "../design/presets";
 import { designSpecToCssVars } from "../design/css";
+import { withBase } from "../lib/base";
 import AppearanceDrawer from "../components/AppearanceDrawer.astro";
 
 interface Props {
@@ -44,7 +45,7 @@ const hideSections = spec.creative.hiddenSections.join(" ");
 const chaosEffects = spec.creative.chaosEffects.join(" ");
 const texture = textureFromMotion(appearance.motion);
 const year = new Date().getFullYear();
-const base = import.meta.env.BASE_URL;
+const homeHref = withBase();
 const hasMatrixRain = spec.creative.chaosEffects.includes("matrix-rain");
 const matrixCols = hasMatrixRain ? Array.from({ length: 24 }, (_, i) => i) : [];
 const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789";
@@ -103,8 +104,8 @@ const themePref = appearance.theme;
     <meta name="description" content="Chirag R Gandhi — Platform Product Manager. Enterprise products at work, experiments at home." />
     <meta name="theme-color" content={light.bg} media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content={dark.bg} media="(prefers-color-scheme: dark)" />
-    <link rel="preload" href={`${base}fonts/instrument-serif-400.woff2`} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={`${base}fonts/inter-400.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/instrument-serif-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/inter-400.woff2")} as="font" type="font/woff2" crossorigin />
     <style is:global>
       /* Semantic colors from dual tokens — not inline, so dark remaps work */
       :root {
@@ -311,12 +312,12 @@ const themePref = appearance.theme;
         <a class="skip-link" href="#main">Skip to content</a>
 
         <header class="sticky-atf">
-          <a class="site-name" href={base}>Chirag R Gandhi</a>
+          <a class="site-name" href={homeHref}>Chirag R Gandhi</a>
           <span class="name-sep" aria-hidden="true">|</span>
           <nav class="nav-links" aria-label="Primary">
-            <a href={base} class:list={[active === "home" && "active"]}>Home</a>
-            <a href={`${base}projects`} class:list={[active === "projects" && "active"]}>Projects</a>
-            <a href={`${base}resume`} class:list={[active === "resume" && "active"]}>Resume</a>
+            <a href={homeHref} class:list={[active === "home" && "active"]}>Home</a>
+            <a href={withBase("projects")} class:list={[active === "projects" && "active"]}>Projects</a>
+            <a href={withBase("resume")} class:list={[active === "resume" && "active"]}>Resume</a>
           </nav>
           <div class="nav-actions">
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">

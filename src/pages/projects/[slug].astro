@@ -3,6 +3,7 @@ import HomeLayout from "../../layouts/HomeLayout.astro";
 import { projects } from "../../data/projects";
 import { getProductionBaseSpec } from "../../design/production-default";
 import { applyAppearance, DEFAULT_APPEARANCE } from "../../design/presets";
+import { withBase } from "../../lib/base";
 
 export function getStaticPaths() {
   return projects
@@ -14,7 +15,6 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const base = import.meta.env.BASE_URL;
 const displayUrl = (url: string) => url.replace(/^https?:\/\//, "");
 const appearance = DEFAULT_APPEARANCE;
 const spec = applyAppearance(getProductionBaseSpec(), appearance);
@@ -68,7 +68,7 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
       <span>Source: private repo — opens when it ships</span>
     )}
     {project.playgroundUrl && (
-      <a href={project.playgroundUrl}>Try presets →</a>
+      <a href={withBase(project.playgroundUrl)}>Try presets →</a>
     )}
   </div>
 
@@ -82,5 +82,5 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
   <h2>Outcome</h2>
   {project.outcome.map((para) => <p>{para}</p>)}
 
-  <p class="back"><a href={`${base}projects`}>← All projects</a></p>
+  <p class="back"><a href={withBase("projects")}>← All projects</a></p>
 </HomeLayout>
