@@ -1,0 +1,17 @@
+---
+description: Chirag's site voice — read VOICE.md before writing any copy
+alwaysApply: true
+---
+
+# Voice — Read VOICE.md Before Any Copy
+
+**READ `VOICE.md` in full before writing or editing any site copy** — homepage, case studies, project blurbs, blog posts, meta descriptions. It's the voice layer and the source of truth; this rule only summarizes it.
+
+- First person, conversational ("I build…"), never third-person marketing.
+- No buzzwords (synergy, leverage, results-driven, passionate about, best-in-class…). If it belongs in a LinkedIn influencer post, it's out.
+- Ground everything in reality: every claim traces to the resume, a shipped project, or a number. Never invent.
+- Numbers over adjectives. Short sentences. Plain words.
+- Home page never mentions Amazon. Professional experience and personal projects stay in separate sections, always.
+- No hype, no "coming soon" theater — only real, shareable things. "A project counts when a stranger can open it."
+
+If Chirag says "this doesn't sound like me", update `VOICE.md` — don't just fix the one-off copy.

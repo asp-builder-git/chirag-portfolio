@@ -1,0 +1,42 @@
+---
+description: Pick the right model/agent tier per task — stop shipping half-verified UI
+alwaysApply: true
+---
+
+# Model & agent routing (avoid rework)
+
+Chirag's message prefixes (when present) win: `[precise]` / `[opus]` = max care; `[deep]` = complex reasoning; no prefix = default is fine **only for low-risk tasks**.
+
+## Auto-elevate (no prefix required)
+
+Treat as **precise** — read scripts + CSS vars + layout end-to-end; verify interactive behavior before calling done; never ship on build-green alone:
+
+- Theme / dark mode / `localStorage` / `data-theme` / persona `forceDark`
+- Sticky nav, Appearance drawer, playground presets, production chrome
+- Any bug reported against **live prod** after a ship
+- Design-system token / palette / CSS var mismatches
+
+Treat as **deep** when: multi-file architecture, design-spec ↔ render pipeline, conflicting specs.
+
+## Subagents (`Task` tool)
+
+| Job | `subagent_type` | `model` |
+|-----|-----------------|--------|
+| Theme/UI/layout bugs, production polish | `generalPurpose` | `inherit` (never `composer-2.5-fast`) |
+| Product/voice critique | `generalPurpose` | `inherit` |
+| Git commit / push / PR / deploy verify | `shell` | `inherit` |
+| Broad “where is X” codebase scan | `explore` | `inherit` or `composer-2.5-fast` OK |
+| Mechanical file edits with clear steps | `generalPurpose` | `composer-2.5-fast` OK |
+
+**Hard rule:** do not use `composer-2.5-fast` for theme, dark mode, Appearance UI, or post-ship prod bugs.
+
+## Done means verified
+
+For UI/theme work: state root cause → fix → `npm run build` → confirm the control works (toggle persists; Appearance only where intended). Build exit 0 is not enough for interactive chrome.
+
+## Examples
+
+- ✅ Prod dark-mode broken → `generalPurpose` + `inherit`, fix on `fix/…` branch, verify toggle light↔dark.
+- ❌ Same bug → fast model, “build passed,” ship Appearance drawer still on home.
+- ✅ Copy tweak → default parent; read `VOICE.md`.
+- ✅ Ship after Chirag approval → `shell` agent for commit/PR/curl live URL.

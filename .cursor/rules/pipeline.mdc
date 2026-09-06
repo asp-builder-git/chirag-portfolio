@@ -1,0 +1,25 @@
+---
+description: Review-gate pipeline — never push or merge without Chirag's approval; G5 verifies chrome not just HTTP 200
+alwaysApply: true
+---
+
+# Pipeline — Hard Rules (Chirag, 2026-08-27)
+
+**NO direct pushes to `main`. NO merging without Chirag's recorded approval.** Read `SKILL.md` + `gates.md` — they define the 5-gate flow. This rule is the short version; the docs are the source of truth.
+
+- Every change: branch → `npm run build` → review in `REVIEW.md` → **Chirag approves** → merge → **G5 verify**.
+- Sub-agents never push/merge to main alone. Drafts and reviews stay visible.
+- Before work: check `REVIEW.md` + `gates.md` for unmerged milestones.
+- Recovery: mistaken main touch → revert via PR; log in `REVIEW.md`.
+
+## G5 is not “homepage 200”
+
+- **Content-ship ≠ chrome-ship.** Confirm the bug class on live HTML: theme toggle, Appearance presence/absence, LinkedIn href, projects filter — not only `/` body copy.
+- Diagnose live/`origin/main` HTML **before** panic-shipping “missing pages.”
+- Agent terminal/WSL flaky → write `scripts/…` one-shot and/or ask Chirag to run; **do not claim shipped** until G5 is verified.
+- For ship verification, follow `.cursor/skills/ship-verify/SKILL.md` when available.
+
+Examples:
+
+- ✅ “PR merged; Actions green; curl 200 on `/` `/projects` `/resume`; LinkedIn + no Appearance on home.”
+- ❌ Merging without Chirag approval; claiming shipped on build exit 0 alone.

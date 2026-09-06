@@ -14,7 +14,9 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Pipeline (mandatory)
 
-**NO direct pushes to main. NO merging without review.** Read SKILL.md + gates.md. Every change: branch → `npm run build` passes → review summary for Chirag → his approval → merge → verify live URL. Sub-agents must never push to main or merge without Chirag's recorded approval.
+**NO direct pushes to main. NO merging without review.** Read SKILL.md + gates.md. Every change: branch → `npm run build` passes → review summary for Chirag → his approval → merge → G5 verify (`.cursor/skills/ship-verify/SKILL.md`). Sub-agents must never push to main or merge without Chirag's recorded approval.
+
+**Product invariants:** `.cursor/rules/product-invariants.mdc` (Appearance = playground only, theme > forceDark, LinkedIn, Live projects, impact chips).
 
 ## Model routing (mandatory)
 

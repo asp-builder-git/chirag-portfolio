@@ -378,4 +378,30 @@ Kept on `/resume` only (VOICE rule 8 / home density): Amazon employer names; €
 **G4:** Chirag approved in chat 2026-09-05 — "let's push these change to git and deploy to prod."
 **G5:** ✅ SHIPPED — PR [#4](https://github.com/asp-builder-git/chirag-portfolio/pull/4) merged; [Actions success](https://github.com/asp-builder-git/chirag-portfolio/actions/runs/33967985442); live https://asp-builder-git.github.io/chirag-portfolio/ HTTP 200 (impact copy confirmed).
 
+## PR #5 — LinkedIn + dark mode + Appearance scope (2026-09-05)
+
+**G4:** Chirag — "merge the pr." **G5:** ✅ SHIPPED — [#5](https://github.com/asp-builder-git/chirag-portfolio/pull/5); [Actions](https://github.com/asp-builder-git/chirag-portfolio/actions/runs/33974775413); LinkedIn `chiraggandhi09`; Appearance absent on home, present on playground.
+
+## Session fold — persistence (2026-09-05)
+
+Per [Cursor expert](4be2a353-505b-4c43-945c-c648536a0a35): folded into `product-invariants.mdc`, hardened G5 in `pipeline.mdc` / `SKILL.md` / `gates.md`, `design-system.mdc` dual tokens, `.cursor/skills/ship-verify/`. Skipped optional push-to-main hook / verifier agent for now.
+
+## Recovery — 2026-09-06 (stuck-session unstick)
+
+**Prod code:** already on `main` via PR [#4](https://github.com/asp-builder-git/chirag-portfolio/pull/4) + [#5](https://github.com/asp-builder-git/chirag-portfolio/pull/5). Actions green. Live impact chips + LinkedIn + Appearance scope verified in prior G5; re-check with `bash scripts/verify-live.sh`.
+
+**Actually stuck:** session-fold docs (`.cursor/rules/*`, `.cursor/skills/ship-verify`, REVIEW/gates/SKILL harden) existed **locally only** — never pushed. Agent terminal/WSL sandbox repeatedly returned no exit status, so push/PR could not be completed from the agent.
+
+**Safe action for Chirag (run in WSL):**
+```bash
+cd /home/cgexp/cg-projects/chirag-portfolio
+bash scripts/recover-session-fold-pr.sh
+bash scripts/verify-live.sh
+```
+That script: `docs/session-fold-persistence` from `origin/main` → commit docs → push `-u` → `gh pr create`. **Does not merge.**
+
+**G4:** awaiting Chirag approval on the docs PR before merge.
+
+**Not ship-blocking (backlog only):** Design Lab seed pick; M6.2/M6.3 roadmap; unfinished BASE_URL slash probe from Sep 5; stale REVIEW “awaiting G4” text on superseded M5/M6.2 sections; local `main` may lag `origin/main` until `git fetch && git checkout main && git pull --ff-only`.
+
 

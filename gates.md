@@ -8,9 +8,11 @@
 | G2 Plan | Files + spec sources identified | ✅ standing |
 | G3 Build | `npm run build` exit 0 | ✅ standing |
 | G4 Review | Chirag's explicit approval (chat or GitHub PR review) | ⛔ REQUIRED — nothing merges without it |
-| G5 Live | Deployed URL returns HTTP 200 | ✅ standing |
+| G5 Live | HTTP 200 on touched routes **+** bug-class verify (theme, Appearance scope, LinkedIn, Live projects). Content ≠ chrome. | ✅ standing |
 
 ## Change log
+
+- 2026-09-05: G5 hardened (chrome vs content; live HTML before panic-ship). Product invariants + ship-verify skill folded from Swiss-home session. PR #4/#5 shipped.
 
 - 2026-08-30 M5 (feat/p0-p1-benchmark): benchmark P0+P1 execution — two-band home, self-hosted fonts, case-study pages, skip link, reduced-motion, theme-color, resume stripped. G3 ✅ (build green, preview 200s). G4 ⛔ awaiting Chirag approval before merge.
 

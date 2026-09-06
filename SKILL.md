@@ -13,7 +13,7 @@
 2. **PLAN** — files touched, spec sources (analyses/08, 09 etc.), verification steps.
 3. **IMPLEMENT** — on a branch (`chore/…`, `feat/…`, `fix/…`). `npm run build` must pass.
 4. **REVIEW (mandatory, never skipped)** — write a review summary for Chirag: what changed, how it looks, what he should decide. He approves → merge. He rejects → fix on the branch.
-5. **SHIP** — merge to main → GitHub Actions deploys → verify live URL HTTP 200.
+5. **SHIP** — merge to main → GitHub Actions deploys → **G5 verify** (see below). Use `.cursor/skills/ship-verify/SKILL.md`.
 
 ## Gates
 
@@ -21,7 +21,7 @@
 - G2 Plan: files + spec identified.
 - G3 Build: `npm run build` exit 0.
 - G4 Review: **Chirag's explicit approval recorded in REVIEW.md** (chat OK). Without it: no merge, no push.
-- G5 Live: URL returns 200 post-deploy.
+- G5 Live: HTTP 200 on touched routes **and** bug-class checks (theme toggle, Appearance only on `/playground`, LinkedIn `chiraggandhi09`, Live-only projects). Content-ship ≠ chrome-ship. Diagnose live HTML before panic-shipping. Terminal flaky → `scripts/` + ask Chirag; never claim shipped until G5 done.
 
 ## Recovery
 
@@ -33,4 +33,4 @@
 
 - Change is on `main` ONLY via merged PR.
 - REVIEW.md shows the approval.
-- Live URL verified.
+- Live URL verified for the bug class (not build-only).

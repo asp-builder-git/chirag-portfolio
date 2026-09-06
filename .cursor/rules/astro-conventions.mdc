@@ -1,0 +1,14 @@
+---
+description: Astro conventions — routing, layouts, data, dev/build workflow
+globs: src/pages/**, src/layouts/**, src/components/**, src/data/**, src/styles/**
+alwaysApply: false
+---
+
+# Astro Conventions
+
+- **File-based routing:** pages live in `src/pages/`; `projects/[slug].astro` is the dynamic route driven by `src/data/projects.ts`. Add a project by extending the data file — never hardcode projects in a page.
+- **Layouts:** pages use `src/layouts/Layout.astro`. Global styles come from `src/styles/fonts.css` and the design-token CSS vars (see design-system rule).
+- **No islands unless needed:** this is a dependency-light static site (Astro only, no React/Vue/Svelte). Prefer plain Astro + CSS. If a framework island is truly required, flag it in the review summary — it's a big decision.
+- **Fonts:** only the self-hosted set (Inter, Instrument Serif, JetBrains Mono). New weights go through `@fontsource` + `public/fonts/`.
+- **Dev workflow:** use `astro dev --background` (manage with `astro dev stop|status|logs`). Always verify with `npm run build` before review — a green build is a merge gate.
+- **Node:** requires >= 22.12 (see engines). Don't add dependencies casually; `npm run build` must stay green.
