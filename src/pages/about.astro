@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { withBase } from "../lib/base";
 ---
 <Layout title="About — Chirag Gandhi" active="about">
   <style>
@@ -23,7 +24,7 @@ import Layout from "../layouts/Layout.astro";
     <p>
       I'm a product manager. My day job is building enterprise products with
       engineering teams — strategy, discovery, delivery, end to end. The formal
-      record — companies, numbers, dates — lives on the <a href="/chirag-portfolio/resume">resume</a>.
+      record — companies, numbers, dates — lives on the <a href={withBase("resume")}>resume</a>.
     </p>
   </section>
 

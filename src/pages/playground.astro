@@ -10,10 +10,10 @@ import {
   PRESET_OPTIONS,
   type PresetId,
 } from "../design/presets";
+import { withBase } from "../lib/base";
 
 const appearance = parseAppearanceParams(Astro.url.searchParams);
 const spec = applyAppearance(getProductionBaseSpec(), appearance);
-const base = import.meta.env.BASE_URL;
 
 function presetHref(presetId: PresetId): string {
   const next = appearanceForPreset(presetId, appearance);
@@ -21,7 +21,8 @@ function presetHref(presetId: PresetId): string {
   // Always include preset when not swiss default so Classic/Metric/Terminal stick
   if (presetId !== "swiss-statement") params.set("preset", presetId);
   const qs = params.toString();
-  return qs ? `${base}playground?${qs}` : `${base}playground`;
+  const path = withBase("playground");
+  return qs ? `${path}?${qs}` : path;
 }
 ---
 
@@ -57,8 +58,8 @@ function presetHref(presetId: PresetId): string {
       This site is parametric: a seed resolves to a design spec, which drives the CSS — type, color, hero, motion. Pick a theme below. The wilder 24-persona lab stays local-only.
     </p>
     <div class="playground-links">
-      <a href={base}>← Home</a>
-      <a href={`${base}projects/this-portfolio-site`}>Case study →</a>
+      <a href={withBase()}>← Home</a>
+      <a href={withBase("projects/this-portfolio-site")}>Case study →</a>
     </div>
   </div>
 

@@ -1,23 +1,30 @@
 ---
 import { projects } from "../../data/projects";
+import { withBase } from "../../lib/base";
 
-const base = import.meta.env.BASE_URL;
 /** In-progress projects stay in data but off the public list until ready */
 const liveProjects = projects.filter((p) => p.status === "Live");
 ---
 
 <style>
-  h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.5rem; }
-  .sub { color: var(--muted); margin-bottom: 2rem; }
+  h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 1.5rem; }
   .project-row {
     border-top: 1px solid var(--hairline);
     padding: 1.25rem 0;
   }
-  .project-row .status { margin-bottom: 0.35rem; }
-  .project-row h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.3rem; }
-  .project-row h3 a { text-decoration: none; }
-  .project-row h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  .project-row .row-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+  .project-row .row-title a { text-decoration: none; }
+  .project-row .row-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
   .project-row p { color: var(--muted); font-size: 0.9375rem; max-width: 60ch; }
+  .project-row .more { margin-top: 0.75rem; }
 </style>
 
 <h1>Projects</h1>
@@ -26,11 +33,20 @@ const liveProjects = projects.filter((p) => p.status === "Live");
 {
   liveProjects.map((p) => (
     <div class="project-row">
-      <div class="status">{p.status}</div>
-      <h3><a href={`${base}projects/${p.slug}`}>{p.name}</a></h3>
+      <div class="row-title">
+        <a href={withBase(`projects/${p.slug}`)}>{p.name}</a>
+        <span class="status">{p.status}</span>
+      </div>
       <p>
         {p.blurb} {p.difficulty}
       </p>
+      {p.playgroundUrl && (
+        <p class="more">
+          <a class="btn btn-secondary" href={withBase(p.playgroundUrl)}>
+            View this site in different themes →
+          </a>
+        </p>
+      )}
     </div>
   ))
 }

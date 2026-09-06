@@ -1,5 +1,6 @@
 ---
 import "../styles/fonts.css";
+import { withBase } from "../lib/base";
 
 interface Props {
   title?: string;
@@ -16,13 +17,12 @@ const description =
   "Chirag R Gandhi — Senior Technical Product Manager and builder. Enterprise products at work, full-stack apps built with Claude, Cursor & OpenClaw. Projects, résumé.";
 
 const links = [
-  { href: "/chirag-portfolio/about", label: "About", key: "about" },
-  { href: "/chirag-portfolio/projects", label: "Projects", key: "projects" },
-  { href: "/chirag-portfolio/resume", label: "Resume", key: "resume" },
+  { href: withBase("about"), label: "About", key: "about" },
+  { href: withBase("projects"), label: "Projects", key: "projects" },
+  { href: withBase("resume"), label: "Resume", key: "resume" },
 ];
 
 const year = new Date().getFullYear();
-const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -36,10 +36,10 @@ const base = import.meta.env.BASE_URL;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)" />
-    <link rel="preload" href={`${base}/fonts/instrument-serif-400.woff2`} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={`${base}/fonts/instrument-serif-400-italic.woff2`} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={`${base}/fonts/inter-400.woff2`} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={`${base}/fonts/jetbrains-mono-400.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/instrument-serif-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/instrument-serif-400-italic.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/inter-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/jetbrains-mono-400.woff2")} as="font" type="font/woff2" crossorigin />
     <style is:global>
       :root {
         --bg: #F8FAFC;

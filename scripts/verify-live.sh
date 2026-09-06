@@ -29,6 +29,17 @@ projects=$(curl -sS "${BASE}/projects/")
 resume=$(curl -sS "${BASE}/resume/")
 playground=$(curl -sS "${BASE}/playground/")
 
+# Catch mashed BASE_URL joins (Astro 7 BASE_URL has no trailing slash)
+if echo "$home$projects$playground" | grep -Eq '/chirag-portfolioprojects|/chirag-portfolioresume|/chirag-portfolioplayground|/chirag-portfoliofonts'; then
+  check "BASE_URL slash joins" 0 "mashed href like /chirag-portfolioprojects found"
+else
+  check "BASE_URL slash joins" 1
+fi
+
+echo "$home" | grep -q 'href="/chirag-portfolio/projects"' \
+  && check "Nav Projects href" 1 \
+  || check "Nav Projects href" 0 "expected /chirag-portfolio/projects"
+
 echo "$resume" | grep -q 'linkedin.com/in/chiraggandhi09' \
   && check "LinkedIn chiraggandhi09" 1 \
   || check "LinkedIn chiraggandhi09" 0 "missing on /resume"

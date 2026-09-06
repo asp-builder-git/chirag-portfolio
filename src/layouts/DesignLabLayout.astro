@@ -5,6 +5,7 @@ import "../styles/design-lab-personas.css";
 import "../styles/design-lab-fx.css";
 import type { DesignSpec } from "../design/types";
 import { designSpecToCssVars } from "../design/css";
+import { withBase } from "../lib/base";
 
 interface Props {
   spec: DesignSpec;
@@ -30,10 +31,9 @@ const DARK_PERSONAS = [
 const forceDark = spec.creative.themePersona !== "default" && DARK_PERSONAS.includes(spec.creative.themePersona);
 const hideSections = spec.creative.hiddenSections.join(" ");
 const chaosEffects = spec.creative.chaosEffects.join(" ");
-const labBase = "/chirag-portfolio/design-lab";
+const labBase = withBase("design-lab");
 const seedParam = spec.seedId;
 const year = new Date().getFullYear();
-const base = import.meta.env.BASE_URL;
 const hasMatrixRain = spec.creative.chaosEffects.includes("matrix-rain");
 const matrixCols = hasMatrixRain ? Array.from({ length: 24 }, (_, i) => i) : [];
 const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789";
@@ -85,8 +85,8 @@ function matrixColumnText(col: number): string {
     <title>{title} — {spec.seedId}</title>
     <meta name="theme-color" content={light.bg} media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content={dark.bg} media="(prefers-color-scheme: dark)" />
-    <link rel="preload" href={`${base}/fonts/instrument-serif-400.woff2`} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={`${base}/fonts/inter-400.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/instrument-serif-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/inter-400.woff2")} as="font" type="font/woff2" crossorigin />
     <style is:global>
       /* Semantic colors from dual tokens — not inline, so dark remaps work */
       :root {
