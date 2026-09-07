@@ -1,6 +1,7 @@
 ---
 import type { AppearanceState } from "../design/presets";
 import { DEFAULT_APPEARANCE, PRESET_APPEARANCE } from "../design/presets";
+import { withBase } from "../lib/base";
 
 interface Props {
   appearance: AppearanceState;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { appearance, expanded = false } = Astro.props;
+const playgroundBase = withBase("playground");
 ---
 
 <div
@@ -74,17 +76,35 @@ const { appearance, expanded = false } = Astro.props;
   </svg>
 </button>
 
-<script define:vars={{ defaultAppearance: DEFAULT_APPEARANCE, presetAppearance: PRESET_APPEARANCE, expanded }}>
+<script define:vars={{ defaultAppearance: DEFAULT_APPEARANCE, presetAppearance: PRESET_APPEARANCE, expanded, playgroundBase }}>
   (function () {
     var STORAGE_KEY = "chirag-appearance";
     var drawer = document.getElementById("appearance-drawer");
     var trigger = document.getElementById("appearance-trigger");
     var form = document.getElementById("appearance-form");
     var copyBtn = document.getElementById("copy-share-link");
+    var base = String(playgroundBase || "/playground").replace(/\/+$/, "");
+
+    function pathPreset() {
+      var path = window.location.pathname.replace(/\/+$/, "");
+      if (path === base) return defaultAppearance.preset;
+      if (path.indexOf(base + "/") === 0) {
+        var id = path.slice(base.length + 1).split("/")[0];
+        if (id && presetAppearance[id]) return id;
+      }
+      return null;
+    }
+
+    function isPlaygroundPath() {
+      var path = window.location.pathname.replace(/\/+$/, "");
+      return path === base || path.indexOf(base + "/") === 0;
+    }
 
     function readState() {
       var params = new URLSearchParams(window.location.search);
-      var preset = params.get("preset") || defaultAppearance.preset;
+      var fromPath = pathPreset();
+      var preset = fromPath || params.get("preset") || defaultAppearance.preset;
+      if (!presetAppearance[preset]) preset = defaultAppearance.preset;
       var presetDefaults = presetAppearance[preset] || { hero: defaultAppearance.hero, density: defaultAppearance.density };
       return {
         preset: preset,
@@ -110,13 +130,14 @@ const { appearance, expanded = false } = Astro.props;
     function buildUrl(state) {
       var params = new URLSearchParams();
       var presetDefaults = presetAppearance[state.preset] || { hero: defaultAppearance.hero, density: defaultAppearance.density };
-      if (state.preset !== defaultAppearance.preset) params.set("preset", state.preset);
+      // Preset is a path segment — static Pages ignores ?preset=
       if (state.theme !== defaultAppearance.theme) params.set("theme", state.theme);
       if (state.hero !== presetDefaults.hero) params.set("hero", state.hero);
       if (state.density !== presetDefaults.density) params.set("density", state.density);
       if (state.motion !== defaultAppearance.motion) params.set("motion", state.motion);
+      var path = state.preset === defaultAppearance.preset ? base : base + "/" + state.preset;
       var qs = params.toString();
-      return window.location.pathname + (qs ? "?" + qs : "");
+      return path + (qs ? "?" + qs : "");
     }
 
     function navigateWithState(state) {
@@ -176,23 +197,37 @@ const { appearance, expanded = false } = Astro.props;
       });
     }
 
+    // Legacy ?preset= on /playground → path-based URL (static HTML ignores query)
+    if (isPlaygroundPath()) {
+      var params = new URLSearchParams(window.location.search);
+      var qPreset = params.get("preset");
+      var fromPath = pathPreset();
+      if (qPreset && presetAppearance[qPreset] && qPreset !== fromPath) {
+        params.delete("preset");
+        var next = qPreset === defaultAppearance.preset ? base : base + "/" + qPreset;
+        var qs = params.toString();
+        window.location.replace(next + (qs ? "?" + qs : ""));
+        return;
+      }
+    }
+
     // Only restore stored appearance on playground — not home (home stays swiss default)
     var stored = loadStoredState();
     var hasParams = window.location.search.length > 1;
-    var path = window.location.pathname.replace(/\/$/, "");
-    var isPlayground = path.endsWith("/playground");
-    if (stored && !hasParams && isPlayground) {
+    if (stored && !hasParams && isPlaygroundPath() && pathPreset() === defaultAppearance.preset) {
       var needsRedirect = false;
-      ["preset", "theme", "hero", "density", "motion"].forEach(function (key) {
+      if (stored.preset && stored.preset !== defaultAppearance.preset && presetAppearance[stored.preset]) {
+        needsRedirect = true;
+      }
+      ["theme", "hero", "density", "motion"].forEach(function (key) {
         var presetDefaults = presetAppearance[stored.preset || defaultAppearance.preset] || defaultAppearance;
         var fallback = key === "hero" || key === "density"
           ? (presetDefaults[key] || defaultAppearance[key])
           : defaultAppearance[key];
-        if (stored[key] && stored[key] !== fallback && !(key === "preset" && stored[key] === defaultAppearance.preset)) {
-          if (stored[key] !== defaultAppearance[key] && stored[key] !== fallback) needsRedirect = true;
+        if (stored[key] && stored[key] !== fallback && stored[key] !== defaultAppearance[key]) {
+          needsRedirect = true;
         }
       });
-      if (stored.preset && stored.preset !== defaultAppearance.preset) needsRedirect = true;
       if (needsRedirect) {
         window.location.replace(buildUrl(stored));
       }

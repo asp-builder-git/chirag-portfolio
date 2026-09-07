@@ -95,6 +95,19 @@ const VALID_HERO = new Set<HeroPref>(["statement", "name", "metric"]);
 const VALID_DENSITY = new Set<DensityPref>(["standard", "poster"]);
 const VALID_MOTION = new Set<MotionPref>(["off", "full"]);
 
+/** Non-default presets prerendered as /playground/<id>/ (static hosting ignores ?preset=). */
+export const PLAYGROUND_PATH_PRESETS: PresetId[] = ["bio-hub", "metric-proof", "terminal"];
+
+export function isPresetId(value: string | null | undefined): value is PresetId {
+  return !!value && VALID_PRESETS.has(value as PresetId);
+}
+
+/** Site-relative playground path for a preset — pass through withBase(). */
+export function playgroundPathForPreset(preset: PresetId): string {
+  if (preset === DEFAULT_APPEARANCE.preset) return "playground";
+  return `playground/${preset}`;
+}
+
 function pick<T extends string>(value: string | null, valid: Set<T>, fallback: T): T {
   return value && valid.has(value as T) ? (value as T) : fallback;
 }
@@ -111,11 +124,13 @@ export function parseAppearanceParams(searchParams: URLSearchParams): Appearance
   };
 }
 
-/** Build share/nav URL params; omit values that match the active preset's defaults */
+/**
+ * Query params for share/nav — preset is a path segment on static hosts, not ?preset=.
+ * Omit values that match the active preset's defaults.
+ */
 export function appearanceToSearchParams(state: AppearanceState): URLSearchParams {
   const params = new URLSearchParams();
   const presetDefaults = PRESET_APPEARANCE[state.preset];
-  if (state.preset !== DEFAULT_APPEARANCE.preset) params.set("preset", state.preset);
   if (state.theme !== DEFAULT_APPEARANCE.theme) params.set("theme", state.theme);
   if (state.hero !== presetDefaults.hero) params.set("hero", state.hero);
   if (state.density !== presetDefaults.density) params.set("density", state.density);

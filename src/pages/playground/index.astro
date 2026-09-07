@@ -1,0 +1,11 @@
+---
+import PlaygroundView from "../../components/pages/PlaygroundView.astro";
+import { getProductionBaseSpec } from "../../design/production-default";
+import { DEFAULT_APPEARANCE, applyAppearance } from "../../design/presets";
+
+/** Default Swiss poster — static hosts ignore ?preset=, so other presets live under /playground/<id>/. */
+const appearance = DEFAULT_APPEARANCE;
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
+---
+
+<PlaygroundView spec={spec} appearance={appearance} />
