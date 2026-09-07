@@ -1,0 +1,170 @@
+---
+import BaseDocument from "./BaseDocument.astro";
+import "../styles/production/home.css";
+import "../styles/production/playground-presets.css";
+import type { DesignSpec } from "../design/types";
+import type { AppearanceState } from "../design/presets";
+import { textureFromMotion } from "../design/presets";
+import { designSpecToCssVars } from "../design/css";
+import { withBase } from "../lib/base";
+import { PRIMARY_NAV } from "../lib/nav";
+import AppearanceDrawer from "../components/features/AppearanceDrawer.astro";
+import ThemeToggle from "../components/chrome/ThemeToggle.astro";
+
+interface Props {
+  spec: DesignSpec;
+  appearance: AppearanceState;
+  title?: string;
+  description?: string;
+  active?: "home" | "playground" | "projects" | "resume";
+  drawerExpanded?: boolean;
+  showAppearance?: boolean;
+}
+
+const {
+  spec,
+  appearance,
+  title = "Chirag R Gandhi — Platform Product Manager",
+  description,
+  active = "home",
+  drawerExpanded = false,
+  showAppearance = false,
+} = Astro.props;
+
+const cssVars = designSpecToCssVars(spec);
+const rootStyle = Object.entries(cssVars)
+  .map(([k, v]) => `${k}: ${v}`)
+  .join("; ");
+const light = spec.colors.light;
+const dark = spec.colors.dark;
+
+const DARK_PERSONAS = [
+  "matrix", "terminal", "neonTokyo", "voidMono", "retroTerminal", "luxurySerif",
+  "acid", "glitch", "cyberpunk", "bloodMoon", "arcade",
+];
+const forceDark =
+  spec.creative.themePersona !== "default" &&
+  DARK_PERSONAS.includes(spec.creative.themePersona);
+const hideSections = spec.creative.hiddenSections.join(" ");
+const chaosEffects = spec.creative.chaosEffects.join(" ");
+const texture = textureFromMotion(appearance.motion);
+const year = new Date().getFullYear();
+const homeHref = withBase();
+const hasMatrixRain = spec.creative.chaosEffects.includes("matrix-rain");
+const matrixCols = hasMatrixRain ? Array.from({ length: 24 }, (_, i) => i) : [];
+const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789";
+const seedParam = spec.seedId;
+
+function matrixColumnText(col: number): string {
+  let out = "";
+  for (let r = 0; r < 20; r++) {
+    out +=
+      MATRIX_CHARS[
+        (col * 7 + r * 13 + seedParam.charCodeAt(r % seedParam.length)) %
+          MATRIX_CHARS.length
+      ];
+    if (r < 19) out += "\n";
+  }
+  return out;
+}
+
+const themePref = appearance.theme;
+
+const htmlAttrs: Record<string, string | undefined> = {
+  "data-archetype": spec.archetype,
+  "data-pillar-layout": spec.pillarLayout,
+  "data-btn-variant": spec.buttonVariant,
+  "data-font-pairing": spec.fontPairing,
+  "data-hero-layout": spec.heroLayout,
+  "data-hero-scale": spec.heroScale,
+  "data-text-align": spec.textAlign,
+  "data-cta-layout": spec.ctaLayout,
+  "data-interaction": spec.interaction,
+  "data-nav-style": spec.navStyle,
+  "data-metric-layout": spec.metricLayout,
+  "data-section-style": spec.sectionStyle,
+  "data-label-style": spec.labelStyle,
+  "data-projects-layout": spec.projectsLayout,
+  "data-theme-persona": spec.creative.themePersona,
+  "data-hero-mode": spec.creative.heroMode,
+  "data-name-placement": spec.creative.namePlacement,
+  "data-nav-position": spec.creative.navPosition,
+  "data-content-width": spec.creative.contentWidth,
+  "data-hide": hideSections,
+  "data-chaos": chaosEffects,
+  "data-force-dark": forceDark ? "true" : "false",
+  "data-wildness": String(spec.creative.wildness),
+  "data-visual-layout": spec.creative.visualLayout,
+  "data-hero-shell": spec.creative.heroShell,
+  "data-texture": texture,
+  "data-motion": appearance.motion,
+};
+---
+
+<BaseDocument
+  title={title}
+  description={description}
+  themeColorLight={light.bg}
+  themeColorDark={dark.bg}
+  forceDark={forceDark}
+  themePref={themePref}
+  rootStyle={rootStyle}
+  htmlAttrs={htmlAttrs}
+>
+  {hasMatrixRain && (
+    <div class="matrix-rain" aria-hidden="true">
+      {matrixCols.map((i) => (
+        <div
+          class="col"
+          style={`left:${(i / matrixCols.length) * 100}%;animation-duration:${8 + (i % 7) * 2}s;animation-delay:${-(i % 5)}s`}
+        >
+          {matrixColumnText(i)}
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="page-wrap">
+    <div class="container">
+      <a class="skip-link" href="#main">Skip to content</a>
+
+      <header class="sticky-atf">
+        <a class="site-name" href={homeHref}>Chirag R Gandhi</a>
+        <span class="name-sep" aria-hidden="true">|</span>
+        <nav class="nav-links" aria-label="Primary">
+          {PRIMARY_NAV.map((item) => (
+            <a
+              href={item.href}
+              class:list={[active === item.key && "active"]}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <div class="nav-actions">
+          <ThemeToggle />
+          {showAppearance && (
+            <AppearanceDrawer appearance={appearance} expanded={drawerExpanded} />
+          )}
+        </div>
+      </header>
+
+      <main id="main">
+        <slot />
+      </main>
+
+      <footer>
+        <span>© {year} Chirag R Gandhi</span>
+        <div class="f-links">
+          <a href="mailto:chirag0912@gmail.com">Email</a>
+          <span>·</span>
+          <a href="https://www.linkedin.com/in/chiraggandhi09" rel="noopener"
+            >LinkedIn</a
+          >
+          <span>·</span>
+          <a href="https://github.com/asp-builder-git" rel="noopener">GitHub</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+</BaseDocument>

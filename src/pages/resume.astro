@@ -1,12 +1,12 @@
 ---
-import HomeLayout from "../layouts/HomeLayout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
 import { getProductionBaseSpec } from "../design/production-default";
 import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
 
 const appearance = DEFAULT_APPEARANCE;
 const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<HomeLayout
+<SiteLayout
   spec={spec}
   appearance={appearance}
   title="Resume — Chirag R Gandhi"
@@ -53,7 +53,7 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
     .contact a { color: var(--ink); text-decoration: none; font-weight: 600; }
     .contact a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
     .summary {
-      font-size: 1.02rem; color: var(--body); border-left: 2px solid var(--hairline);
+      font-size: 1.02rem; color: var(--ink); border-left: 2px solid var(--hairline);
       padding-left: 1.1rem; margin-bottom: 2.5rem;
     }
     /* Match home: mono nums + hairline rows (not boxed cards) */
@@ -75,10 +75,10 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
     .job-head .dates { font-size: 0.85rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
     .job .company { font-weight: 600; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
     .job ul { margin: 0 0 0 1.15rem; }
-    .job li { margin-bottom: 0.45rem; color: var(--body); }
+    .job li { margin-bottom: 0.45rem; color: var(--ink); }
     .edu { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; }
     .edu .d { font-size: 0.85rem; color: var(--muted); }
-    .skills { color: var(--body); }
+    .skills { color: var(--ink); }
     .skills p { margin-bottom: 0.75rem; }
     .skills p:last-child { margin-bottom: 0; }
     .sec { margin-bottom: 2.5rem; }
@@ -238,4 +238,4 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
       });
     })();
   </script>
-</HomeLayout>
+</SiteLayout>

@@ -1,0 +1,16 @@
+{
+  "name": "Market Evaluation — 4 Agents, 1 Day",
+  "status": "In progress",
+  "blurb": "A 4-week market study compressed into a single day with a 4-agent pipeline.",
+  "difficulty": "Keeping four agents on one brief was the hard part.",
+  "problem": [
+    "A proper market study takes weeks: research, teardowns, scoring, synthesis. I wanted to know whether a 4-agent pipeline could compress a 4-week study into a single day — and whether the output was usable."
+  ],
+  "built": [
+    "One brief, four agents: problem discovery, validation, solution generation, and a synthesis pass. Three ranked, ready-to-build business ideas came out.",
+    "Keeping four agents on the same brief was the hard part — context leaks and drifts fast."
+  ],
+  "outcome": [
+    "No outcome yet — the write-up lands here when it ships."
+  ]
+}

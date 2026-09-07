@@ -1,6 +1,6 @@
 ---
-import DesignLabLayout from "../../../layouts/DesignLabLayout.astro";
-import HomeContentLab from "../../../components/pages/HomeContentLab.astro";
+import LabLayout from "../../../layouts/LabLayout.astro";
+import HomeContent from "../../../components/home/HomeContent.astro";
 import { CURATED_SEEDS, resolveLabDesign } from "../../../design/seeds";
 import { isDesignLabEnabled } from "../../../design/lab-guard";
 
@@ -21,6 +21,6 @@ const { fullSeed, galleryIndex } = Astro.props;
 const spec = resolveLabDesign(fullSeed, galleryIndex);
 ---
 
-<DesignLabLayout spec={spec} seed={fullSeed} title="Design Lab — Home" active="home" pageLabel="Home">
-  <HomeContentLab spec={spec} />
-</DesignLabLayout>
+<LabLayout spec={spec} seed={fullSeed} title="Design Lab — Home" active="home" pageLabel="Home">
+  <HomeContent spec={spec} variant="lab" />
+</LabLayout>

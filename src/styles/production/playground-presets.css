@@ -1,0 +1,179 @@
+/* Curated lab subset for production playground presets only.
+   Personas: swissBrutal, terminal (warmPaper has no structural rules).
+   Chaos: thick-rules, all-caps-nav, oversized-type, scanlines.
+   Plus hero/shell bits those presets rely on. */
+
+[data-hero-mode="statement"] .intro .hero-name { display: none; }
+[data-hero-mode="statement"] .intro .status-chip,
+[data-hero-mode="metric"] .intro .status-chip,
+[data-hero-mode="name"] .intro .status-chip { display: none; }
+[data-hero-mode="statement"] .intro .hero-statement {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 2vw, 3rem);
+  font-weight: var(--display-weight, 400);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 28ch;
+}
+
+[data-hero-mode="metric"] .intro .hero-name,
+[data-hero-mode="metric"] .intro .role,
+[data-hero-mode="metric"] .intro .plain { display: none; }
+[data-hero-mode="metric"] .intro .hero-metric {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 2.5rem + 5vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+[data-hero-mode="metric"] .intro .hero-metric-label {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+  max-width: 30ch;
+}
+
+[data-name-placement="byline"] .intro .hero-byline {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+}
+
+[data-theme-persona="swissBrutal"][data-hero-mode="statement"] .intro .hero-statement {
+  text-shadow: none;
+}
+
+[data-theme-persona="terminal"] .intro::before {
+  content: "$ whoami";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+[data-theme-persona="terminal"] .intro .hero-name::before { content: "> "; color: var(--accent); }
+
+[data-theme-persona="swissBrutal"] .label,
+[data-theme-persona="swissBrutal"] .eyebrow {
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+[data-theme-persona="swissBrutal"] .section {
+  border-top: 4px solid var(--ink);
+  padding-top: 2rem;
+}
+[data-theme-persona="swissBrutal"] .btn {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+}
+
+[data-chaos~="oversized-type"] .intro .hero-statement {
+  font-size: clamp(2rem, 1.6rem + 3vw, 3.75rem);
+  line-height: 1.08;
+  max-width: 18ch;
+}
+[data-chaos~="all-caps-nav"] nav a {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+}
+[data-chaos~="thick-rules"] .row,
+[data-chaos~="thick-rules"] .section {
+  border-top-width: 3px;
+}
+
+[data-chaos~="scanlines"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+}
+
+[data-visual-layout="poster"] .intro {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 8vw, 6rem) 0;
+}
+[data-hero-shell="fullscreen"] .intro {
+  min-height: 100vh;
+  margin: calc(-1 * clamp(1.5rem, 5vw, 3rem));
+  margin-bottom: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1));
+  padding: clamp(2rem, 8vw, 6rem) clamp(1.5rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.matrix-rain {
+  display: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0.35;
+}
+[data-chaos~="matrix-rain"] .matrix-rain {
+  display: block;
+}
+.matrix-rain .col {
+  position: absolute;
+  top: -100%;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.1;
+  color: #00ff41;
+  text-shadow: 0 0 6px #00ff41;
+  animation: matrix-fall linear infinite;
+  white-space: pre;
+}
+@keyframes matrix-fall {
+  to { transform: translateY(200vh); }
+}
+[data-theme-persona="swissBrutal"] .matrix-rain {
+  opacity: 1;
+}
+[data-theme-persona="swissBrutal"] .matrix-rain .col {
+  color: #000000;
+  text-shadow: none;
+  opacity: 0.15;
+}
+:root[data-theme="dark"][data-theme-persona="swissBrutal"] .matrix-rain .col,
+[data-theme-persona="swissBrutal"][data-force-dark="true"] .matrix-rain .col {
+  color: #ffffff;
+  opacity: 0.08;
+}
+[data-texture="off"] .matrix-rain,
+[data-motion="off"] .matrix-rain {
+  display: none !important;
+}
+[data-texture="subtle"] .matrix-rain,
+[data-motion="full"] .matrix-rain {
+  display: block;
+}
+
+[data-force-dark="true"] { color-scheme: dark; }
+
+@media (prefers-reduced-motion: reduce) {
+  .matrix-rain .col { animation: none; display: none; }
+}

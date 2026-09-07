@@ -1,3 +1,4 @@
+# DEPRECATED — use npm run design:a11y (scripts/audit-standalone.mjs)
 # Self-contained a11y audit for curated design seeds
 # Usage: powershell -File scripts/audit-standalone.ps1
 

@@ -1,3 +1,4 @@
+/** DEPRECATED — use `npm run design:a11y` → scripts/audit-standalone.mjs */
 #!/usr/bin/env node
 /**
  * Audit curated design seeds for WCAG AA contrast.

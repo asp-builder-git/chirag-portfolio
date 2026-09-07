@@ -7,6 +7,31 @@
 - **G3 Implementation review**: verify scaffold matches plan; check no leftover boilerplate confusion.
 - **G4 Ship review**: URL live, repo public, README positioning line, guardrails documented.
 
+
+## ORG-0…ORG-6 — Organization scale roadmap (2026-09-07) — `chore/org-scale-roadmap`
+
+**Status:** G1–G3 done on branch. Awaiting Chirag approval before merge. Do not merge to main without review.
+
+### Summary
+Multi-PR structure/scale work landed on one branch for review: unified document shell, production vs lab CSS split, shared theme/appearance scripts, CI beyond build, content collections, component taxonomy, and process/docs hygiene.
+
+### Backlog IDs closed
+- **ORG-0 / ORG-0b:** `ORG-BACKLOG.md`, package `chirag-portfolio`, README + M6-PLAN token line, Org structure in AGENTS/CLAUDE + `.cursor/rules/org-structure.mdc`, `model-routing.mdc` present
+- **ORG-1:** `BaseDocument` → `SiteLayout` / `LabLayout`; `src/lib/nav.ts`; about/writing/resume/home/projects/playground migrated; legacy layouts deleted; favicons via `withBase`; writing empty (no coming-soon theater); About/Writing off primary nav; verify-live favicon check
+- **ORG-2:** `styles/production/` vs `styles/lab/`; SiteLayout production + curated `playground-presets.css`; LabLayout imports lab CSS; production dist home CSS lacks lab persona matrix (`neonTokyo`/`bloodMoon`)
+- **ORG-3:** `src/scripts/theme.ts` + `appearance.ts`; `.github/workflows/ci.yml` (astro check, build, dist smoke, design:a11y)
+- **ORG-4:** `src/content.config.ts` + `content/projects/*.json` + writing schema stub; `projects/[slug]` via `getCollection`; `home-content` stays typed module; `data/projects.ts` re-exports JSON
+- **ORG-5:** `components/chrome|features|home|ui/`; HomeContent merged behind `variant`; AppearanceDrawer under features
+- **ORG-6:** `docs/process` + `docs/archive`; a11y scripts collapsed to `audit-standalone.mjs`; tsconfig aliases; `--body`→`--ink`; `404.astro` + `DocumentMeta`; `LabCreativeProfile` type alias
+
+### Verify
+- `npm run build` exit 0
+- `npx astro check` — 0 errors
+- Dist smoke: Appearance absent on home, present on playground; favicon base path; home CSS without full lab matrix
+
+### Ask Chirag
+Approve merge of `chore/org-scale-roadmap` → main (or request splits into smaller PRs). Interactive theme/Appearance still need a click-pass on playground after deploy (G5).
+
 ## M2 — Homepage vs Separate Resume Page (2026-08-27)
 
 **Decision: hybrid.** Homepage stays a focused hook; full history lives on a dedicated `/resume` page.

@@ -397,7 +397,7 @@ export function resolveCreativeProfile(
     heroQuestion,
     sectionOrder,
     hiddenSections,
-    showNameInFooter: namePlacement === "footer" || namePlacement === "hidden",
+    showNameInFooter: namePlacement === "footer",
     namePlacement,
     navPosition,
     contentWidth,

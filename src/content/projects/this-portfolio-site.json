@@ -1,0 +1,22 @@
+{
+  "name": "This portfolio site",
+  "status": "Live",
+  "blurb": "The meta-project — a portfolio with a design system visitors can try.",
+  "difficulty": "The hard part wasn't Astro. It was the discipline: every change goes through a review gate before it ships.",
+  "url": "https://asp-builder-git.github.io/chirag-portfolio/",
+  "repo": "https://github.com/asp-builder-git/chirag-portfolio",
+  "repoPublic": true,
+  "playgroundUrl": "playground",
+  "problem": [
+    "Most portfolios are a template or a promise. I wanted one that only shows real things — and that shows how I think about systems, not just what I shipped.",
+    "The rule that runs it: a project counts when a stranger can open it."
+  ],
+  "built": [
+    "A static Astro site on GitHub Pages. A seed string resolves to a design spec, which drives the CSS — typography, palette, hero, motion.",
+    "Four curated presets visitors can try on /playground. Twenty-four wilder ones stay in a local design lab.",
+    "Every change ships through a review gate: branch, build, approval, then merge."
+  ],
+  "outcome": [
+    "Live since August 2026. Open /playground to switch themes. The meta-project is proof I can finish things."
+  ]
+}

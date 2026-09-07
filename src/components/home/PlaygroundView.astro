@@ -1,5 +1,5 @@
 ---
-import HomeLayout from "../../layouts/HomeLayout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import HomeContent from "./HomeContent.astro";
 import {
   PRESET_OPTIONS,
@@ -17,7 +17,7 @@ interface Props {
 const { spec, appearance } = Astro.props;
 ---
 
-<HomeLayout
+<SiteLayout
   spec={spec}
   appearance={appearance}
   title="Playground — Chirag R Gandhi"
@@ -70,4 +70,4 @@ const { spec, appearance } = Astro.props;
   </div>
 
   <HomeContent spec={spec} />
-</HomeLayout>
+</SiteLayout>

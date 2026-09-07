@@ -1,0 +1,90 @@
+---
+import type { AppearanceState } from "../../design/presets";
+import { withBase } from "../../lib/base";
+
+interface Props {
+  appearance: AppearanceState;
+  expanded?: boolean;
+}
+
+const { appearance, expanded = false } = Astro.props;
+const playgroundBase = withBase("playground");
+---
+
+<div
+  id="appearance-drawer"
+  class="appearance-drawer"
+  hidden
+  role="dialog"
+  aria-labelledby="appearance-drawer-title"
+  aria-modal="true"
+  data-playground-base={playgroundBase}
+>
+  <div class="drawer-backdrop" data-drawer-close></div>
+  <div class="drawer-panel">
+    <header class="drawer-header">
+      <h2 id="appearance-drawer-title">Appearance</h2>
+      <button type="button" class="drawer-close" data-drawer-close aria-label="Close appearance panel">×</button>
+    </header>
+
+    <form id="appearance-form" class="drawer-form">
+      <fieldset>
+        <legend>Hero mode</legend>
+        <select name="hero" id="appearance-hero">
+          <option value="statement" selected={appearance.hero === "statement"}>Statement</option>
+          <option value="name" selected={appearance.hero === "name"}>Name + role</option>
+          <option value="metric" selected={appearance.hero === "metric"}>Metric</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Density</legend>
+        <select name="density" id="appearance-density">
+          <option value="standard" selected={appearance.density === "standard"}>Standard</option>
+          <option value="poster" selected={appearance.density === "poster"}>Poster</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Texture</legend>
+        <select name="motion" id="appearance-motion">
+          <option value="off" selected={appearance.motion === "off"}>Off</option>
+          <option value="full" selected={appearance.motion === "full"}>Subtle</option>
+        </select>
+      </fieldset>
+
+      {expanded && (
+        <p class="drawer-hint">
+          <button type="button" class="btn-copy-link" id="copy-share-link">Copy share link</button>
+        </p>
+      )}
+    </form>
+  </div>
+</div>
+
+<button
+  type="button"
+  id="appearance-trigger"
+  class="appearance-trigger"
+  aria-label="Open appearance settings"
+  aria-expanded="false"
+  aria-controls="appearance-drawer"
+  title="Appearance"
+>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+  </svg>
+</button>
+
+<script>
+  import { bindAppearanceDrawer } from "../../scripts/appearance";
+  import { DEFAULT_APPEARANCE, PRESET_APPEARANCE } from "../../design/presets";
+
+  const el = document.getElementById("appearance-drawer");
+  const playgroundBase = el?.getAttribute("data-playground-base") || "/playground";
+  bindAppearanceDrawer({
+    defaultAppearance: DEFAULT_APPEARANCE,
+    presetAppearance: PRESET_APPEARANCE,
+    playgroundBase,
+  });
+</script>
