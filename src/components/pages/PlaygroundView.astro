@@ -1,29 +1,20 @@
 ---
-import HomeLayout from "../layouts/HomeLayout.astro";
-import HomeContent from "../components/pages/HomeContent.astro";
-import { getProductionBaseSpec } from "../design/production-default";
+import HomeLayout from "../../layouts/HomeLayout.astro";
+import HomeContent from "./HomeContent.astro";
 import {
-  parseAppearanceParams,
-  applyAppearance,
-  appearanceToSearchParams,
-  appearanceForPreset,
   PRESET_OPTIONS,
-  type PresetId,
-} from "../design/presets";
-import { withBase } from "../lib/base";
+  playgroundPathForPreset,
+  type AppearanceState,
+} from "../../design/presets";
+import type { DesignSpec } from "../../design/types";
+import { withBase } from "../../lib/base";
 
-const appearance = parseAppearanceParams(Astro.url.searchParams);
-const spec = applyAppearance(getProductionBaseSpec(), appearance);
-
-function presetHref(presetId: PresetId): string {
-  const next = appearanceForPreset(presetId, appearance);
-  const params = appearanceToSearchParams(next);
-  // Always include preset when not swiss default so Classic/Metric/Terminal stick
-  if (presetId !== "swiss-statement") params.set("preset", presetId);
-  const qs = params.toString();
-  const path = withBase("playground");
-  return qs ? `${path}?${qs}` : path;
+interface Props {
+  spec: DesignSpec;
+  appearance: AppearanceState;
 }
+
+const { spec, appearance } = Astro.props;
 ---
 
 <HomeLayout
@@ -68,7 +59,7 @@ function presetHref(presetId: PresetId): string {
     <div class="theme-presets-row">
       {PRESET_OPTIONS.map((p) => (
         <a
-          href={presetHref(p.id)}
+          href={withBase(playgroundPathForPreset(p.id))}
           class:list={["preset-btn", appearance.preset === p.id && "active"]}
           title={p.label}
         >

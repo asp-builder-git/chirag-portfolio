@@ -1,0 +1,21 @@
+---
+import PlaygroundView from "../../components/pages/PlaygroundView.astro";
+import { getProductionBaseSpec } from "../../design/production-default";
+import {
+  PLAYGROUND_PATH_PRESETS,
+  appearanceForPreset,
+  applyAppearance,
+  DEFAULT_APPEARANCE,
+  type PresetId,
+} from "../../design/presets";
+
+export function getStaticPaths() {
+  return PLAYGROUND_PATH_PRESETS.map((preset) => ({ params: { preset } }));
+}
+
+const presetId = Astro.params.preset as PresetId;
+const appearance = appearanceForPreset(presetId, DEFAULT_APPEARANCE);
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
+---
+
+<PlaygroundView spec={spec} appearance={appearance} />

@@ -60,6 +60,26 @@ else
   check "Appearance present on /playground" 0 "no Appearance string"
 fi
 
+# Path-based presets (static Pages ignores ?preset= on a single HTML file)
+echo "$playground" | grep -q 'data-theme-persona="swissBrutal"' \
+  && check "Playground default swissBrutal" 1 \
+  || check "Playground default swissBrutal" 0
+
+bio=$(curl -sS "${BASE}/playground/bio-hub/")
+echo "$bio" | grep -q 'data-theme-persona="warmPaper"' \
+  && check "Preset Classic warmPaper" 1 \
+  || check "Preset Classic warmPaper" 0 "got: $(echo "$bio" | grep -o 'data-theme-persona="[^"]*"' | head -1)"
+
+metric=$(curl -sS "${BASE}/playground/metric-proof/")
+echo "$metric" | grep -q 'data-hero-mode="metric"' \
+  && check "Preset Metric hero" 1 \
+  || check "Preset Metric hero" 0
+
+term=$(curl -sS "${BASE}/playground/terminal/")
+echo "$term" | grep -q 'data-theme-persona="terminal"' \
+  && check "Preset Terminal persona" 1 \
+  || check "Preset Terminal persona" 0
+
 echo "$home" | grep -q '€87M surfaced' \
   && check "Impact Build chip" 1 \
   || check "Impact Build chip" 0
