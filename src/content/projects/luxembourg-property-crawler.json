@@ -1,0 +1,20 @@
+{
+  "name": "Luxembourg Property Asymmetry Crawler",
+  "status": "In progress",
+  "blurb": "Compares broker listings against the atHome aggregator inventory.",
+  "difficulty": "Matching listings across two very different sites was harder than it looked.",
+  "repo": "https://github.com/asp-builder-git/lux-property-crawler",
+  "repoPublic": false,
+  "problem": [
+    "Property listings in Luxembourg are scattered. Brokers publish on their own sites, and the big aggregator doesn't see everything.",
+    "I wanted to know what's listed where, and what the aggregator is missing."
+  ],
+  "built": [
+    "A full pipeline: crawl broker listings, snapshot the aggregator inventory, match across both, and surface the asymmetry in a dashboard.",
+    "The matching step was harder than it looked — the same house shows up with different address formats, different languages, different spellings."
+  ],
+  "outcome": [
+    "No outcome yet — the matching step is still being tuned.",
+    "The repo stays private until a stranger can open it. That's the rule."
+  ]
+}

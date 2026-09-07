@@ -1,6 +1,6 @@
 # Chirag Gandhi — Personal Site
 
-**Product Manager & Builder.** Built with [Astro](https://astro.build), deployed to GitHub Pages, public from day one.
+**Platform Product Manager & Builder.** Built with [Astro](https://astro.build), deployed to GitHub Pages, public from day one.
 
 ## Why this exists
 
@@ -27,10 +27,8 @@ Pushed to `main` → GitHub Actions builds and deploys to GitHub Pages.
 
 ## Status
 
-- [x] M1: skeleton live (Home / About / Projects / Writing)
-- [ ] M2: first case studies (market-evaluation, SDE pipeline page)
-- [ ] M3: writing section (model-smackdown on Substack, linked)
-- [ ] M4: first interactive demo (TrueReview)
-- [ ] M5: Anki case study
-- [ ] M6: crawler dashboard
-- [ ] M7+: stock dashboard, marketing agent output
+Live routes: Home, Projects (+ case-study slugs), Resume, Playground (Appearance). About exists off primary nav. Writing is empty until real posts. Design lab is local/DEV only.
+
+- Product milestones: see [M6-PLAN.md](M6-PLAN.md)
+- Structure / scale backlog: see [ORG-BACKLOG.md](ORG-BACKLOG.md) (check off as PRs ship)
+- Voice: [VOICE.md](VOICE.md) · Ship gates: [gates.md](gates.md)

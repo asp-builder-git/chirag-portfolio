@@ -1,0 +1,20 @@
+{
+  "name": "TrueReview",
+  "status": "In progress",
+  "blurb": "Analyzes Google reviews for suspicious patterns and shows the adjusted “true” rating.",
+  "difficulty": "The hard part is proving a pattern is real and not just noise.",
+  "repo": "https://github.com/asp-builder-git/truereview",
+  "repoPublic": false,
+  "problem": [
+    "Restaurant ratings get gamed. A place with a hundred glowing five-star reviews can still be average — the reviews just look similar.",
+    "I wanted the rating a place actually deserves, not the one the review pattern produces."
+  ],
+  "built": [
+    "A tool that pulls Google reviews, looks for suspicious patterns — bursts of reviews, repetitive language, one-sided stars — and shows an adjusted “true” rating.",
+    "The hard part is proving a pattern is real and not just noise."
+  ],
+  "outcome": [
+    "No outcome yet — in progress.",
+    "The repo stays private until it ships."
+  ]
+}

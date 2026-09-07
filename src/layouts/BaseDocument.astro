@@ -1,0 +1,76 @@
+---
+import "../styles/production/fonts.css";
+import "../styles/production/chrome.css";
+import { withBase } from "../lib/base";
+import DocumentMeta from "../components/chrome/DocumentMeta.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  themeColorLight: string;
+  themeColorDark: string;
+  forceDark?: boolean;
+  themePref?: string;
+  noindex?: boolean;
+  rootStyle?: string;
+  htmlAttrs?: Record<string, string | undefined>;
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description = "Chirag R Gandhi — Platform Product Manager. Enterprise products at work, experiments at home.",
+  themeColorLight,
+  themeColorDark,
+  forceDark = false,
+  themePref = "system",
+  noindex = false,
+  rootStyle = "",
+  htmlAttrs = {},
+  canonicalPath = "",
+} = Astro.props;
+
+const faviconHref = withBase("favicon.svg");
+---
+
+<!doctype html>
+<html lang="en" style={rootStyle} {...htmlAttrs}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <DocumentMeta
+      title={title}
+      description={description}
+      noindex={noindex}
+      canonicalPath={canonicalPath}
+    />
+    <title>{title}</title>
+    <meta name="theme-color" content={themeColorLight} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={themeColorDark} media="(prefers-color-scheme: dark)" />
+    <link rel="preload" href={withBase("fonts/instrument-serif-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase("fonts/inter-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+    {/* FOUC bootstrap — mirrors initTheme() in src/scripts/theme.ts */}
+    <script is:inline define:vars={{ forceDark, themePref }}>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem("theme"); } catch (e) {}
+        var dark;
+        if (themePref === "light" || stored === "light") dark = false;
+        else if (themePref === "dark" || stored === "dark") dark = true;
+        else {
+          dark = forceDark || window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+        document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script>
+      import { bindThemeToggle } from "../scripts/theme";
+      bindThemeToggle();
+    </script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "name": "astro-scaffold",
+  "name": "chirag-portfolio",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "design:seeds": "node --experimental-strip-types scripts/design-seeds.ts",
-    "design:a11y": "node scripts/audit-standalone.mjs"
+    "design:a11y": "node scripts/audit-standalone.mjs",
+    "check": "astro check"
   },
   "dependencies": {
     "astro": "^7.2.9"
@@ -20,9 +21,11 @@
     "esbuild": true
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@fontsource/instrument-serif": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
-    "fontaine": "^0.8.1"
+    "fontaine": "^0.8.1",
+    "typescript": "^6.0.3"
   }
 }

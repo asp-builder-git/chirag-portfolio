@@ -1,0 +1,30 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
+import { withBase } from "../lib/base";
+
+const appearance = DEFAULT_APPEARANCE;
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
+---
+
+<SiteLayout
+  spec={spec}
+  appearance={appearance}
+  title="Not found — Chirag Gandhi"
+  showAppearance={false}
+>
+  <style>
+    h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.75rem; }
+    p { color: var(--muted); max-width: 42ch; margin-bottom: 1.5rem; }
+    a { color: var(--ink); }
+  </style>
+  <div class="eyebrow">404</div>
+  <h1>Page not found</h1>
+  <p>That URL isn't on this site. Try home or projects.</p>
+  <p>
+    <a href={withBase()}>← Home</a>
+    ·
+    <a href={withBase("projects")}>Projects</a>
+  </p>
+</SiteLayout>

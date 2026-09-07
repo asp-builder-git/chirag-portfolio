@@ -6,11 +6,18 @@ import { withBase } from "../../lib/base";
 
 interface Props {
   spec: DesignSpec;
+  /** Production = Swiss home; lab = full creative matrix hero modes */
+  variant?: "production" | "lab";
 }
 
-const { spec } = Astro.props;
+const { spec, variant = "production" } = Astro.props;
 const c = spec.creative;
-const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
+const isLab = variant === "lab";
+const showMarquee = isLab && c.visualLayout === "marquee";
+const marqueeText = `${c.themePersona} · ${c.heroMode} · ${c.heroShell} · wild ${c.wildness}`;
+const homeProjects = isLab
+  ? projects.filter((p) => p.status === "Live")
+  : projects.filter((p) => p.slug === "this-portfolio-site");
 ---
 
 <style>
@@ -59,6 +66,28 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
     margin-top: 0.5rem;
     max-width: 46ch;
   }
+  .intro .plain {
+    font-size: 1.0625rem;
+    line-height: var(--line-height-body, 1.65);
+    color: var(--ink);
+    margin-top: 1rem;
+    max-width: 60ch;
+  }
+  .intro .status-chip {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1.1rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+  }
+  .intro .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.75rem;
+  }
   .intro .hero-byline { display: none; }
   .intro { margin-bottom: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1)); }
   .section + .section { margin-top: calc(clamp(3rem, 6vw, 4.5rem) * var(--space-section, 1)); }
@@ -83,7 +112,6 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
   .pillar h3 { font-size: 1.0625rem; line-height: 1.3; margin-bottom: 0.5rem; }
   .pillar p { font-size: 0.9375rem; line-height: 1.6; color: var(--muted); }
 
-  /* Single horizontal impact band */
   .impact-strip {
     display: flex;
     flex-wrap: wrap;
@@ -117,6 +145,35 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
     font-size: 0.75rem;
     line-height: 1.35;
     color: var(--muted);
+  }
+
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.5rem;
+  }
+  .metric {
+    flex: 1 1 150px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-card, 10px);
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-md, none);
+  }
+  .metric .metric-num {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .metric .metric-label {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-top: 0.35rem;
   }
 
   .row {
@@ -154,28 +211,81 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
   }
 </style>
 
+{showMarquee && (
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      {Array.from({ length: 8 }).map(() => (
+        <span>{marqueeText}</span>
+      ))}
+    </div>
+  </div>
+)}
+
 <header class="intro">
-  {c.heroMode === "metric" && (
+  {isLab ? (
     <>
-      <h1 class="hero-metric" data-text={c.heroMetric.value}>{c.heroMetric.value}</h1>
-      <p class="hero-metric-label">{c.heroMetric.label}</p>
+      {c.namePlacement === "above-statement" && (
+        <h1 class="hero-name-label">Chirag R Gandhi</h1>
+      )}
+      {c.heroMode === "statement" && (
+        <p class="hero-statement" data-text={c.heroStatement}>{c.heroStatement}</p>
+      )}
+      {c.heroMode === "metric" && (
+        <>
+          <div class="hero-metric" data-text={c.heroMetric.value}>{c.heroMetric.value}</div>
+          <p class="hero-metric-label">{c.heroMetric.label}</p>
+        </>
+      )}
+      {c.heroMode === "question" && (
+        <p class="hero-question">{c.heroQuestion}</p>
+      )}
+      {c.heroMode === "role" && (
+        <p class="role">Platform Product Manager — Enterprise Platforms &amp; AI Automation</p>
+      )}
+      {c.heroMode === "name" && (
+        <>
+          <h1 class="hero-name">Chirag R Gandhi</h1>
+          <p class="role">Platform Product Manager — Enterprise Platforms &amp; AI Automation</p>
+          <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~850 negotiators across EU and NA.</p>
+          <span class="status status-chip">Luxembourg · EU · Remote-ready</span>
+        </>
+      )}
+      {(c.heroMode === "statement" || c.heroMode === "metric" || c.heroMode === "question") && (
+        <p class="plain">I build internal platforms that turn manual work into deterministic automation — used by ~850 negotiators across EU and NA.</p>
+      )}
+      {c.namePlacement === "byline" && (
+        <span class="hero-byline">Chirag R Gandhi</span>
+      )}
+      <div class="cta-row">
+        <a class="btn btn-primary" href={withBase("projects")}>See the work</a>
+        <a class="btn btn-secondary" href={withBase("resume")}>Resume</a>
+      </div>
     </>
-  )}
-  {c.heroMode === "name" && (
+  ) : (
     <>
-      <h1 class="hero-name">{HERO_COPY.name}</h1>
-      <p class="role">Platform Product Manager</p>
+      {c.heroMode === "metric" && (
+        <>
+          <h1 class="hero-metric" data-text={c.heroMetric.value}>{c.heroMetric.value}</h1>
+          <p class="hero-metric-label">{c.heroMetric.label}</p>
+        </>
+      )}
+      {c.heroMode === "name" && (
+        <>
+          <h1 class="hero-name">{HERO_COPY.name}</h1>
+          <p class="role">Platform Product Manager</p>
+        </>
+      )}
+      {c.heroMode === "statement" && (
+        <>
+          <h1 class="hero-statement" data-text={HERO_COPY.statement}>{HERO_COPY.statement}</h1>
+          <p class="hero-sub">{HERO_COPY.subhero}</p>
+          <p class="tagline">{HERO_COPY.tagline}</p>
+        </>
+      )}
+      {c.namePlacement === "byline" && c.heroMode !== "statement" && (
+        <span class="hero-byline">{HERO_COPY.name}</span>
+      )}
     </>
-  )}
-  {c.heroMode === "statement" && (
-    <>
-      <h1 class="hero-statement" data-text={HERO_COPY.statement}>{HERO_COPY.statement}</h1>
-      <p class="hero-sub">{HERO_COPY.subhero}</p>
-      <p class="tagline">{HERO_COPY.tagline}</p>
-    </>
-  )}
-  {c.namePlacement === "byline" && c.heroMode !== "statement" && (
-    <span class="hero-byline">{HERO_COPY.name}</span>
   )}
 </header>
 
@@ -201,6 +311,21 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
     }
 
     if (sectionId === "impact") {
+      if (isLab) {
+        return (
+          <section class="section impact">
+            <h2 class="label">Impact</h2>
+            <div class="metrics">
+              {IMPACT_METRICS.map((m) => (
+                <div class="metric">
+                  <div class="metric-num">{m.num}</div>
+                  <div class="metric-label">{m.label}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      }
       return (
         <section class="section impact">
           <h2 class="label">Impact</h2>
@@ -231,10 +356,14 @@ const homeProjects = projects.filter((p) => p.slug === "this-portfolio-site");
               </div>
             ))}
           </div>
-          <div class="more-row">
-            <a class="btn btn-secondary more" href={withBase("playground")}>View this site in different themes →</a>
+          {isLab ? (
             <a class="btn btn-secondary more" href={withBase("projects")}>All projects →</a>
-          </div>
+          ) : (
+            <div class="more-row">
+              <a class="btn btn-secondary more" href={withBase("playground")}>View this site in different themes →</a>
+              <a class="btn btn-secondary more" href={withBase("projects")}>All projects →</a>
+            </div>
+          )}
         </section>
       );
     }

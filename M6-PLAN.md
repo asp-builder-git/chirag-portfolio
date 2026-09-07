@@ -10,7 +10,7 @@
 4. **No direct pushes to main. Ever.** Branch protection stays on (1 approving review, enforce_admins). Each milestone = own branch + PR.
 5. **WCAG AA everywhere.** New color pairs verified programmatically before shipping.
 6. **VOICE.md applies to all copy:** first person, short plain sentences, numbers over adjectives, honest about difficulty, no "coming soon" theater, no invented titles on the home page (system roles, not job titles).
-7. **Design tokens live in `Layout.astro`** (`--bg/--surface/--ink/--muted/--hairline/--accent/--accent-text`, `--font-mono`). Inner pages consume tokens; they do not hardcode colors.
+7. **Design tokens** are resolved in `src/design/css.ts` (`designSpecToCssVars`), remapped for light/dark in the document shell (`SiteLayout` / `BaseDocument`), and extended by `src/styles/production/`. Core vars: `--bg/--surface/--ink/--muted/--hairline/--accent/--accent-text`, `--font-mono`. Inner pages consume tokens; they do not hardcode colors.
 
 ## 2. Review model (how we work)
 
@@ -60,7 +60,7 @@ Slate/indigo palette (AA-verified), JetBrains Mono self-hosted → `--font-mono`
 Each implementation sub-agent task prompt must contain:
 1. Repo path + branch to create (`feat/m6-x-…`, off `main`).
 2. Current state + exact files to touch.
-3. Constraints: VOICE.md rules, no invented facts, tokens from `Layout.astro`, WCAG AA, keep build size sane.
+3. Constraints: VOICE.md rules, no invented facts, tokens from production styles + `design/css.ts`, WCAG AA, keep build size sane.
 4. **Completion criteria:** `npm run build` exits 0; required strings/classes verified in `dist/`; **do not push to main, do not merge, do not deploy** — PM owns merge/deploy.
 5. Report back: what changed, files, verification output, any deviations.
 

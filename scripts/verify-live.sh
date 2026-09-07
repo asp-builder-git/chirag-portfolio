@@ -40,6 +40,13 @@ echo "$home" | grep -q 'href="/chirag-portfolio/projects"' \
   && check "Nav Projects href" 1 \
   || check "Nav Projects href" 0 "expected /chirag-portfolio/projects"
 
+# Root-absolute favicon breaks under /chirag-portfolio base
+if echo "$home$projects$resume$playground" | grep -Eq 'href="/favicon\.(svg|ico)"'; then
+  check "Favicon withBase" 0 "found root-absolute /favicon — must use base path"
+else
+  check "Favicon withBase" 1
+fi
+
 echo "$resume" | grep -q 'linkedin.com/in/chiraggandhi09' \
   && check "LinkedIn chiraggandhi09" 1 \
   || check "LinkedIn chiraggandhi09" 0 "missing on /resume"

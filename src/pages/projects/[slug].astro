@@ -1,17 +1,19 @@
 ---
-import HomeLayout from "../../layouts/HomeLayout.astro";
-import { projects } from "../../data/projects";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { getCollection } from "astro:content";
+import type { Project } from "../../data/projects";
 import { getProductionBaseSpec } from "../../design/production-default";
 import { applyAppearance, DEFAULT_APPEARANCE } from "../../design/presets";
 import { withBase } from "../../lib/base";
 
-export function getStaticPaths() {
-  return projects
-    .filter((p) => p.status === "Live")
-    .map((p) => ({
-      params: { slug: p.slug },
-      props: { project: p },
-    }));
+export async function getStaticPaths() {
+  const entries = await getCollection("projects");
+  return entries
+    .filter((e) => e.data.status === "Live")
+    .map((e) => {
+      const project: Project = { slug: e.id, ...e.data };
+      return { params: { slug: e.id }, props: { project } };
+    });
 }
 
 const { project } = Astro.props;
@@ -19,7 +21,7 @@ const displayUrl = (url: string) => url.replace(/^https?:\/\//, "");
 const appearance = DEFAULT_APPEARANCE;
 const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<HomeLayout
+<SiteLayout
   spec={spec}
   appearance={appearance}
   title={`${project.name} — Chirag Gandhi`}
@@ -41,7 +43,7 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
     .proof a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
     .proof a:hover { text-decoration-color: var(--accent); }
     h2 { margin: 2.5rem 0 0.75rem; }
-    p { margin-bottom: 1rem; color: var(--body); max-width: 62ch; }
+    p { margin-bottom: 1rem; color: var(--ink); max-width: 62ch; }
     p:last-child { margin-bottom: 0; }
     .difficulty {
       border-left: 2px solid var(--accent);
@@ -83,4 +85,4 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
   {project.outcome.map((para) => <p>{para}</p>)}
 
   <p class="back"><a href={withBase("projects")}>← All projects</a></p>
-</HomeLayout>
+</SiteLayout>

@@ -99,6 +99,13 @@ export interface CreativeProfile {
   galleryLabel?: string;
 }
 
+/**
+ * Lab-only creative knobs (personas/chaos/gallery). Production routes use a
+ * curated subset via SiteLayout + playground-presets.css — do not import full
+ * lab CSS on production pages.
+ */
+export type LabCreativeProfile = CreativeProfile;
+
 export interface DesignSpec {
   seed: string;
   seedId: string;

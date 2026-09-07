@@ -1,13 +1,24 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
 import { withBase } from "../lib/base";
+
+const appearance = DEFAULT_APPEARANCE;
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<Layout title="About — Chirag Gandhi" active="about">
+<SiteLayout
+  spec={spec}
+  appearance={appearance}
+  title="About — Chirag Gandhi"
+  active="home"
+  showAppearance={false}
+>
   <style>
     h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 2rem; }
     .block { margin-bottom: 2.5rem; }
     .block h2 { margin-bottom: 0.75rem; }
-    .block p { margin-bottom: 0.9rem; font-size: 1.02rem; color: var(--body); max-width: 62ch; }
+    .block p { margin-bottom: 0.9rem; font-size: 1.02rem; color: var(--ink); max-width: 62ch; }
     .block p:last-child { margin-bottom: 0; }
     .block strong { font-weight: 600; color: var(--ink); }
     .block .rule {
@@ -54,4 +65,4 @@ import { withBase } from "../lib/base";
     </p>
     <p>My style: build small, ship publicly, iterate. This site is the standing example.</p>
   </section>
-</Layout>
+</SiteLayout>

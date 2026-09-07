@@ -1,0 +1,221 @@
+---
+import BaseDocument from "./BaseDocument.astro";
+import "../styles/production/home.css";
+import "../styles/lab/variants.css";
+import "../styles/lab/personas.css";
+import "../styles/lab/fx.css";
+import type { DesignSpec } from "../design/types";
+import { designSpecToCssVars } from "../design/css";
+import { withBase } from "../lib/base";
+import ThemeToggle from "../components/chrome/ThemeToggle.astro";
+
+interface Props {
+  spec: DesignSpec;
+  seed: string;
+  title?: string;
+  active?: "home" | "projects";
+  pageLabel?: string;
+}
+
+const { spec, title = "Design Lab", active, pageLabel = "Home" } = Astro.props;
+
+
+const cssVars = designSpecToCssVars(spec);
+const rootStyle = Object.entries(cssVars)
+  .map(([k, v]) => `${k}: ${v}`)
+  .join("; ");
+const light = spec.colors.light;
+const dark = spec.colors.dark;
+
+const DARK_PERSONAS = [
+  "matrix", "terminal", "neonTokyo", "voidMono", "retroTerminal", "luxurySerif",
+  "acid", "glitch", "cyberpunk", "bloodMoon", "arcade",
+];
+const forceDark =
+  spec.creative.themePersona !== "default" &&
+  DARK_PERSONAS.includes(spec.creative.themePersona);
+const hideSections = spec.creative.hiddenSections.join(" ");
+const chaosEffects = spec.creative.chaosEffects.join(" ");
+const labBase = withBase("design-lab");
+const seedParam = spec.seedId;
+const year = new Date().getFullYear();
+const hasMatrixRain = spec.creative.chaosEffects.includes("matrix-rain");
+const matrixCols = hasMatrixRain ? Array.from({ length: 24 }, (_, i) => i) : [];
+const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789";
+
+function matrixColumnText(col: number): string {
+  let out = "";
+  for (let r = 0; r < 20; r++) {
+    out +=
+      MATRIX_CHARS[
+        (col * 7 + r * 13 + seedParam.charCodeAt(r % seedParam.length)) %
+          MATRIX_CHARS.length
+      ];
+    if (r < 19) out += "\n";
+  }
+  return out;
+}
+
+const htmlAttrs: Record<string, string | undefined> = {
+  "data-archetype": spec.archetype,
+  "data-pillar-layout": spec.pillarLayout,
+  "data-btn-variant": spec.buttonVariant,
+  "data-font-pairing": spec.fontPairing,
+  "data-hero-layout": spec.heroLayout,
+  "data-hero-scale": spec.heroScale,
+  "data-text-align": spec.textAlign,
+  "data-cta-layout": spec.ctaLayout,
+  "data-interaction": spec.interaction,
+  "data-nav-style": spec.navStyle,
+  "data-metric-layout": spec.metricLayout,
+  "data-section-style": spec.sectionStyle,
+  "data-label-style": spec.labelStyle,
+  "data-projects-layout": spec.projectsLayout,
+  "data-theme-persona": spec.creative.themePersona,
+  "data-hero-mode": spec.creative.heroMode,
+  "data-name-placement": spec.creative.namePlacement,
+  "data-nav-position": spec.creative.navPosition,
+  "data-content-width": spec.creative.contentWidth,
+  "data-hide": hideSections,
+  "data-chaos": chaosEffects,
+  "data-force-dark": forceDark ? "true" : "false",
+  "data-wildness": String(spec.creative.wildness),
+  "data-visual-layout": spec.creative.visualLayout,
+  "data-hero-shell": spec.creative.heroShell,
+};
+---
+
+<BaseDocument
+  title={`${title} — ${spec.seedId}`}
+  themeColorLight={light.bg}
+  themeColorDark={dark.bg}
+  forceDark={forceDark}
+  noindex={true}
+  rootStyle={rootStyle}
+  htmlAttrs={htmlAttrs}
+>
+  <style is:global slot="head">
+      .lab-banner {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-btn, 6px);
+        padding: 0.5rem 0.75rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.25rem;
+        align-items: center;
+      }
+      .lab-banner strong { color: var(--ink); font-weight: 500; }
+      .lab-banner a { color: var(--accent-text); font-weight: 500; }
+      .lab-tabs {
+        display: flex;
+        gap: 0.75rem;
+        margin-left: auto;
+      }
+      .lab-tabs a {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: var(--radius-btn, 6px);
+        border: 1px solid var(--hairline);
+      }
+      .lab-tabs a.active {
+        background: var(--ink);
+        color: var(--bg);
+        text-decoration: none;
+      }
+      nav.lab-nav-top {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.5rem;
+        padding-bottom: 1rem; border-bottom: 1px solid var(--hairline); margin-bottom: 2rem;
+      }
+      nav.lab-nav-top a { font-size: 0.9375rem; font-weight: 500; padding: 0.15rem 0; }
+      nav.lab-nav-top a.active { text-decoration: underline; text-decoration-color: var(--ink); }
+      nav.lab-nav-top .theme-toggle { margin-left: auto; }
+      .card {
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-card, 10px);
+        padding: 1.25rem 1.4rem;
+        margin-bottom: 1rem;
+        background: var(--surface);
+        box-shadow: var(--shadow-md, none);
+      }
+      .card h3 { font-size: 1.125rem; margin-bottom: 0.35rem; }
+      .card p { color: var(--muted); font-size: 0.9375rem; }
+      [data-btn-variant="outline"] .btn-primary:hover { background: var(--surface); opacity: 1; }
+      [data-btn-variant="ghost"] .btn-primary {
+        background: transparent;
+        color: var(--accent-text);
+        border: none;
+        padding: 0;
+      }
+      [data-btn-variant="ghost"] .btn-primary:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        opacity: 1;
+      }
+      [data-archetype="paco"] .section .label { letter-spacing: 0.12em; }
+      [data-archetype="antfu"] body { font-size: 0.9375rem; }
+      [data-archetype="brutalist"] .card,
+      [data-archetype="brutalist"] .btn { border-width: 2px; }
+  </style>
+
+  {spec.creative.ghostText && (
+    <div class="ghost-bg" aria-hidden="true">
+      <span>{spec.creative.ghostText}</span>
+    </div>
+  )}
+
+  {hasMatrixRain && (
+    <div class="matrix-rain" aria-hidden="true">
+      {matrixCols.map((i) => (
+        <div
+          class="col"
+          style={`left:${(i / matrixCols.length) * 100}%;animation-duration:${8 + (i % 7) * 2}s;animation-delay:${-(i % 5)}s`}
+        >
+          {matrixColumnText(i)}
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="page-wrap">
+    <div class="container">
+      <a class="skip-link" href="#main">Skip to content</a>
+
+      <div class="lab-banner">
+        <span>
+          <strong>{spec.creative.galleryLabel ?? spec.seedId}</strong>
+          · wild {spec.creative.wildness} · {spec.creative.themePersona}
+        </span>
+        <span>hero:{spec.creative.heroMode} · {spec.textAlign} · {spec.creative.heroShell}</span>
+        <div class="lab-tabs">
+          <a href={`${labBase}/${seedParam}/home`} class:list={[active === "home" && "active"]}>Home</a>
+          <a href={`${labBase}/${seedParam}/projects`} class:list={[active === "projects" && "active"]}>Projects</a>
+          <a href={labBase}>Gallery</a>
+        </div>
+      </div>
+
+      <nav class="lab-nav-top" aria-label="Lab">
+        <a href={`${labBase}/${seedParam}/home`} class:list={[active === "home" && "active"]}>Home</a>
+        <a href={`${labBase}/${seedParam}/projects`} class:list={[active === "projects" && "active"]}>Projects</a>
+        <ThemeToggle />
+      </nav>
+
+      <main id="main">
+        <slot />
+      </main>
+
+      <footer>
+        <span>
+          Design lab · {pageLabel} · seed {seedParam}
+          {spec.creative.showNameInFooter && " · Chirag R Gandhi"}
+          · © {year}
+        </span>
+      </footer>
+    </div>
+  </div>
+</BaseDocument>

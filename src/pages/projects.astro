@@ -1,6 +1,6 @@
 ---
-import HomeLayout from "../layouts/HomeLayout.astro";
-import ProjectsContent from "../components/pages/ProjectsContent.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ProjectsContent from "../components/home/ProjectsContent.astro";
 import { getProductionBaseSpec } from "../design/production-default";
 import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
 
@@ -8,7 +8,7 @@ const appearance = DEFAULT_APPEARANCE;
 const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
 
-<HomeLayout
+<SiteLayout
   spec={spec}
   appearance={appearance}
   title="Projects — Chirag Gandhi"
@@ -16,4 +16,4 @@ const spec = applyAppearance(getProductionBaseSpec(), appearance);
   showAppearance={false}
 >
   <ProjectsContent />
-</HomeLayout>
+</SiteLayout>

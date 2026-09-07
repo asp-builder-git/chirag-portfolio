@@ -1,19 +1,29 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getProductionBaseSpec } from "../design/production-default";
+import { applyAppearance, DEFAULT_APPEARANCE } from "../design/presets";
+import { withBase } from "../lib/base";
+
+const appearance = DEFAULT_APPEARANCE;
+const spec = applyAppearance(getProductionBaseSpec(), appearance);
 ---
-<Layout title="Writing — Chirag Gandhi">
+<SiteLayout
+  spec={spec}
+  appearance={appearance}
+  title="Writing — Chirag Gandhi"
+  active="home"
+  showAppearance={false}
+>
   <style>
     h1 { font-size: clamp(2rem, 5vw, 2.6rem); margin-bottom: 0.5rem; }
-    .sub { color: var(--muted); margin-bottom: 2rem; }
+    .sub { color: var(--muted); margin-bottom: 2rem; max-width: 58ch; }
+    .sub a { color: var(--ink); }
   </style>
 
   <div class="eyebrow">Writing</div>
   <h1>Writing</h1>
-  <div class="sub">Notes on building in public, AI pipelines, and what I learn shipping real things.</div>
-
-  <div class="card">
-    <div class="status">Coming soon</div>
-    <h3>First post: why I'm publishing my work in public</h3>
-    <p>The story behind this site, and the rule that runs it: a project counts when a stranger can open it.</p>
-  </div>
-</Layout>
+  <p class="sub">
+    No posts here yet. When I publish, they land here — not a placeholder card.
+    For now: <a href={withBase()}>home</a> and <a href={withBase("projects")}>projects</a>.
+  </p>
+</SiteLayout>
