@@ -41,9 +41,9 @@ Keep org-scale decisions in agent-facing config so future work extends existing 
 - [x] ORG-1.3 `src/lib/nav.ts` single primary-nav source
 - [x] ORG-1.4 Migrate about/writing/resume/home/projects/playground onto SiteLayout; delete legacy `Layout.astro`
 - [x] ORG-1.5 Favicons via `withBase`; verify-live catches root-absolute `/favicon`
-- [x] ORG-1.6 Writing: remove “coming soon” theater; About/Writing omit from primary nav
+- [x] ORG-1.6 Writing / About+Writing nav — **already shipped in separate PRs**; org branch only preserves structure (`nav.ts` + layouts). Do not treat as an ORG product win in this PR.
 
-**Accept:** One theme bootstrap path; About/Writing not in primary nav; build green; Appearance FOUC OK on playground.
+**Accept:** One theme bootstrap path; build green; Appearance FOUC OK on playground. (Nav product choices: prior PRs.)
 
 ---
 
@@ -94,7 +94,7 @@ Keep org-scale decisions in agent-facing config so future work extends existing 
 - [x] ORG-6.2 Collapse duplicate a11y scripts to one Node entry
 - [x] ORG-6.3 `tsconfig` path aliases (`@design/*`, `@lib/*`, …)
 - [x] ORG-6.4 Retire `--body` → `--ink` (and related legacy aliases) on pages
-- [x] ORG-6.5 `404.astro` + shared meta/OG component
+- [x] ORG-6.5 Shared meta/OG (`DocumentMeta`); `404.astro` wiring if present — **404 page content already shipped separately**; not an ORG product win
 - [x] ORG-6.6 Optional `LabCreativeProfile` split if lab knobs still leak
 
 **Accept:** One process path for agents; aliases work in build; fewer dead scripts.
