@@ -10,7 +10,9 @@
 
 ## ORG-0…ORG-6 — Organization scale roadmap (2026-09-07) — `chore/org-scale-roadmap`
 
-**Status:** G1–G4 done. Chirag approved merge (chat **"go ahead"**, structure review, 2026-09-07). Structure/scale only — not product IA/copy wins.
+**Status:** G1–G5 done. Chirag approved merge (chat **"go ahead"**, structure review, 2026-09-07). Structure/scale only — not product IA/copy wins.
+
+**G5 theme click-pass (2026-09-08):** Chirag confirmed light↔dark theme toggle **works** on live after ORG PR [#11](https://github.com/asp-builder-git/chirag-portfolio/pull/11) (chat). Closes open “needs Chirag click” / post-deploy theme checklist for ORG #11.
 
 ### Summary
 Repo organization and scale: one document shell, production vs lab CSS split, shared theme/appearance scripts, CI beyond build, content collections, component taxonomy, agent org rules, process/docs hygiene. Home / Projects / Resume / Playground behavior preserved; this PR is not a redesign.
@@ -31,7 +33,7 @@ Repo organization and scale: one document shell, production vs lab CSS split, sh
 - `npm run build` exit 0
 - `npx astro check` — 0 errors
 - Dist smoke: Appearance absent on home, present on playground; favicon base path; home CSS without full lab matrix
-- Structure + click-pass checklist (theme toggle, Appearance on playground, base-path nav) — G5 after deploy
+- Structure + click-pass checklist (theme toggle, Appearance on playground, base-path nav) — **G5 ✅** theme light↔dark confirmed by Chirag on live (chat, 2026-09-08) after PR #11
 
 ## M2 — Homepage vs Separate Resume Page (2026-08-27)
 
