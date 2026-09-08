@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Org structure (mandatory)
 
-Read [`ORG-BACKLOG.md`](ORG-BACKLOG.md) before adding chrome, theme, nav, or layout files.
+**Structure truth:** [`docs/ORG-BLUEPRINT.md`](docs/ORG-BLUEPRINT.md). **Work queue:** [`ORG-BACKLOG.md`](ORG-BACKLOG.md). Read the blueprint before adding chrome, theme, nav, or layout files.
 
 - **One document shell:** `BaseDocument` → `SiteLayout` / `LabLayout`. Do not revive a second full `Layout.astro` or duplicate html/head/theme bootstrap.
 - **CSS:** production pages import only `src/styles/production/`. Lab CSS under `src/styles/lab/` is imported only by `LabLayout`. Never ship lab persona/chaos matrix CSS on production routes (playground gets curated `playground-presets.css` only).
