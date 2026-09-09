@@ -10,7 +10,7 @@
 
 ## Docs — Org blueprint + generic backlog (2026-09-08) — `docs/org-blueprint-backlog`
 
-**Status:** Awaiting Chirag approval (do not merge until approved). Docs-only.
+**Status:** Chirag approved merge (chat **"go ahead"**, 2026-09-09) for PR [#13](https://github.com/asp-builder-git/chirag-portfolio/pull/13). Docs-only.
 
 ### Summary
 - Added [`docs/ORG-BLUEPRINT.md`](docs/ORG-BLUEPRINT.md) — durable desired-state architecture (folder map + invariants). Agents treat this as structure truth.
