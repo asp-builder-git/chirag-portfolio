@@ -20,13 +20,13 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Org structure (mandatory)
 
-Read `ORG-BACKLOG.md` before adding chrome, theme, nav, or layout files. Details: `.cursor/rules/org-structure.mdc`.
+**Structure truth:** [`docs/ORG-BLUEPRINT.md`](docs/ORG-BLUEPRINT.md). **Work queue:** [`ORG-BACKLOG.md`](ORG-BACKLOG.md). Details: `.cursor/rules/org-structure.mdc`.
 
 - One document shell: `BaseDocument` → `SiteLayout` / `LabLayout` — do not revive a second full `Layout.astro` or duplicate html/head/theme bootstrap
 - CSS: production pages import only `src/styles/production/`; lab CSS under `src/styles/lab/` imported only by `LabLayout` — never ship lab persona/chaos CSS on production routes
 - Nav: single source `src/lib/nav.ts` — no second primary-nav list
 - Home: diverge lab vs production by props/flags, not forked `HomeContent`/layout shells
-- Before adding chrome/theme/nav/layout files, read `ORG-BACKLOG.md` and extend existing paths — do not re-split the repo
+- Before adding chrome/theme/nav/layout files, read the blueprint and extend existing paths — do not re-split the repo
 
 ## Model routing (mandatory)
 

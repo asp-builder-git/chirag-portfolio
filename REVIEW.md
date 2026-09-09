@@ -8,6 +8,21 @@
 - **G4 Ship review**: URL live, repo public, README positioning line, guardrails documented.
 
 
+## Docs — Org blueprint + generic backlog (2026-09-08) — `docs/org-blueprint-backlog`
+
+**Status:** Chirag approved merge (chat **"go ahead"**, 2026-09-09) for PR [#13](https://github.com/asp-builder-git/chirag-portfolio/pull/13). Docs-only.
+
+### Summary
+- Added [`docs/ORG-BLUEPRINT.md`](docs/ORG-BLUEPRINT.md) — durable desired-state architecture (folder map + invariants). Agents treat this as structure truth.
+- Rewrote [`ORG-BACKLOG.md`](ORG-BACKLOG.md) into an ongoing repo/structure/process backlog (how-to + empty Active + template). ORG-0–6 collapsed to a short Completed table; full checklist archived at [`docs/archive/ORG-0-6.md`](docs/archive/ORG-0-6.md).
+- Pointers updated: `AGENTS.md` / CLAUDE, `.cursor/rules/org-structure.mdc`, README Status, `docs/process` + `docs/archive`.
+
+### Verify
+- Docs-only — build optional. Link targets resolve in-repo.
+- No merge without Chirag approval.
+
+---
+
 ## ORG-0…ORG-6 — Organization scale roadmap (2026-09-07) — `chore/org-scale-roadmap`
 
 **Status:** G1–G5 done. Chirag approved merge (chat **"go ahead"**, structure review, 2026-09-07). Structure/scale only — not product IA/copy wins.
