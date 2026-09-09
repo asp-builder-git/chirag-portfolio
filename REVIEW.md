@@ -10,7 +10,9 @@
 
 ## Playground copy + home hero spacing (2026-09-09) — `fix/playground-copy-hero-spacing`
 
-**Status:** Chirag approved merge (chat **"commit and deploy"**, 2026-09-09). G4 ✅ → merge → G5.
+**Status:** G1–G5 done. Chirag approved merge (chat **"commit and deploy"**, 2026-09-09). Merged [PR #14](https://github.com/asp-builder-git/chirag-portfolio/pull/14).
+
+**G5 (2026-09-09):** [Deploy](https://github.com/asp-builder-git/chirag-portfolio/actions/runs/34397447012) success. Live 200 on `/` `/projects/` `/resume/` `/playground/`; LinkedIn `chiraggandhi09`; Appearance absent home/projects/resume, present playground; no parametric blurb; live CSS `min(48svh, 22rem)`.
 
 ### Summary
 1. **Playground** — removed the “parametric seed / design spec” intro paragraph; kept Home + Case study links.
