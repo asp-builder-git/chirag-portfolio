@@ -26,32 +26,19 @@ const { spec, appearance } = Astro.props;
   showAppearance={true}
 >
   <style>
-    .playground-intro {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: var(--muted);
-      max-width: 58ch;
-      margin-bottom: 1.5rem;
-    }
-    .playground-intro a { color: var(--ink); }
     .playground-links {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem 1.25rem;
       font-size: 0.875rem;
-      margin-top: 0.75rem;
+      margin-bottom: 1.5rem;
     }
     .playground-links a { color: var(--muted); }
   </style>
 
-  <div class="playground-intro">
-    <p>
-      This site is parametric: a seed resolves to a design spec, which drives the CSS — type, color, hero, motion. Pick a theme below. The wilder 24-persona lab stays local-only.
-    </p>
-    <div class="playground-links">
-      <a href={withBase()}>← Home</a>
-      <a href={withBase("projects/this-portfolio-site")}>Case study →</a>
-    </div>
+  <div class="playground-links">
+    <a href={withBase()}>← Home</a>
+    <a href={withBase("projects/this-portfolio-site")}>Case study →</a>
   </div>
 
   <div class="theme-presets" role="group" aria-label="Theme presets">
