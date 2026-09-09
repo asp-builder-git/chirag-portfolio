@@ -8,6 +8,24 @@
 - **G4 Ship review**: URL live, repo public, README positioning line, guardrails documented.
 
 
+## Playground copy + home hero spacing (2026-09-09) — `fix/playground-copy-hero-spacing`
+
+**Status:** Chirag approved merge (chat **"commit and deploy"**, 2026-09-09). G4 ✅ → merge → G5.
+
+### Summary
+1. **Playground** — removed the “parametric seed / design spec” intro paragraph; kept Home + Case study links.
+2. **Home hero** — less whitespace above/below the statement: sticky ATF margin `2rem` → `0.75rem`; fullscreen/poster intro `min-height` `min(80svh, 36rem)` → `min(48svh, 22rem)` with tighter vertical padding; intro → next-section gap slightly reduced.
+3. **CSS load order** — `playground-presets.css` then `home.css` so production hero overrides actually win.
+
+### Verify
+- `npm run build` exit 0
+- `/playground` HTML has no “This site is parametric” copy; theme preset buttons + links remain
+- `/` hero sits closer to sticky bar and Impact strip (visual check in preview)
+- Appearance still absent on home; present on playground
+- No merge without Chirag approval
+
+---
+
 ## Docs — Org blueprint + generic backlog (2026-09-08) — `docs/org-blueprint-backlog`
 
 **Status:** Chirag approved merge (chat **"go ahead"**, 2026-09-09) for PR [#13](https://github.com/asp-builder-git/chirag-portfolio/pull/13). Docs-only.
